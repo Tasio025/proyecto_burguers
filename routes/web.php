@@ -13,6 +13,7 @@
 
 /*Route::get('/time' , function(){$date =new Carbon;echo $date ; } );*/
 
+use Illuminate\Support\Facades\Route;
 
 Route::group(array('domain' => '127.0.0.1'), function () {
 
