@@ -103,7 +103,6 @@ Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
 /* CONTROLADOR CLIENTE                           */
 /* --------------------------------------------- */
 Route::get('/admin/clientes/nuevo', 'ControladorCliente@nuevo');
-//A PARTIR DE ACÁ AGREGADO X COP
 Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo'); // Alias singular para compatibilidad
 Route::get('/admin/sistema/clientes/nuevo', 'ControladorCliente@nuevo'); // Ruta del enlace en la vista
 Route::post('/admin/cliente/guardar', 'ControladorCliente@guardar'); // Ruta para guardar cliente
@@ -112,7 +111,7 @@ Route::post('/admin/cliente/guardar', 'ControladorCliente@guardar'); // Ruta par
 /* --------------------------------------------- */
 /* CONTROLADOR PRODUCTOS                           */
 /* --------------------------------------------- */
-
+Route::get('/admin/productos/nuevo', 'ControladoProducto@nuevo');
 
 
 /* --------------------------------------------- */

@@ -44,6 +44,14 @@ if (isset($msg)) {
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
                 </div>
             </div>
+            <div class="row">
+                  <input type="hidden" name="_token"value="{{ csrf_token() }}"></input>
+                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                  <div class="form-group col-lg-6">
+                        <label for="">Apellido</label>
+                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                  </div>
+            </div>
       </form>
 
       <script>
@@ -60,6 +68,24 @@ if (isset($msg)) {
             return false;
         }
     }
+
+      <!--function eliminar() {
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('admin/sistema/menu/eliminar') }}",
+            data: { id:globalId },
+            async: true,
+            dataType: "json",
+            success: function (data) {
+                if (data.err = "0") {
+                    msgShow("Registro eliminado exitosamente.", "success");
+                } else {
+                    msgShow(data.err, "danger");
+                }
+                $('#mdlEliminar').modal('toggle');
+            }
+        });
+    }-->
 </script>
 
 @endsection
