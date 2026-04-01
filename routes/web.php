@@ -97,3 +97,51 @@ Route::get('/admin/patente/cargarGrilla', 'ControladorPatente@cargarGrilla')->na
 Route::get('/admin/patente/eliminar', 'ControladorPatente@eliminar');
 Route::get('/admin/patente/nuevo/{id}', 'ControladorPatente@editar');
 Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR CLIENTE                           */
+/* --------------------------------------------- */
+Route::get('/admin/clientes/nuevo', 'ControladorCliente@nuevo');
+//A PARTIR DE ACÁ AGREGADO X COP
+Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo'); // Alias singular para compatibilidad
+Route::get('/admin/sistema/clientes/nuevo', 'ControladorCliente@nuevo'); // Ruta del enlace en la vista
+Route::post('/admin/cliente/guardar', 'ControladorCliente@guardar'); // Ruta para guardar cliente
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR PRODUCTOS                           */
+/* --------------------------------------------- */
+
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR PEDIDOS                           */
+/* --------------------------------------------- */
+
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR POSTULAICONES                           */
+/* --------------------------------------------- */
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR SUCURSALES                           */
+/* --------------------------------------------- */
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR CATEGORÍAS                           */
+/* --------------------------------------------- */
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR PROVEEDORES                           */
+/* --------------------------------------------- */
+
+
+
+/* --------------------------------------------- */
+/* CONTROLADOR RUBROS                           */
+/* --------------------------------------------- */
