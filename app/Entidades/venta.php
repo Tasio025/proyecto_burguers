@@ -71,6 +71,7 @@ use Illuminate\Database\Eloquent\Model;
                    $this->preciounitario,
                    $this->total
              ]);
+             return $this->idventa = DB getPdo()->lastInsertId();
       }
 }
 ?>

@@ -34,6 +34,25 @@ use Illuminate\Database\Eloquent\Model;
             }
             return null;
       }
+      public function guardar(){
+            $sql = "UPDATE tipoproducto SET
+                  nombre='$this->nombre'
+                  WHERE idtipoproducto=?";
+            $affected = DB::update($sql, [$this->idtipoproducto]);
       }
+      public function eliminar(){
+            $sql = "DELETE FROM tipoproducto WHERE idtipoproducto=?";
+            $affected = DB::delete($sql, [$this->idtipoproducto]);
+      }
+      public function insertar(){
+            $sql = "INSERT INTO tipoproducto (
+                  nombre
+            ) VALUES (?)";
+            $result = DB::insert($sql, [
+                  $this->nombre
+            ]);
+            return $this->idtipoproducto = DB::getPdo()->lastInsertId();
+      }
+}
 
 ?>
