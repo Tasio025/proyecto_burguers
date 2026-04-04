@@ -1,6 +1,6 @@
 <?php
 
-      namespace App\Entidades\Sistema;
+      namespace App\Entidades;
 
       use DB;
       use Illuminate\Database\Eloquent\Model;
@@ -44,8 +44,8 @@
             $sql = "UPDATE carritos SET
             fk_idclientes = $this->fk_idclientes,
             fk_idproductos = $this->fk_idproductos
-            WHERE idcarrito = $this->idcarrito";
-      $affected = DB::update($sql);
+            WHERE idcarrito = ?";
+      $affected = DB::update($sql, [$this->idcarrito]);
       }
       public function eliminar(){
             $sql = "DELETE FROM carritos WHERE idcarrito = $this->idcarrito";
@@ -60,7 +60,7 @@
                   $this->fk_idclientes,
                   $this->fk_idproductos
             ]);
-            return $result;
+            return $this->idcarrito = DB::getPdo()->lastInsertId();
       }
 }
 

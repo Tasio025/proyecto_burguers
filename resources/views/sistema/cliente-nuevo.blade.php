@@ -8,7 +8,7 @@
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/admin/home">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
     <li class="breadcrumb-item"><a href="/admin/clientes">Clientes;</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
@@ -48,12 +48,35 @@ if (isset($msg)) {
                   <input type="hidden" name="_token"value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-lg-6">
-                        <label for="">Apellido</label>
-                        <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                        <label for="">Apellido:</label>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
                   </div>
             </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="txtCorreo">Correo:</label>
+                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="txtDni">DNI:</label>
+                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="txtCelular">Celular:</label>
+                    <input type="number" id="txtCelular" name="txtCelular" class="form-control" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="txtClave">Contraseña:</label>
+                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
+                </div>
+            </div>
       </form>
-
       <script>
 
     $("#form1").validate();
