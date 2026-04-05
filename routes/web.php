@@ -111,7 +111,10 @@ Route::post('/admin/cliente/guardar', 'ControladorCliente@guardar'); // Ruta par
 /* --------------------------------------------- */
 /* CONTROLADOR PRODUCTOS                           */
 /* --------------------------------------------- */
-Route::get('/admin/productos/nuevo', 'ControladoProducto@nuevo');
+Route::get('/admin/productos/nuevo', 'ControladorProducto@nuevo');
+Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo'); // Alias singular para compatibilidad
+Route::get('/admin/sistema/productos/nuevo', 'ControladorProducto@nuevo'); // Ruta del enlace en la vista
+Route::post('/admin/producto/guardar', 'ControladorProducto@guardar'); // Ruta para guardar producto
 
 
 /* --------------------------------------------- */
