@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
       class Cliente extends Model{
       protected $table = 'clientes';
       public $timestamps = false;
-      protected $fillable = ['idcliente', 'nombre', 'direccion', 'correo', 'dni', 'celular'];
+      protected $fillable = ['idcliente', 'nombre', 'direccion', 'correo', 'dni', 'celular', 'clave'];
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\Model;
             $this->correo = $request->input('txtCorreo');
             $this->dni = $request->input('txtDni');
             $this->celular = $request->input('txtTelefono');
-      }
+            $this->clave = $request->input('txtClave');
+      } 
 
       public function obtenerTodos(){
             $sql = "SELECT
@@ -25,7 +26,8 @@ use Illuminate\Database\Eloquent\Model;
                   nombre,
                   direccion,
                   correo,
-                  dni,
+                  dni,,
+                  clave
                   celular
                   FROM clientes ORDER BY idcliente ASC";
                   $lstRetorno = DB::select($sql);
@@ -37,8 +39,8 @@ use Illuminate\Database\Eloquent\Model;
             nombre,
             direccion,
             correo,
-            dni,
-            celular
+            dni,,
+            clave
             FROM clientes WHERE idcliente = $idcliente";
             $lstRetorno = DB::select($sql, [$idcliente]);
 
@@ -49,6 +51,7 @@ use Illuminate\Database\Eloquent\Model;
                   $this->correo = $lstRetorno[0]->correo;
                   $this->dni = $lstRetorno[0]->dni;
                   $this->celular = $lstRetorno[0]->celular;
+                  $this->clave = $lstRetorno[0]->clave;
                   return $this;
             }
             return null;
@@ -59,10 +62,11 @@ use Illuminate\Database\Eloquent\Model;
             direccion = '$this->direccion',
             correo = '$this->correo',
             dni = $this->dni,
-            celular = $this->celular
+            celular = $this->celular,
+            clave = '$this->clave'
             WHERE idcliente = ?";
             $affected = DB::update($sql, [$this->idcliente]);
-            return $affected;
+           // return $affected;
       }
       public function eliminar(){
             $sql = "DELETE FROM clientes WHERE idcliente =?";
@@ -74,14 +78,16 @@ use Illuminate\Database\Eloquent\Model;
                   direccion,
                   correo,
                   dni,
-                  celular
-            ) VALUES (?,?,?,?,?)";
+                  celular,
+                  clave
+            ) VALUES (?,?,?,?,?,?)";
             $result = DB::insert($sql, [
                   $this->nombre,
                   $this->direccion,
                   $this->correo,
                   $this->dni,
-                  $this->celular
+                  $this->celular,
+                  $this->clave
             ]);
             return $this->idcliente = DB::getPdo()->lastInsertId();
       }

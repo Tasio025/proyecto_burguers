@@ -14,7 +14,7 @@
 </ol>
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/sistema/clientes/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
-    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="return guardar();"><span>Guardar</span></a>
+    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: $('#modalGuardar').modal('toggle');"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-trash-o" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');"><span>Eliminar</span></a></li>
@@ -63,51 +63,30 @@ if (isset($msg)) {
                     <label for="txtTelefono">Teléfono:</label>
                     <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" required>
                 </div>
+                <div class="form-group col-lg-6">
+                    <label for="txtClave">Clave:</label>
+                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
+                </div>
             </div>
       </form>
       <script>
 
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         if (typeof $.fn.validate === 'function') {
             $("#form1").validate();
         }
-    });
+    });*/
+    $("#form1").validate();
 
-    function guardar() {
-        if (typeof $.fn.validate === 'function') {
-            if (!$("#form1").valid()) {
-                msgShow("Corrija los errores e intente nuevamente.", "danger");
-                return false;
-            }
-        } else {
-            var form = document.getElementById('form1');
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return false;
-            }
+    function guardar(){
+        if($("#form1").valid()) {
+            modificado = false;
+            form1.submit();
+        }else{
+            $("#modalGuardar").modal('toggle');
+            msgShow("Corrija los errores e intente nuevamente.", "danger");
+            return false;
         }
-
-        document.getElementById('form1').submit();
-        return false;
     }
-
-      <!--function eliminar() {
-        $.ajax({
-            type: "GET",
-            url: "{{ asset('admin/sistema/menu/eliminar') }}",
-            data: { id:globalId },
-            async: true,
-            dataType: "json",
-            success: function (data) {
-                if (data.err = "0") {
-                    msgShow("Registro eliminado exitosamente.", "success");
-                } else {
-                    msgShow(data.err, "danger");
-                }
-                $('#mdlEliminar').modal('toggle');
-            }
-        });
-    }-->
 </script>
-
 @endsection

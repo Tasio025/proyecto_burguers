@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Entidades\Cliente;  //AGREGADO X COP
-use Illuminate\Http\Request;  //AGREGADO X COP
+use App\Entidades\Cliente;  
+use Illuminate\Http\Request;  
 require app_path() . '/start/constants.php';
 
 class ControladorCliente extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo clientes";
-            return view('Sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
+            return view('sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
       }
       public function guardar(Request $request){
             try{
@@ -19,11 +19,11 @@ class ControladorCliente extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->dni == "" || $entidad->celular == ""){
+                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->dni == "" || $entidad->celular == "" || $entidad->clave == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $cliente = new Cliente();
-                        return view('Sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
+                        return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
                   } else {
                         if($_POST["id"] > 0){
                               //Es actualización
@@ -44,7 +44,7 @@ class ControladorCliente extends Controller{
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar cliente";
                   $cliente = new Cliente();
-                  return view('Sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
+                  return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
             }
       }
 }
