@@ -102,10 +102,12 @@ Route::post('/admin/patente/nuevo/{id}', 'ControladorPatente@guardar');
 /* --------------------------------------------- */
 /* CONTROLADOR CLIENTE                           */
 /* --------------------------------------------- */
+Route::get('/admin/clientes', 'ControladorCliente@index');
+Route::get('/admin/sistema/clientes', 'ControladorCliente@index');
 Route::get('/admin/clientes/nuevo', 'ControladorCliente@nuevo');
 Route::get('/admin/cliente/nuevo', 'ControladorCliente@nuevo'); // Alias singular para compatibilidad
 Route::get('/admin/sistema/clientes/nuevo', 'ControladorCliente@nuevo'); // Ruta del enlace en la vista
-Route::post('/admin/cliente/guardar', 'ControladorCliente@guardar'); // Ruta para guardar cliente
+Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar'); // Ruta para guardar cliente
 
 
 /* --------------------------------------------- */
@@ -115,7 +117,7 @@ Route::get('/admin/productos/nuevo', 'ControladorProducto@nuevo');
 Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo'); // Alias singular para compatibilidad
 Route::get('/admin/sistema/productos/nuevo', 'ControladorProducto@nuevo'); // Ruta del enlace en la vista
 Route::get('/admin/sistema/producto/nuevo', 'ControladorProducto@nuevo'); // Alias singular para compatibilidad de la vista
-Route::post('/admin/producto/guardar', 'ControladorProducto@guardar'); // Ruta para guardar producto
+Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar'); // Ruta para guardar producto
 
 
 /* --------------------------------------------- */
@@ -125,7 +127,7 @@ Route::get('/admin/pedidos/nuevo', 'ControladorPedidos@nuevo');
 Route::get('/admin/pedido/nuevo', 'ControladorPedidos@nuevo'); // Alias singular para compatibilidad
 Route::get('/admin/sistema/pedidos/nuevo', 'ControladorPedidos@nuevo'); // Ruta del enlace en la vista
 Route::get('/admin/sistema/pedido/nuevo', 'ControladorPedidos@nuevo'); // Alias singular para compatibilidad de la vista
-Route::post('/admin/pedido/guardar', 'ControladorPedidos@guardar'); // Ruta para guardar pedido
+Route::post('/admin/pedido/nuevo', 'ControladorPedidos@guardar'); // Ruta para guardar pedido
 
 
 /* --------------------------------------------- */
@@ -135,7 +137,7 @@ Route::get('/admin/postulacion/nuevo', 'ControladorPostulaciones@nuevo');
 Route::get('/admin/postulaciones/nuevo', 'ControladorPostulaciones@nuevo'); // Alias plural para compatibilidad
 Route::get('/admin/sistema/postulacion/nuevo', 'ControladorPostulaciones@nuevo'); // Ruta del enlace en la vista
 Route::get('/admin/sistema/postulaciones/nuevo', 'ControladorPostulaciones@nuevo'); // Alias plural para compatibilidad
-Route::post('/admin/postulacion/guardar', 'ControladorPostulaciones@guardar'); // Ruta para guardar postulacion
+Route::post('/admin/postulacion/nuevo', 'ControladorPostulaciones@guardar'); // Ruta para guardar postulacion
 
 
 /* --------------------------------------------- */
@@ -144,7 +146,7 @@ Route::post('/admin/postulacion/guardar', 'ControladorPostulaciones@guardar'); /
 Route::get('/admin/categorias/nuevo', 'ControladorCategoria@nuevo');
 Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo'); 
 Route::get('/admin/sistema/categorias/nuevo', 'ControladorCategoria@nuevo'); 
-Route::post('/admin/categoria/guardar', 'ControladorCategoria@guardar'); 
+Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar'); 
 
 /* --------------------------------------------- */
 /* CONTROLADOR SUCURSALES                           */
@@ -153,7 +155,7 @@ Route::get('/admin/sucursales/nuevo', 'ControladorSucursal@nuevo');
 Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
 Route::get('/admin/sistema/sucursales/nuevo', 'ControladorSucursal@nuevo');
 //Route::get('/admin/sistema/sucursal/nuevo', 'ControladorSucursal@nuevo'); // Alias singular para compatibilidad
-Route::post('/admin/sucursal/guardar', 'ControladorSucursal@guardar');
+Route::post('/admin/sucursal/nuevo', 'ControladorSucursal@guardar');
 
 
 /* --------------------------------------------- */
@@ -162,7 +164,7 @@ Route::post('/admin/sucursal/guardar', 'ControladorSucursal@guardar');
 Route::get('/admin/proveedores/nuevo', 'ControladorProveedor@nuevo');
 Route::get('/admin/proveedor/nuevo', 'ControladorProveedor@nuevo');
 Route::get('/admin/sistema/proveedores/nuevo', 'ControladorProveedor@nuevo');
-Route::post('/admin/proveedor/guardar', 'ControladorProveedor@guardar');
+Route::post('/admin/proveedor/nuevo', 'ControladorProveedor@guardar');
 
 
 /* --------------------------------------------- */
@@ -171,7 +173,7 @@ Route::post('/admin/proveedor/guardar', 'ControladorProveedor@guardar');
 Route::get('/admin/rubros/nuevo', 'ControladorRubro@nuevo');
 Route::get('/admin/rubro/nuevo', 'ControladorRubro@nuevo');
 Route::get('/admin/sistema/rubros/nuevo', 'ControladorRubro@nuevo');
-Route::post('/admin/rubro/guardar', 'ControladorRubro@guardar');
+Route::post('/admin/rubro/nuevo', 'ControladorRubro@guardar');
 
 
 ?>

@@ -35,7 +35,7 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/proveedor/guardar">
+      <form id="form1" method="POST" action="/admin/proveedor/nuevo">
             <div class="row">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                   <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>

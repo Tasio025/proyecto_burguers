@@ -61,7 +61,7 @@ DELETE FROM `categoria`;
 CREATE TABLE IF NOT EXISTS `clientes` (
   `idcliente` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(150) NOT NULL,
-  `apellido` varchar(150) NOT NULL,
+  `direccion` varchar(150) NOT NULL,
   `correo` varchar(150) NOT NULL,
   `dni` varchar(50) NOT NULL,
   `celular` varchar(50) NOT NULL,

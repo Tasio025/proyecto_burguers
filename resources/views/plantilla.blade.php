@@ -50,6 +50,13 @@
 	            }
 	        });
 	    }
+
+	    function enviarFormulario() {
+	        var form = document.getElementById('form1');
+	        if (form) {
+	            form.submit();
+	        }
+	    }
 	</script>
     @yield('scripts')
 </head>
@@ -169,7 +176,7 @@
               <div class="modal-body">Seleccione Si para guardar y volver a la pantalla anterior.</div>
               <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-                <a class="btn btn-primary" href="#" onclick="guardar();">Sí</a>
+                <a class="btn btn-primary" href="#" onclick="enviarFormulario(); return false;">Sí</a>
               </div>
             </div>
         </div>

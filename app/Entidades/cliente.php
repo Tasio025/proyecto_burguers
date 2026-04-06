@@ -7,14 +7,23 @@ use Illuminate\Database\Eloquent\Model;
       class Cliente extends Model{
       protected $table = 'clientes';
       public $timestamps = false;
-      protected $fillable = ['idcliente', 'nombre', 'apellido', 'correo', 'dni', 'celular'];
+      protected $fillable = ['idcliente', 'nombre', 'direccion', 'correo', 'dni', 'celular'];
       protected $hidden = [];
+
+      public function cargarDesdeRequest($request){
+            $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+            $this->nombre = $request->input('txtNombre');
+            $this->direccion = $request->input('txtDireccion');
+            $this->correo = $request->input('txtCorreo');
+            $this->dni = $request->input('txtDni');
+            $this->celular = $request->input('txtTelefono');
+      }
 
       public function obtenerTodos(){
             $sql = "SELECT
                   idcliente,
                   nombre,
-                  apellido,
+                  direccion,
                   correo,
                   dni,
                   celular
@@ -26,18 +35,17 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idcliente,
             nombre,
-            apellido,
+            direccion,
             correo,
             dni,
             celular
             FROM clientes WHERE idcliente = $idcliente";
             $lstRetorno = DB::select($sql, [$idcliente]);
-            return $lstRetorno;
 
-            if(count($lstRetorno)> 0){
+            if(count($lstRetorno) > 0){
                   $this->idcliente = $lstRetorno[0]->idcliente;
                   $this->nombre = $lstRetorno[0]->nombre;
-                  $this->apellido = $lstRetorno[0]->apellido;
+                  $this->direccion = $lstRetorno[0]->direccion;
                   $this->correo = $lstRetorno[0]->correo;
                   $this->dni = $lstRetorno[0]->dni;
                   $this->celular = $lstRetorno[0]->celular;
@@ -48,7 +56,7 @@ use Illuminate\Database\Eloquent\Model;
       public function guardar(){
             $sql = "UPDATE clientes SET
             nombre = '$this->nombre',
-            apellido = '$this->apellido',
+            direccion = '$this->direccion',
             correo = '$this->correo',
             dni = $this->dni,
             celular = $this->celular
@@ -63,14 +71,14 @@ use Illuminate\Database\Eloquent\Model;
       public function insertar(){
             $sql = "INSERT INTO clientes ( 
                   nombre,
-                  apellido,
+                  direccion,
                   correo,
                   dni,
                   celular
             ) VALUES (?,?,?,?,?)";
             $result = DB::insert($sql, [
                   $this->nombre,
-                  $this->apellido,
+                  $this->direccion,
                   $this->correo,
                   $this->dni,
                   $this->celular

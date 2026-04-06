@@ -14,7 +14,7 @@
 </ol>
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/sistema/clientes/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
-    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar();"><span>Guardar</span></a>
+    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="return guardar();"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-trash-o" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');"><span>Eliminar</span></a></li>
@@ -35,19 +35,17 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/cliente/guardar">
+      <form id="form1" name="form1" method="POST" action="/admin/cliente/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                    <label>Nombre: *</label>
+                    <label>Nombre: </label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
                 </div>
-                <input type="hidden" name="_token"value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                        <label for="">Apellido:</label>
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
+                        <label for="">Dirección:</label>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="" required>
                 </div>
             </div>
             <div class="row">
@@ -65,25 +63,32 @@ if (isset($msg)) {
                     <label for="txtTelefono">Teléfono:</label>
                     <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" required>
                 </div>
-                <div class="form-group col-lg-6">
-                    <label for="txtClave">Contraseña:</label>
-                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
-                </div>
             </div>
       </form>
       <script>
 
-    $("#form1").validate();
+    $(document).ready(function() {
+        if (typeof $.fn.validate === 'function') {
+            $("#form1").validate();
+        }
+    });
 
     function guardar() {
-        if ($("#form1").valid()) {
-            modificado = false;
-            form1.submit();
+        if (typeof $.fn.validate === 'function') {
+            if (!$("#form1").valid()) {
+                msgShow("Corrija los errores e intente nuevamente.", "danger");
+                return false;
+            }
         } else {
-            $("#modalGuardar").modal('toggle');
-            msgShow("Corrija los errores e intente nuevamente.", "danger");
-            return false;
+            var form = document.getElementById('form1');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return false;
+            }
         }
+
+        document.getElementById('form1').submit();
+        return false;
     }
 
       <!--function eliminar() {

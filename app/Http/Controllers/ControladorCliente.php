@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Cliente;  //AGREGADO X COP
 use Illuminate\Http\Request;  //AGREGADO X COP
+require app_path() . '/start/constants.php';
 
 class ControladorCliente extends Controller{
 
@@ -11,29 +12,40 @@ class ControladorCliente extends Controller{
             $titulo = "Nuevo clientes";
             return view('Sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
       }
-      //A PARTIR DE ACÁ AGREGADO X COP
       public function guardar(Request $request){
-            $cliente = new Cliente();
-            $cliente->nombre = $request->input('txtNombre');
-            $cliente->apellido = $request->input('txtApellido', '');
-            $cliente->correo = $request->input('txtCorreo', '');
-            $cliente->dni = $request->input('txtDni', 0);
-            $cliente->celular = $request->input('txtCelular', '');
-            
-            $id = $request->input('id');
-            
-            if($id > 0){
-                  // Actualizar cliente existente
-                  $cliente->idcliente = $id;
-                  $resultado = $cliente->guardar();
-                  $msg = "Cliente actualizado correctamente";
-            } else {
-                  // Insertar nuevo cliente
-                  $resultado = $cliente->insertar();
-                  $msg = "Cliente guardado correctamente";
+            try{
+                  $titulo = "Modificar cliente";
+                  $entidad = new Cliente();
+                  $entidad->cargarDesdeRequest($request);
+
+                  //Validaciones
+                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->dni == "" || $entidad->celular == ""){
+                        $msg["ESTADO"] = MSG_ERROR;
+                        $msg["MSG"] = "Complete todos los datos";
+                        $cliente = new Cliente();
+                        return view('Sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
+                  } else {
+                        if($_POST["id"] > 0){
+                              //Es actualización
+                              $entidad->guardar();
+                              $msg["ESTADO"] = MSG_SUCCESS;
+                              $msg["MSG"] = OKINSERT;
+                        } else {
+                              //Es nuevo
+                              $entidad->insertar();
+                              $msg["ESTADO"] = MSG_SUCCESS;
+                              $msg["MSG"] = OKINSERT;
+                        }
+                        $_POST["id"] = $entidad->idcliente;
+                        return redirect('/admin/clientes')->with('msg', $msg);
+                  }
+            } catch (\Exception $e) {
+                  $msg["ESTADO"] = MSG_ERROR;
+                  $msg["MSG"] = $e->getMessage();
+                  $titulo = "Modificar cliente";
+                  $cliente = new Cliente();
+                  return view('Sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
             }
-            
-            return redirect('/admin/cliente/nuevo')->with('msg', ['MSG' => $msg, 'ESTADO' => 'success']);
       }
 }
 
