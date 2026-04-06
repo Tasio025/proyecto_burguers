@@ -2,18 +2,18 @@
 @section('titulo', $titulo) <!--Crea el título de la seccion-->
 @section('scripts')<!--Crea los scripts -->
 <script>
-    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->idcliente : 0; ?>';
-    <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?>
+    globalId = '<?php echo isset($sucursal->idsucursales) && $sucursal->idsucursales > 0 ? $sucursal->idsucursales : 0; ?>';
+    <?php $globalId = isset($sucursal->idsucursales) ? $sucursal->idsucursales : "0";?>
 </script>
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/clientes">Clientes</a></li>
+    <li class="breadcrumb-item"><a href="/admin/sucursales">Sucursales</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/clientes/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/sucursales/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar();"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
@@ -23,7 +23,7 @@
 </ol>
 <script>
 function fsalir(){
-    location.href ="/admin/sistema/clientes";
+    location.href ="/admin/sistema/sucursales";
 }
 </script>
 @endsection
@@ -35,39 +35,33 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/cliente/guardar">
+      <form id="form1" method="POST" action="/admin/sucursal/guardar">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                    <label>Nombre: *</label>
+                    <label>Teléfono</label>
+                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="" required>
+                </div>
+                <div class="form-group col-lg-6">
+                        <label for="">Dirección:</label>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="txtLink">Link: </label>
+                    <input type="url" id="txtLink" name="txtLink" class="form-control" value="" required>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="txtNombre">Nombre:</label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
                 </div>
-                <input type="hidden" name="_token"value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                <div class="form-group col-lg-6">
-                        <label for="">Apellido:</label>
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
-                </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="txtCorreo">Correo:</label>
-                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
-                </div>
-                <div class="form-group col-lg-6">
-                    <label for="txtDni">DNI:</label>
-                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-6">
-                    <label for="txtTelefono">Teléfono:</label>
-                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" required>
-                </div>
-                <div class="form-group col-lg-6">
-                    <label for="txtClave">Contraseña:</label>
-                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
+                    <label for="txtHorario">Horario:</label>
+                    <input type="time" id="txtHorario" name="txtHorario" class="form-control" value="" required>
                 </div>
             </div>
       </form>

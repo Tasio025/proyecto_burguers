@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Entidades\Sistema\Cliente;  //AGREGADO X COP
+use App\Entidades\Cliente;  //AGREGADO X COP
 use Illuminate\Http\Request;  //AGREGADO X COP
 
 class ControladorCliente extends Controller{
@@ -12,7 +12,7 @@ class ControladorCliente extends Controller{
             return view('Sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
       }
       //A PARTIR DE ACÁ AGREGADO X COP
- /*     public function guardar(Request $request){
+      public function guardar(Request $request){
             $cliente = new Cliente();
             $cliente->nombre = $request->input('txtNombre');
             $cliente->apellido = $request->input('txtApellido', '');
@@ -34,7 +34,7 @@ class ControladorCliente extends Controller{
             }
             
             return redirect('/admin/cliente/nuevo')->with('msg', ['MSG' => $msg, 'ESTADO' => 'success']);
-      }*/
+      }
 }
 
 ?>

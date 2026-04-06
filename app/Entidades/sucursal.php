@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
       protected $table = 'sucursales';
       public $timestamps = false;
-      protected $fillable = ['idsucursal', 'telefono', 'direccion', 'linkmapa', 'nombre', 'horario'];
+      protected $fillable = ['idsucursales', 'telefono', 'direccion', 'linkmapa', 'nombre', 'horario'];
       protected $hidden = [];
 
       public function obtenerTodos(){
             $sql = "SELECT
-                  idsucursal,
+                  idsucursales,
                   telefono,
                   direccion,
                   linkmapa,
@@ -23,20 +23,20 @@ use Illuminate\Database\Eloquent\Model;
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
       }
-      public function obtenerPorId($idsucursal){
+      public function obtenerPorId($idsucursales){
             $sql = "SELECT
-            idsucursal,
+            idsucursales,
             telefono,
             direccion,
             linkmapa,
             nombre,
             horario
-            FROM sucursales WHERE idsucursal = $idsucursal";
-            $lstRetorno = DB::select($sql, [$idsucursal]);
+            FROM sucursales WHERE idsucursales = $idsucursales";
+            $lstRetorno = DB::select($sql, [$idsucursales]);
             return $lstRetorno;
 
             if(count($lstRetorno)> 0){
-                  $this->idsucursal = $lstRetorno[0]->idsucursal;
+                  $this->idsucursales = $lstRetorno[0]->idsucursales;
                   $this->telefono = $lstRetorno[0]->telefono;
                   $this->direccion = $lstRetorno[0]->direccion;
                   $this->linkmapa = $lstRetorno[0]->linkmapa;
@@ -51,12 +51,12 @@ use Illuminate\Database\Eloquent\Model;
             linkmapa = '$this->linkmapa',
             nombre = '$this->nombre',
             horario = '$this->horario'    
-            WHERE idsucursal = ?";
-            $affected = DB::update($sql, [$this->idsucursal]);
+            WHERE idsucursales = ?";
+            $affected = DB::update($sql, [$this->idsucursales]);
       }
       public function eliminar(){
-            $sql = "DELETE FROM sucursales WHERE idsucursal = ?";
-            $affected = DB::delete($sql, [$this->idsucursal]);
+            $sql = "DELETE FROM sucursales WHERE idsucursales = ?";
+            $affected = DB::delete($sql, [$this->idsucursales]);
       }
       public function insertar(){
             $sql = "INSERT INTO sucursales (

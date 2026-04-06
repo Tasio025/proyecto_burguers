@@ -1,19 +1,19 @@
-@extends("plantilla") <!--Trae la plantilla a esa sección de la página-->
-@section('titulo', $titulo) <!--Crea el título de la seccion-->
-@section('scripts')<!--Crea los scripts -->
+@extends("PLantilla")
+@section('titulo', $titulo)
+@section('scripts')
 <script>
-    globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->idcliente : 0; ?>';
-    <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?>
+    globalId = '<?php echo isset($pedidos->idpedido) && $pedidos->idpedido > 0 ? $pedidos->idpedido : 0; ?>';
+    <?php $globalId = isset($pedidos->idpedido) ? $pedidos->idpedido : "0";?>
 </script>
-@endsection
+@endsection 
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/clientes">Clientes</a></li>
+    <li class="breadcrumb-item"><a href="/admin/pedidos">Pedidos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/clientes/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/pedidos/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar();"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
@@ -23,7 +23,7 @@
 </ol>
 <script>
 function fsalir(){
-    location.href ="/admin/sistema/clientes";
+    location.href ="/admin/sistema/pedidos";
 }
 </script>
 @endsection
@@ -35,41 +35,41 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/cliente/guardar">
+      <form id="form1" method="POST" action="/admin/pedido/guardar">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                    <label>Nombre: *</label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                    <label>Fecha </label>
+                    <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="" required>
                 </div>
-                <input type="hidden" name="_token"value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                        <label for="">Apellido:</label>
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
+                        <label for="txtSucursal">Sucursal: </label>
+                        <input type="text" id="txtSucursal" name="txtSucursal" class="form-control" value="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="txtCorreo">Correo:</label>
-                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
+                    <label for="txtCliente">Cliente: </label>
+                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="" required>
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="txtDni">DNI:</label>
-                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" required>
+                    <label for="txtEstado">Estado del pedido</label>
+                    <select name="txtEstado" id="txtEstado" class="form-control" required>
+                        <option value="">Seleccionar...</option>
+                        <option value="1">Pendiente (pendiente por pago)</option>
+                        <option value="2">En preparacion</option>
+                        <option value="3">Entregado</option>
+                        <option value="4">Cancelado</option>
+                        <option value="5">Pendiente (pago por MP)</option>
+                    </select>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="txtTelefono">Teléfono:</label>
-                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" required>
+                    <label for="txtTotal">Total: </label>
+                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
                 </div>
-                <div class="form-group col-lg-6">
-                    <label for="txtClave">Contraseña:</label>
-                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
-                </div>
-            </div>
       </form>
       <script>
 

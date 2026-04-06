@@ -1,19 +1,19 @@
 @extends("Plantilla")
-@section('titulo', $titulo)
-@section('scripts')
+@section('titulo', $titulo) <!--Crea el título de la seccion-->
+@section('scripts')<!--Crea los scripts -->
 <script>
-    globalId = '<?php echo isset($producto->idproducto) && $producto->idproducto > 0 ? $producto->idproducto : 0; ?>';
-    <?php $globalId = isset($producto->idproducto) ? $producto->idproducto : "0";?>
+    globalId = '<?php echo isset($rubro->idrubro) && $rubro->idrubro > 0 ? $rubro->idrubro : 0; ?>';
+    <?php $globalId = isset($rubro->idrubro) ? $rubro->idrubro : "0";?>
 </script>
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/productos">Productos;</a></li>
+    <li class="breadcrumb-item"><a href="/admin/rubros">Rubros</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/producto/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/rubros/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar();"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
@@ -23,7 +23,7 @@
 </ol>
 <script>
 function fsalir(){
-    location.href ="/admin/sistema/productos";
+    location.href ="/admin/sistema/rubros";
 }
 </script>
 @endsection
@@ -35,37 +35,14 @@ if (isset($msg)) {
 }
 ?>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/producto/guardar" enctype="multipart/form-data">
+      <form id="form1" method="POST" action="/admin/rubro/guardar">
             <div class="row">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
-                <div class="form-group col-lg-6">
-                    <label>Nombre: </label>
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                  <div class="form-group col-lg-6">
+                    <label>Nombre:</label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
-                </div>
-                <div class="form-group col-lg-6">
-                        <label for="">Cantidad:</label>
-                        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="" required>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-6">
-                    <label for="txtCorreo">Precio:</label>
-                    <input type="number"  id="txtPrecio" name="txtPrecio" class="form-control" value="" required>
-                </div>
-                <div class="form-group col-lg-6">
-                    <label>Imagen:</label>
-                    <input type="file" id="txtImagen" name="txtImagen" class="form-control-file">
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-lg-6">
-                    <label for="lstTipoProducto">Tipo de producto: </label>
-                    <select name="lstTipoProducto" id="lstTipoProducto" class="form-control">
-                        <option value="1">Tipo 1</option>
-                        <option value="2">Tipo 2</option>
-                    </select>
-                </div>
+                  </div>
             </div>
       </form>
       <script>
@@ -103,5 +80,3 @@ if (isset($msg)) {
 </script>
 
 @endsection
-
-

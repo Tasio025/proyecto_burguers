@@ -30,7 +30,7 @@ class ControladorProducto extends Controller{
                   $producto->imagen = $nombreImagen;
             }
             //Guardar en BD
-            $proudcto_>insertar();
+            $producto->insertar();
 
             //Mensaje
             $msg = "Producto guardado!";
