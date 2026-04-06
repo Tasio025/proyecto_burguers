@@ -11,6 +11,14 @@ use Illuminate\Database\Eloquent\Model;
       protected $fillable = ['idproveedor', 'nombre', 'direccion', 'telefono', 'correo'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idproveedor = $request->input('id') != "0" ? $request->input('id') : $this->idproveedor;
+            $this->nombre = $request->input('txtNombre');
+            $this->direccion = $request->input('txtDireccion');
+            $this->telefono = $request->input('txtTelefono');
+            $this->correo = $request->input('txtCorreo');
+      } 
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idproveedor,
@@ -31,9 +39,8 @@ use Illuminate\Database\Eloquent\Model;
             correo
             FROM proveedores WHERE idproveedor = $idproveedor";
             $lstRetorno = DB::select($sql, [$idproveedor]);
-            return $lstRetorno;
-
-            if(count($lstRetorno)> 0){
+            
+           if(count($lstRetorno)> 0){
                   $this->idproveedor = $lstRetorno[0]->idproveedor;
                   $this->nombre = $lstRetorno[0]->nombre;
                   $this->direccion = $lstRetorno[0]->direccion;
@@ -51,7 +58,7 @@ use Illuminate\Database\Eloquent\Model;
             correo = '$this->correo'
             WHERE idproveedor = ?";
             $affected = DB::update($sql, [$this->idproveedor]);
-            return $affected;
+            //return $affected;
       }
       public function eliminar(){
             $sql = "DELETE FROM proveedores WHERE idproveedor =?";
@@ -70,7 +77,7 @@ use Illuminate\Database\Eloquent\Model;
                   $this->telefono,
                   $this->correo
             ]);
-            
+            return $this->idproveedor = DB::getPdo()->lastInsertId();   
       }
 }     
 

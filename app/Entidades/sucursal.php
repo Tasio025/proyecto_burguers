@@ -11,6 +11,15 @@ use Illuminate\Database\Eloquent\Model;
       protected $fillable = ['idsucursales', 'telefono', 'direccion', 'linkmapa', 'nombre', 'horario'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+            $this->telefono = $request->input('txtTelefono');
+            $this->direccion = $request->input('txtDireccion');
+            $this->linkmapa = $request->input('txtLinkMapa');
+            $this->nombre = $request->input('txtNombre');
+            $this->horario = $request->input('txtHorario');
+      } 
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idsucursales,
@@ -33,13 +42,15 @@ use Illuminate\Database\Eloquent\Model;
             horario
             FROM sucursales WHERE idsucursales = $idsucursales";
             $lstRetorno = DB::select($sql, [$idsucursales]);
-            return $lstRetorno;
+            
 
             if(count($lstRetorno)> 0){
                   $this->idsucursales = $lstRetorno[0]->idsucursales;
                   $this->telefono = $lstRetorno[0]->telefono;
                   $this->direccion = $lstRetorno[0]->direccion;
                   $this->linkmapa = $lstRetorno[0]->linkmapa;
+                  $this->nombre = $lstRetorno[0]->nombre;
+                  $this->horario = $lstRetorno[0]->horario;
                   return $this;
             }
             return null;
@@ -71,7 +82,7 @@ use Illuminate\Database\Eloquent\Model;
                   $this->nombre,
                   $this->horario,
             ]);
-            return $this->idsucursak = DB::getPdo()->lastInsertId();
+            return $this->idsucursales = DB::getPdo()->lastInsertId();
       }
 }
 

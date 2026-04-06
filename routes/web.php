@@ -112,39 +112,35 @@ Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
 /* CONTROLADOR PRODUCTOS                           */
 /* --------------------------------------------- */
 Route::get('/admin/productos/nuevo', 'ControladorProducto@nuevo');
-Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo'); // Alias singular para compatibilidad
-Route::get('/admin/sistema/productos/nuevo', 'ControladorProducto@nuevo'); // Ruta del enlace en la vista
-Route::get('/admin/sistema/producto/nuevo', 'ControladorProducto@nuevo'); // Alias singular para compatibilidad de la vista
-Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar'); // Ruta para guardar producto
+Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
+Route::get('/admin/sistema/productos/nuevo', 'ControladorProducto@nuevo');
+Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');
 
 
 /* --------------------------------------------- */
 /* CONTROLADOR PEDIDOS                           */
 /* --------------------------------------------- */
-Route::get('/admin/pedidos/nuevo', 'ControladorPedidos@nuevo');
-Route::get('/admin/pedido/nuevo', 'ControladorPedidos@nuevo'); // Alias singular para compatibilidad
-Route::get('/admin/sistema/pedidos/nuevo', 'ControladorPedidos@nuevo'); // Ruta del enlace en la vista
-Route::get('/admin/sistema/pedido/nuevo', 'ControladorPedidos@nuevo'); // Alias singular para compatibilidad de la vista
-Route::post('/admin/pedido/nuevo', 'ControladorPedidos@guardar'); // Ruta para guardar pedido
+Route::get('/admin/pedidos/nuevo', 'ControladorPedido@nuevo');
+Route::get('/admin/pedido/nuevo', 'ControladorPedido@nuevo');
+Route::get('/admin/sistema/pedidos/nuevo', 'ControladorPedido@nuevo');
+Route::post('/admin/pedido/nuevo', 'ControladorPedido@guardar');
 
 
 /* --------------------------------------------- */
 /* CONTROLADOR POSTULAICONES                           */
 /* --------------------------------------------- */
-Route::get('/admin/postulacion/nuevo', 'ControladorPostulaciones@nuevo');
-Route::get('/admin/postulaciones/nuevo', 'ControladorPostulaciones@nuevo'); // Alias plural para compatibilidad
-Route::get('/admin/sistema/postulacion/nuevo', 'ControladorPostulaciones@nuevo'); // Ruta del enlace en la vista
-Route::get('/admin/sistema/postulaciones/nuevo', 'ControladorPostulaciones@nuevo'); // Alias plural para compatibilidad
-Route::post('/admin/postulacion/nuevo', 'ControladorPostulaciones@guardar'); // Ruta para guardar postulacion
-
+Route::get('/admin/postulaciones/nuevo', 'ControladorPostulacion@nuevo');
+Route::get('/admin/postulacion/nuevo', 'ControladorPostulacion@nuevo');
+Route::get('/admin/sistema/postulaciones/nuevo', 'ControladorPostulacion@nuevo');
+Route::post('/admin/postulacion/nuevo', 'ControladorPostulacion@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR CATEGORÍAS                           */
 /* --------------------------------------------- */
 Route::get('/admin/categorias/nuevo', 'ControladorCategoria@nuevo');
-Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo'); 
-Route::get('/admin/sistema/categorias/nuevo', 'ControladorCategoria@nuevo'); 
-Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar'); 
+Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
+Route::get('/admin/sistema/categorias/nuevo', 'ControladorCategoria@nuevo');
+Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR SUCURSALES                           */
@@ -152,7 +148,6 @@ Route::post('/admin/categoria/nuevo', 'ControladorCategoria@guardar');
 Route::get('/admin/sucursales/nuevo', 'ControladorSucursal@nuevo');
 Route::get('/admin/sucursal/nuevo', 'ControladorSucursal@nuevo');
 Route::get('/admin/sistema/sucursales/nuevo', 'ControladorSucursal@nuevo');
-//Route::get('/admin/sistema/sucursal/nuevo', 'ControladorSucursal@nuevo'); // Alias singular para compatibilidad
 Route::post('/admin/sucursal/nuevo', 'ControladorSucursal@guardar');
 
 

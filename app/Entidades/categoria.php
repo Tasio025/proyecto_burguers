@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Model;
       protected $fillable = ['idcategoria', 'nombre'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idcategoria = $request->input('id') != "0" ? $request->input('id') : $this->idcategoria;
+            $this->nombre = $request->input('txtNombre');
+      }
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idcategoria,
@@ -24,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
             nombre
             FROM categorias WHERE idcategoria = $idcategoria";
             $lstRetorno = DB::select($sql, [$idcategoria]);
-            return $lstRetorno;
 
             if(count($lstRetorno)> 0){
                   $this->idcategoria = $lstRetorno[0]->idcategoria;
@@ -38,12 +42,12 @@ use Illuminate\Database\Eloquent\Model;
             nombre = '$this->nombre'
             WHERE idcategoria = ?";
             $affected = DB::update($sql, [$this->idcategoria]);
-            return $affected;
+           // return $affected;
       }
       public function eliminar(){
             $sql = "DELETE FROM categorias WHERE idcategoria =?";
             $affected = DB::delete($sql, [$this->idcategoria]);
-            return $affected;
+           // return $affected;
       }
       public function insertar(){
             $sql = "INSERT INTO categorias (

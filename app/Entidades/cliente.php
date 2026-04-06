@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Model;
             nombre,
             direccion,
             correo,
-            dni,,
+            dni,
             clave
             FROM clientes WHERE idcliente = $idcliente";
             $lstRetorno = DB::select($sql, [$idcliente]);

@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Entidades\Rubro;
+use App\Entidades\Postulacion;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
 
-
-class ControladorRubro extends Controller{
+class ControladorPostulacion extends Controller{
 
       public function nuevo(){
-            $titulo = "Nuevo rubro";
-            return view('Sistema.rubro-nuevo', compact("titulo"));
+            $titulo = "Nueva Postulación";
+            return view('Sistema.postulacion-nuevo', compact("titulo")); //Envía la variable título   
       }
       public function guardar(Request $request){
             try{
-                  $titulo = "Modificar rubro";
-                  $entidad = new Rubro();
+                  $titulo = "Modificar Postulación";
+                  $entidad = new Postulacion();
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == ""){
+                  if($entidad->nombre == "" || $entidad->apellido == "" || $entidad->celular == "" || $entidad->dni == "" || $entidad->correo == "" || $entidad->clave == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
-                        $rubro = new Rubro();
-                        return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
+                        $postulacion = new Postulacion();
+                        return view('sistema.postulacion-nuevo', compact('titulo', 'msg', 'postulacion'));
                   } else {
                         if($_POST["id"] > 0){
                               //Es actualización
@@ -37,19 +36,22 @@ class ControladorRubro extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idrubro;
-                        return redirect('/admin/rubros')->with('msg', $msg);
+                        $_POST["id"] = $entidad->idpostulacion;
+                        return redirect('/admin/postulaciones')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
                   $msg["ESTADO"] = MSG_ERROR;
                   $msg["MSG"] = $e->getMessage();
-                  $titulo = "Modificar rubro";
-                  $rubro = new Rubro();
-                  return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
+                  $titulo = "Modificar Postulación";
+                  $postulacion = new Postulacion();
+                  return view('sistema.postulacion-nuevo', compact('titulo', 'msg', 'postulacion'));
             }
       }
 
+
+
 }
+
 
 
 ?>

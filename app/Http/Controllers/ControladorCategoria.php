@@ -4,11 +4,48 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Categoria;
 use Illuminate\Http\Request;
+require app_path() . '/start/constants.php';
+
 
       class ControladorCategoria extends Controller{
             public function nuevo(){
                   $titulo = "Nueva categoria";
                   return view('Sistema.categoria-nuevo', compact("titulo"));
+            }
+            public function guardar(Request $request){
+                  try{
+                        $titulo = "Modificar categoria";
+                        $entidad = new Categoria();
+                        $entidad->cargarDesdeRequest($request);
+
+                        //Validaciones
+                        if($entidad->nombre == ""){
+                              $msg["ESTADO"] = MSG_ERROR;
+                              $msg["MSG"] = "Complete todos los datos";
+                              $categoria = new Categoria();
+                              return view('sistema.categoria-nuevo', compact('titulo', 'msg', 'categoria'));
+                        } else {
+                              if($_POST["id"] > 0){
+                                    //Es actualización
+                                    $entidad->guardar();
+                                    $msg["ESTADO"] = MSG_SUCCESS;
+                                    $msg["MSG"] = OKINSERT;
+                              } else {
+                                    //Es nuevo
+                                    $entidad->insertar();
+                                    $msg["ESTADO"] = MSG_SUCCESS;
+                                    $msg["MSG"] = OKINSERT;
+                              }
+                              $_POST["id"] = $entidad->idcategoria;
+                              return redirect('/admin/categorias')->with('msg', $msg);
+                        }
+                  } catch (\Exception $e) {
+                        $msg["ESTADO"] = MSG_ERROR;
+                        $msg["MSG"] = $e->getMessage();
+                        $titulo = "Modificar categoria";
+                        $categoria = new Categoria();
+                        return view('sistema.categoria-nuevo', compact('titulo', 'msg', 'categoria'));
+                  }
             }
       }
 

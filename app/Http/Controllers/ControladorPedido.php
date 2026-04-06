@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Entidades\Rubro;
+use App\Entidades\Pedido;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
 
-
-class ControladorRubro extends Controller{
+class ControladorPedido extends Controller{
 
       public function nuevo(){
-            $titulo = "Nuevo rubro";
-            return view('Sistema.rubro-nuevo', compact("titulo"));
+            $titulo = "Nuevo Pedido";
+            return view('sistema.pedido-nuevo', compact("titulo"));
       }
       public function guardar(Request $request){
             try{
-                  $titulo = "Modificar rubro";
-                  $entidad = new Rubro();
+                  $titulo = "Modificar Pedido";
+                  $entidad = new Pedido();
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == ""){
+                  if($entidad->fecha == "" || $entidad->descripcion == "" || $entidad->total == "" || $entidad->fk_idsucursal == "" || $entidad->fk_idcliente == "" || $entidad->fk_idestado == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
-                        $rubro = new Rubro();
-                        return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
+                        $pedido = new Pedido();
+                        return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
                   } else {
                         if($_POST["id"] > 0){
                               //Es actualización
@@ -37,19 +36,19 @@ class ControladorRubro extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idrubro;
-                        return redirect('/admin/rubros')->with('msg', $msg);
+                        $_POST["id"] = $entidad->idpedido;
+                        return redirect('/admin/pedidos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
                   $msg["ESTADO"] = MSG_ERROR;
                   $msg["MSG"] = $e->getMessage();
-                  $titulo = "Modificar rubro";
-                  $rubro = new Rubro();
-                  return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
+                  $titulo = "Modificar Pedido";
+                  $pedido = new Pedido();
+                  return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
             }
       }
-
 }
+
 
 
 ?>

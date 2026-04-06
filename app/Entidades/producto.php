@@ -12,6 +12,15 @@ use Illuminate\Database\Eloquent\Model;
       protected $fillable = ['idproducto', 'nombre', 'cantidad', 'precio', 'imagen', 'fk_idcategoria', 'descripcion', 'titulo'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idproducto = $request->input('id') != "0" ? $request->input('id') : $this->idproducto;
+            $this->nombre = $request->input('txtNombre');
+            $this->cantidad = $request->input('txtCantidad');
+            $this->precio = $request->input('txtPrecio');
+            $this->imagen = $request->input('txtImagen');
+            $this->fk_idcategoria = $request->input('lstCategoria');
+      }
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idproducto,
@@ -19,9 +28,7 @@ use Illuminate\Database\Eloquent\Model;
                   cantidad,
                   precio,
                   imagen,
-                  fk_idcategoria,
-                  descripcion,
-                  titulo
+                  fk_idcategoria
                   FROM productos ORDER BY titulo ASC";
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
@@ -33,9 +40,7 @@ use Illuminate\Database\Eloquent\Model;
             cantidad,
             precio,
             imagen,
-            fk_idcategoria,
-            descripcion,
-            titulo
+            fk_idcategoria
             FROM productos WHERE idproducto = $idproducto";
             $lstRetorno = DB::select($sql, [$idproducto]);
             return $lstRetorno;
@@ -47,8 +52,6 @@ use Illuminate\Database\Eloquent\Model;
                   $this->precio = $lstRetorno[0]->precio;
                   $this->imagen = $lstRetorno[0]->imagen;
                   $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
-                  $this->descripcion = $lstRetorno[0]->descripcion;
-                  $this->titulo = $lstRetorno[0]->titulo;
                   return $this;
             }
             return null;
@@ -60,9 +63,7 @@ use Illuminate\Database\Eloquent\Model;
             cantidad,
             precio,
             imagen,
-            fk_idcategoria,
-            descripcion,
-            titulo
+            fk_idcategoria
             FROM productos WHERE fk_idcategoria = $idTipoProducto";
             $lstRetorno = DB::select($sql, [$idTipoProducto]);
 
@@ -73,9 +74,7 @@ use Illuminate\Database\Eloquent\Model;
             cantidad = $this->cantidad,
             precio = $this->precio,
             imagen = '$this->imagen',
-            fk_idcategoria = $this->fk_idcategoria,
-            descripcion = '$this->descripcion',
-            titulo = '$this->titulo'
+            fk_idcategoria = $this->fk_idcategoria
             WHERE idproducto =?";
             $affected = DB::update($sql[$this->idproducto]);
       }
@@ -89,20 +88,16 @@ use Illuminate\Database\Eloquent\Model;
             cantidad,
             precio,
             imagen,
-            fk_idcategoria,
-            descripcion,
-            titulo
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            fk_idcategoria
+            ) VALUES (?, ?, ?, ?, ?)";
             $result = DB::insert($sql, [
                   $this->nombre,
                   $this->cantidad,
                   $this->precio,
                   $this->imagen,
-                  $this->fk_idcategoria,
-                  $this->descripcion,
-                  $this->titulo
+                  $this->fk_idcategoria
             ]);
-            return $result;
+            return $this->idproducto = DB::getPdo()-> lastInsertId();
       }
 }
 

@@ -12,6 +12,11 @@ class Rubro extends Model{
       protected $fillable = ['idrubro', 'nombre'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+            $this->nombre = $request->input('txtNombre');
+      } 
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idrubro,
@@ -26,7 +31,6 @@ class Rubro extends Model{
             nombre
             FROM rubros WHERE idrubro = $idrubro";
             $lstRetorno = DB::select($sql, [$idrubro]);
-            return $lstRetorno;
 
             if(count($lstRetorno)> 0){
                   $this->idrubro = $lstRetorno[0]->idrubro;

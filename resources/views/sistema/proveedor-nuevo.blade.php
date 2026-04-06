@@ -14,7 +14,7 @@
 </ol>
 <ol class="toolbar">
     <li class="btn-item"><a title="Nuevo" href="/admin/sistema/proveedores/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
-    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar();"><span>Guardar</span></a>
+    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: $('#modalGuardar').modal('toggle');"><span>Guardar</span></a>
     </li>
     @if($globalId > 0)
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-trash-o" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');"><span>Eliminar</span></a></li>
@@ -60,37 +60,18 @@ if (isset($msg)) {
             </div>
       </form>
       <script>
+        $("#form1").validate();
 
-    $("#form1").validate();
-
-    function guardar() {
-        if ($("#form1").valid()) {
-            modificado = false;
-            form1.submit();
-        } else {
-            $("#modalGuardar").modal('toggle');
-            msgShow("Corrija los errores e intente nuevamente.", "danger");
-            return false;
-        }
-    }
-
-      <!--function eliminar() {
-        $.ajax({
-            type: "GET",
-            url: "{{ asset('admin/sistema/menu/eliminar') }}",
-            data: { id:globalId },
-            async: true,
-            dataType: "json",
-            success: function (data) {
-                if (data.err = "0") {
-                    msgShow("Registro eliminado exitosamente.", "success");
-                } else {
-                    msgShow(data.err, "danger");
+            function guardar(){
+                if($("#form1").valid()) {
+                    modificado = false;
+                    form1.submit();
+                }else{
+                    $("#modalGuardar").modal('toggle');
+                    msgShow("Corrija los errores e intente nuevamente.", "danger");
+                    return false;
                 }
-                $('#mdlEliminar').modal('toggle');
             }
-        });
-    }-->
 </script>
 
 @endsection
