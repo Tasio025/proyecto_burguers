@@ -12,6 +12,10 @@ class ControladorCliente extends Controller{
             $titulo = "Nuevo clientes";
             return view('sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
       }
+      public function index(){
+            $titulo = "Listado de clientes";
+            return view('sistema.cliente-listar', compact("titulo"));
+      }
       public function guardar(Request $request){
             try{
                   $titulo = "Modificar cliente";
@@ -46,6 +50,37 @@ class ControladorCliente extends Controller{
                   $cliente = new Cliente();
                   return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
             }
+      }
+      public function cargarGrilla(Request $request){
+            $request = $_REQUEST;
+            $entidad = new Cliente();
+            $aClientes = $entidad->obtenerFiltrado();  //Método creado para cargar la grilla de clientes
+            $data = array();  
+            print_r($aClientes);exit;
+            $cont = 0;
+            $inicio = $request['start'];
+            $registros_por_pagina = $request['length'];
+
+            for($i = $inicio; $i<count($aClientes) && $cont < $registros_por_pagina; $i++){ //Este for recorre el array de clientes y devuelve en formato Json
+                  $row = array();
+                  $row[] = '<a href="/admin/sistema/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>';
+                  $row[] = $aClientes[$i]->nombre;
+                  $row[] = $aClientes[$i]->direccion;
+                  $row[] = $aClientes[$i]->correo;
+                  $row[] = $aClientes[$i]->dni;
+                  $row[] = $aClientes[$i]->celular;
+                  $row[] = $aClientes[$i]->clave;
+                  $cont++;
+                  $data[] = $row;
+            }
+            $json_data = array(
+                  "draw" => intval($request['draw']),
+                  "recordsTotal" => count($aClientes),
+                  "recordsFiltered" => count($aClientes),
+                  "data" =>$data,
+            );
+            return json_encode($json_data);
+
       }
 }
 

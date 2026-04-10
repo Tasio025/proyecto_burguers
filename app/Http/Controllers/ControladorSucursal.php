@@ -10,6 +10,10 @@ require app_path() . '/start/constants.php';
                   $titulo = "Nueva sucursal";
                   return view('sistema.sucursal-nuevo', compact("titulo"));
             }
+            public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de sucursales";
+            return view('sistema.sucursal-listado', compact("titulo"));
+      }
             public function guardar(Request $request){
                   try{
                         $titulo = "Modificar sucursal";

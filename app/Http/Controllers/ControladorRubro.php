@@ -13,6 +13,10 @@ class ControladorRubro extends Controller{
             $titulo = "Nuevo rubro";
             return view('Sistema.rubro-nuevo', compact("titulo"));
       }
+      public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de rubros";
+            return view('sistema.rubro-listado', compact("titulo"));
+      }
       public function guardar(Request $request){
             try{
                   $titulo = "Modificar rubro";

@@ -12,6 +12,10 @@ class ControladorPostulacion extends Controller{
             $titulo = "Nueva Postulación";
             return view('Sistema.postulacion-nuevo', compact("titulo")); //Envía la variable título   
       }
+      public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de postulaciones";
+            return view('sistema.postulacion-listado', compact("titulo"));
+      }
       public function guardar(Request $request){
             try{
                   $titulo = "Modificar Postulación";

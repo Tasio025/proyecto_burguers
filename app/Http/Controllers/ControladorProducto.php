@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
+use App\Entidades\Tipoproducto;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';   
 
 class ControladorProducto extends Controller{
-
+ 
       public function nuevo(){
-            $titulo = 'Nuevo Producto';
-            return view('sistema.producto-nuevo', compact("titulo"));
+            $titulo = 'Nuevo Producto';   
+            $categoria = new Tipoproducto(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
+            $aCategorias = $categoria->obtenerTodos();
+            return view('sistema.producto-nuevo', compact("titulo", "aCategorias"));      //Esto lo pasa al blade via compact
       }
-      public function guardar(Request $request){
+      public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de productos";
+            return view('sistema.producto-listado', compact("titulo"));
+      }
+      public function guardar(Request $request){ 
             try{
                   $titulo = "Modificar producto";
                   $entidad = new Producto();
@@ -23,7 +30,9 @@ class ControladorProducto extends Controller{
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $producto = new Producto();
-                        return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto'));
+                        $categoria = new Tipoproducto(); 
+            $aCategorias = $categoria->obtenerTodos();
+                        return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
                   } else {
                         if($_POST["id"] > 0){
                               //Es actualización
@@ -44,7 +53,9 @@ class ControladorProducto extends Controller{
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar producto";
                   $producto = new Producto();
-                  return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto'));
+                  $categoria = new Tipoproducto(); 
+                  $aCategorias = $categoria->obtenerTodos();
+                  return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
             }
       }
 }

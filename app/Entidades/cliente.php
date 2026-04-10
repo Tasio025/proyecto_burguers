@@ -26,8 +26,8 @@ use Illuminate\Database\Eloquent\Model;
                   nombre,
                   direccion,
                   correo,
-                  dni,,
-                  clave
+                  dni,
+                  clave,
                   celular
                   FROM clientes ORDER BY idcliente ASC";
                   $lstRetorno = DB::select($sql);
@@ -90,6 +90,35 @@ use Illuminate\Database\Eloquent\Model;
                   $this->clave
             ]);
             return $this->idcliente = DB::getPdo()->lastInsertId();
+      }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $columns = array(
+                  0 =>'A.nombre',
+                  1 => 'A.direccion',
+                  2 => 'A.correo',
+                  3 => 'A.dni',
+                  4 => 'A.celular',
+                  5 => 'A.clave'
+            );
+            $sql = "SELECT 
+                        idcliente,
+                        nombre,
+                        direccion,
+                        correo,
+                        dni,
+                        celular 
+                        FROM clientes WHERE 1 = 1";   //1 = 1 es true, es decir, siempre se cumple, entonces no afecta a la consulta pero permite agregar condiciones con AND
+            //Ahora realiza el filtrado
+            if(!empty($request['search']['value'])){
+                  $sql .= "AND (nombre LIKE '%" . $request['search']['value'] . "%' ";
+                  $sql .= "OR direccion LIKE '%" . $request['search']['value'] . "%' ";
+                  $sql .= "OR correo LIKE '%" . $request['search']['value'] . "%' ";
+                  $sql .= "OR dni LIKE '%" . $request['search']['value'] . "%' ";
+                  $sql .= "OR celular LIKE '%" . $request['search']['value'] . "%' ";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
       }
       }     
 

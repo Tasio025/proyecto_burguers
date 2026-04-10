@@ -57,6 +57,19 @@ CREATE TABLE IF NOT EXISTS `categoria` (
 -- Volcando datos para la tabla burguers_2026.categoria: ~0 rows (aproximadamente)
 DELETE FROM `categoria`;
 
+-- Volcando estructura para tabla burguers_2026.tipoproducto
+CREATE TABLE IF NOT EXISTS `tipoproducto` (
+  `idtipoproducto` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(150) NOT NULL,
+  PRIMARY KEY (`idtipoproducto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Volcando datos para la tabla burguers_2026.tipoproducto: ~0 rows (aproximadamente)
+DELETE FROM `tipoproducto`;
+INSERT INTO `tipoproducto` (`idtipoproducto`, `nombre`) VALUES
+	(1, 'Hamburguesas'),
+	(2, 'promociones');
+
 -- Volcando estructura para tabla burguers_2026.clientes
 CREATE TABLE IF NOT EXISTS `clientes` (
   `idcliente` int(11) unsigned NOT NULL AUTO_INCREMENT,

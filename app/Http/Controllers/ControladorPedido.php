@@ -12,6 +12,10 @@ class ControladorPedido extends Controller{
             $titulo = "Nuevo Pedido";
             return view('sistema.pedido-nuevo', compact("titulo"));
       }
+      public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de pedidos";
+            return view('sistema.pedido-listado', compact("titulo"));
+      }
       public function guardar(Request $request){
             try{
                   $titulo = "Modificar Pedido";

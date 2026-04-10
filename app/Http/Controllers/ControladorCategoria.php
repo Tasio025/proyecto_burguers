@@ -12,6 +12,10 @@ require app_path() . '/start/constants.php';
                   $titulo = "Nueva categoria";
                   return view('Sistema.categoria-nuevo', compact("titulo"));
             }
+             public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de categorias";
+            return view('sistema.categoria-listado', compact("titulo"));
+      }
             public function guardar(Request $request){
                   try{
                         $titulo = "Modificar categoria";

@@ -3,7 +3,7 @@
 @section('scripts')<!--Crea los scripts -->
 <script>
     globalId = '<?php echo isset($cliente->idcliente) && $cliente->idcliente > 0 ? $cliente->idcliente : 0; ?>';
-    <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?>
+    <?php $globalId = isset($cliente->idcliente) ? $cliente->idcliente : "0";?> 
 </script>
 @endsection
 @section('breadcrumb')

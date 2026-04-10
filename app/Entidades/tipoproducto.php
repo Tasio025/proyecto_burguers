@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Model;
       protected $fillable = ['idtipoproducto', 'nombre'];
       protected $hidden = [];
 
+      public function cargarDesdeRequest($request){
+            $this->idtipoproducto = $request->input('id') != "0" ? $request->input('id') : $this->idtipoproducto;
+            $this->nombre = $request->input('txtNombre');
+      }
       public function obtenerTodos(){
             $sql = "SELECT
                   idtipoproducto,
@@ -25,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
             nombre
             FROM tipoproducto WHERE idtipoproducto = $idtipoproducto";
             $lstRetorno = DB::select($sql, [$idtipoproducto]);
-            return $lstRetorno;
 
             if(count($lstRetorno)> 0){
                   $this->idtipoproducto = $lstRetorno[0]->idtipoproducto;

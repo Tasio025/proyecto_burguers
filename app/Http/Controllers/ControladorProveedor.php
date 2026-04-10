@@ -11,6 +11,10 @@ class ControladorProveedor extends Controller{
             $titulo = "Nuevo Proveedor";
             return view('Sistema.proveedor-nuevo', compact("titulo"));
       }
+      public function index(){      //El index va a ser basicamente el listado
+            $titulo = "Listado de proveedores";
+            return view('sistema.proveedor-listado', compact("titulo"));
+      }
       public function guardar(Request $request){
             try{
                   $titulo = "Modificar Proveedor";

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
             $this->cantidad = $request->input('txtCantidad');
             $this->precio = $request->input('txtPrecio');
             $this->imagen = $request->input('txtImagen');
-            $this->fk_idcategoria = $request->input('lstCategoria');
+            $this->fk_idcategoria = $request->input('lstTipoproducto');
       }
 
       public function obtenerTodos(){

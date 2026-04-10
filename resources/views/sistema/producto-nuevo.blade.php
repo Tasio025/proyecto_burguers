@@ -9,7 +9,7 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/productos">Productos;</a></li>
+    <li class="breadcrumb-item"><a href="/admin/productos">Productos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
@@ -60,11 +60,13 @@ if (isset($msg)) {
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="lstTipoProducto">Tipo de producto: </label>
-                    <select name="lstTipoProducto" id="lstTipoProducto" class="form-control">
-                        <option value="1">Tipo 1</option>
-                        <option value="2">Tipo 2</option>
+                    <label for="lstTipoproducto">Tipo de producto: </label>
+                    <select name="lstTipoproducto" id="lstTipoproducto" class="form-control">
+                        @foreach($aCategorias as $categoria)
+                        <option value="{{$categoria->idtipoproducto}}">{{$categoria->nombre}}</option>
+                        @endforeach
                     </select>
+
                 </div>
             </div>
       </form>
