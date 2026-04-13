@@ -51,9 +51,32 @@ class ControladorPostulacion extends Controller{
                   return view('sistema.postulacion-nuevo', compact('titulo', 'msg', 'postulacion'));
             }
       }
-
-
-
+      public function cargarGrilla(Request $request){
+            $request = $_REQUEST;
+            $entidad = new Postulacion();
+            $aPostulaciones = $entidad->obtenerFiltrado();
+            $data = array();
+            $cont = 0;
+            $inicio = $request['start'];
+            $registros_por_pagina = $request['length'];
+            for($i = $inicio; $i < count($aPostulaciones) && $cont < $registros_por_pagina; $i++){
+                  $row = array();
+                  $row[] = '<a href="/admin/sistema/postulacion/' . $aPostulaciones[$i]->idpostulacion . '">' . $aPostulaciones[$i]->nombre . '</a>';
+                  $row[] = $aPostulaciones[$i]->apellido;
+                  $row[] = $aPostulaciones[$i]->celular;
+                  $row[] = $aPostulaciones[$i]->correo;
+                  $row[] = "<a href=''> . Descargar </a>" ;
+                  $cont++;
+                  $data[] = $row;
+            }
+            $json_data = array(
+                  "draw" => intval($request['draw']),
+                  "recordsTotal" => count($aPostulaciones),
+                  "recordsFiltered" => count($aPostulaciones),
+                  "data" => $data,
+            );
+            return json_encode($json_data);
+      }
 }
 
 

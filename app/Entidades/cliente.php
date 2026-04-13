@@ -107,7 +107,8 @@ use Illuminate\Database\Eloquent\Model;
                         direccion,
                         correo,
                         dni,
-                        celular 
+                        celular,
+                        clave 
                         FROM clientes WHERE 1 = 1";   //1 = 1 es true, es decir, siempre se cumple, entonces no afecta a la consulta pero permite agregar condiciones con AND
             //Ahora realiza el filtrado
             if(!empty($request['search']['value'])){

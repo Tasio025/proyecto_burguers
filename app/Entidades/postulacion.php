@@ -5,11 +5,11 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-      class Postulaciones extends Model{
+      class Postulacion extends Model{
 
       protected $table = 'postulaciones';
       public $timestamps = false;
-      protected $fillable = ['idpostulacion', 'nombre', 'apellido', 'celular', 'dni', 'correo', 'clave'];
+      protected $fillable = ['idpostulacion', 'nombre', 'apellido', 'celular', 'correo', 'CV'];
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
@@ -17,9 +17,8 @@ use Illuminate\Database\Eloquent\Model;
             $this->nombre = $request->input('txtNombre');
             $this->apellido = $request->input('txtApellido');
             $this->celular = $request->input('txtTelefono');
-            $this->dni = $request->input('txtDni');
             $this->correo = $request->input('txtCorreo');
-            $this->clave = $request->input('txtClave');
+            $this->CV = $request->input('txtCV');
       }
       public function obtenerTodos(){
             $sql = "SELECT
@@ -27,9 +26,8 @@ use Illuminate\Database\Eloquent\Model;
                   nombre,
                   apellido,
                   celular,
-                  dni,
                   correo,
-                  clave
+                  CV
                   FROM postulaciones ORDER BY idpostulacion ASC";
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
@@ -41,20 +39,17 @@ use Illuminate\Database\Eloquent\Model;
                   nombre,
                   apellido,
                   celular,
-                  dni,
                   correo,
-                  clave
+                  CV
                   FROM postulaciones WHERE idpostulacion = $idpostulacion";
                   $lstRetorno = DB::select($sql, [$idpostulacion]);
-                  return $lstRetorno;
                   if(count($lstRetorno)> 0){
                         $this->idpostulacion = $lstRetorno[0]->idpostulacion;
                         $this->nombre = $lstRetorno[0]->nombre;
                         $this->apellido = $lstRetorno[0]->apellido;
                         $this->celular = $lstRetorno[0]->celular;
-                        $this->dni = $lstRetorno[0]->dni;
                         $this->correo = $lstRetorno[0]->correo;
-                        $this->clave = $lstRetorno[0]->clave;
+                        $this->CV = $lstRetorno[0]->CV;
                         return $this;
                   }
                   return null;
@@ -64,9 +59,8 @@ use Illuminate\Database\Eloquent\Model;
                   nombre = '$this->nombre',
                   apellido = '$this->apellido',
                   celular = '$this->celular',
-                  dni = '$this->dni',
                   correo = '$this->correo',
-                  clave = '$this->clave'
+                  CV = '$this->CV'
                   WHERE idpostulacion = ?";
                   $affected = DB::update($sql, [$this->idpostulacion]);
             }
@@ -79,19 +73,46 @@ use Illuminate\Database\Eloquent\Model;
                         nombre,
                         apellido,
                         celular,
-                        dni,
                         correo,
-                        clave
-                  ) VALUES (?, ? ,?, ?, ?, ?, ?)";
+                        CV
+                  ) VALUES (?,?,?,?,?)";
                   $result = DB::insert($sql, [
                         $this->nombre,
                         $this->apellido,
                         $this->celular,
-                        $this->dni,
                         $this->correo,
-                        $this->clave
+                        $this->CV
                   ]);
                   return $this->idpostulacion = DB::getPdo()->lastInsertId();
+            }
+            public function obtenerFiltrado(){
+                  $request = $_REQUEST;
+                  $columns = array(
+                        0 => 'idpostulacion',
+                        1 => 'nombre',
+                        2 => 'apellido',
+                        3 => 'celular',
+                        4 => 'correo',
+                        5 => 'CV'
+                  );
+                  $sql ="SELECT
+                  idpostulacion,
+                  nombre,
+                  apellido,
+                  celular,
+                  correo,
+                  CV
+                  FROM postulaciones WHERE 1=1";
+                  //filtrado
+                  if(!empty($request['search']['value'])){ 
+                        $sql .= " AND (nombre like '%" . $request['search']['value'] . "%' ";
+                        $sql .= " OR apellido like '%" . $request['search']['value'] . "%' ";
+                        $sql .= " OR celular like '%" . $request['search']['value'] . "%' ";
+                        $sql .= " OR correo like '%" . $request['search']['value'] . "%' ";
+                        $sql .= " OR CV like '%" . $request['search']['value'] . "%' )";
+                  }
+                  $lstRetorno = DB::select($sql);
+                  return $lstRetorno;
             }
       }  
 

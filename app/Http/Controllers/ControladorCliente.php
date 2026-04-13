@@ -56,15 +56,13 @@ class ControladorCliente extends Controller{
             $entidad = new Cliente();
             $aClientes = $entidad->obtenerFiltrado();  //Método creado para cargar la grilla de clientes
             $data = array();  
-            print_r($aClientes);exit;
             $cont = 0;
             $inicio = $request['start'];
             $registros_por_pagina = $request['length'];
 
             for($i = $inicio; $i<count($aClientes) && $cont < $registros_por_pagina; $i++){ //Este for recorre el array de clientes y devuelve en formato Json
                   $row = array();
-                  $row[] = '<a href="/admin/sistema/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>';
-                  $row[] = $aClientes[$i]->nombre;
+                  $row[] = '<a href="/admin/sistema/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>'; //El href acá me servirá para editar al cliente
                   $row[] = $aClientes[$i]->direccion;
                   $row[] = $aClientes[$i]->correo;
                   $row[] = $aClientes[$i]->dni;

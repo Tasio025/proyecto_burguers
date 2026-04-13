@@ -60,8 +60,8 @@ if (isset($msg)) {
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="txtContraseña">Contraseña:</label>
-                    <input type="text" id="txtContraseña" name="txtContraseña" class="form-control" required>
+                    <label for="txtCV">CV:</label>
+                    <input type="file" id="txtCV" name="txtCV" class="form-control" accept=".pdf, .doc, .docx" required>
                 </div>
             </div>
       </form>

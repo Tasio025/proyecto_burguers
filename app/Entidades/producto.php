@@ -99,6 +99,35 @@ use Illuminate\Database\Eloquent\Model;
             ]);
             return $this->idproducto = DB::getPdo()-> lastInsertId();
       }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $columns = array(
+                  0 => 'A.idproducto',
+                  1 => 'A.nombre',
+                  2 => 'A.cantidad',
+                  3 => 'A.precio',
+                  4 => 'A.imagen',
+                  5 => 'A.fk_idcategoria'
+            );
+            $sql = "SELECT
+            idproducto,
+            nombre,
+            cantidad,
+            precio,
+            imagen,
+            fk_idcategoria
+            FROM productos A WHERE 1=1";
+            //Acá se hace el filtrado
+            if(!empty($request['search']['value'])){
+                  $sql .= "AND (nombre like '%" . $request['search']['value'] . "%')";
+                  $sql .= "OR cantidad like '%" . $request['search']['value'] . "%')";
+                  $sql .= "OR precio like '%" . $request['search']['value'] . "%')";
+                  $sql .= "OR imagen like '%" . $request['search']['value'] . "%')";
+                  $sql .= "OR fk_idcategoria like '%" . $request['search']['value'] . "%')";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
+      }
 }
 
 ?>
