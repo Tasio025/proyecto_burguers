@@ -36,7 +36,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
-<table id="ggrilla" class="display">
+<table id="grilla" class="display">
       <thead>
             <tr>
                   <th>Nombre</th>

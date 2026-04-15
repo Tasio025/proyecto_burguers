@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Model;
             direccion,
             telefono,
             correo
-            FROM proveedores WHERE idproveedor = $idproveedor";
+            FROM proveedores WHERE idproveedor = ?";
             $lstRetorno = DB::select($sql, [$idproveedor]);
             
            if(count($lstRetorno)> 0){
@@ -78,6 +78,32 @@ use Illuminate\Database\Eloquent\Model;
                   $this->correo
             ]);
             return $this->idproveedor = DB::getPdo()->lastInsertId();   
+      }
+      public function obtenerFiltrado(){
+            $requestquest = $_REQUEST;
+            $columns = array(
+            0 => 'A.nombre',
+            1 => 'A.direccion',
+            2 => 'A.telefono',
+            3 => 'A.correo'
+            );
+            $sql = "SELECT
+            idproveedor,
+            nombre,
+            direccion,
+            telefono,
+            correo
+            FROM proveedores AS A
+            WHERE 1=1";
+            //Filtrado
+            if(!empty($requestquest['search']['value'])){ 
+                  $sql .= " AND (nombre LIKE '%" . $requestquest['search']['value'] . "%' ";
+                  $sql .= " OR direccion LIKE '%" . $requestquest['search']['value'] . "%' ";
+                  $sql .= " OR telefono LIKE '%" . $requestquest['search']['value'] . "%' ";
+                  $sql .= " OR correo LIKE '%" . $requestquest['search']['value'] . "%') ";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
       }
 }     
 

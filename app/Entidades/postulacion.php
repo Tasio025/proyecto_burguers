@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Model;
                   celular,
                   correo,
                   CV
-                  FROM postulaciones WHERE idpostulacion = $idpostulacion";
+                  FROM postulaciones WHERE idpostulacion = ?";
                   $lstRetorno = DB::select($sql, [$idpostulacion]);
                   if(count($lstRetorno)> 0){
                         $this->idpostulacion = $lstRetorno[0]->idpostulacion;

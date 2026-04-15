@@ -52,6 +52,30 @@ class ControladorRubro extends Controller{
                   return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
             }
       }
+      public function cargarGrilla(Request $request){
+            $request = $_REQUEST;
+            $entidad = new Rubro();
+            $aRubros = $entidad->obtenerFiltrado();  //Método creado para cargar la grilla de rubros
+            $data = array();  
+            $cont = 0;
+            $inicio = $request['start'];
+            $registros_por_pagina = $request['length'];
+
+            for($i = $inicio; $i<count($aRubros) && $cont < $registros_por_pagina; $i++){
+                  $row = array();
+                  $row[] = '<a href="/admin/rubros/' . $aRubros[$i]->idrubro . '" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
+                  $row[] = $aRubros[$i]->nombre;
+                  $cont++;
+                  $data[] = $row;
+            }
+            $json_data = array(
+                  "draw" => intval($request['draw']),
+                  "recordsTotal" => count($aRubros),
+                  "recordsFiltered" => count($aRubros),
+                  "data" => $data,
+            );
+            return json_encode($json_data);
+      }
 
 }
 

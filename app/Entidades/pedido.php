@@ -44,7 +44,7 @@ use Illuminate\Database\Eloquent\Model;
             fk_idsucursal,
             fk_idcliente,
             fk_idestado
-            FROM pedidos WHERE idpedido = $idpedido";
+            FROM pedidos WHERE idpedido = ?";
             $lstRetorno = DB::select($sql, [$idpedido]);
             return $lstRetorno;
 

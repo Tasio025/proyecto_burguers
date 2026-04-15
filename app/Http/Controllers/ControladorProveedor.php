@@ -50,6 +50,34 @@ class ControladorProveedor extends Controller{
                   return view('sistema.proveedor-nuevo', compact('titulo', 'msg', 'proveedor'));
             }
       }
+      public function cargarGrilla(Request $request){
+            $request = $_REQUEST;
+            $entidad = new Proveedor();
+            $aProveedores = $entidad->obtenerFiltrado();  //Método creado para cargar la grilla de proveedores
+            $data = array();  
+            $cont = 0;
+            $inicio = $request['start'];
+            $registros_por_pagina = $request['length'];
+
+            for($i = $inicio; $i < count($aProveedores) && $cont < $registros_por_pagina; $i++){
+                  $row = array();
+                  $row[] = '<a href="/admin/proveedores/' . $aProveedores[$i]->idproveedor . '" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
+                  $row[] = $aProveedores[$i]->nombre;
+                  $row[] = $aProveedores[$i]->direccion;
+                  $row[] = $aProveedores[$i]->telefono;
+                  $row[] = $aProveedores[$i]->correo;
+                  $cont++;
+                  $data[] = $row;
+            }
+            $json_data = array(
+                  "draw" => intval($request['draw']),
+                  "recordsTotal" => count($aProveedores),
+                  "recordsFiltered" => count($aProveedores),
+                  "data" => $data,
+            );
+            return json_encode($json_data);
+
+      }
 }
 
 ?>

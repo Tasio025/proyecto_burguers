@@ -40,7 +40,7 @@ use Illuminate\Database\Eloquent\Model;
             linkmapa,
             nombre,
             horario
-            FROM sucursales WHERE idsucursales = $idsucursales";
+            FROM sucursales WHERE idsucursales = ?";
             $lstRetorno = DB::select($sql, [$idsucursales]);
             
 

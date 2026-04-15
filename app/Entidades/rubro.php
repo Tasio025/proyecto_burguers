@@ -29,7 +29,7 @@ class Rubro extends Model{
             $sql = "SELECT
             idrubro,
             nombre
-            FROM rubros WHERE idrubro = $idrubro";
+            FROM rubros WHERE idrubro = ?";
             $lstRetorno = DB::select($sql, [$idrubro]);
 
             if(count($lstRetorno)> 0){
@@ -57,6 +57,23 @@ class Rubro extends Model{
                   $this->nombre
             ]);
             return $this->idrubro = DB::getPdo()->lastInsertId();
+      }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $columns = array(
+                  0 => 'A.idrubro',
+                  1 => 'A.nombre'
+            );
+            $sql = "SELECT
+            idrubro,
+            nombre
+            FROM rubros WERE 1 = 1";
+            //Filtrado
+            if(!empty($request['search']['value'])){ 
+                  $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%')";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
       }
 }
 

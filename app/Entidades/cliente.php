@@ -40,8 +40,9 @@ use Illuminate\Database\Eloquent\Model;
             direccion,
             correo,
             dni,
+            celular,
             clave
-            FROM clientes WHERE idcliente = $idcliente";
+            FROM clientes WHERE idcliente = ?";
             $lstRetorno = DB::select($sql, [$idcliente]);
 
             if(count($lstRetorno) > 0){

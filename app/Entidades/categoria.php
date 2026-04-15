@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idcategoria,
             nombre
-            FROM categorias WHERE idcategoria = $idcategoria";
+            FROM categorias WHERE idcategoria = ?";
             $lstRetorno = DB::select($sql, [$idcategoria]);
 
             if(count($lstRetorno)> 0){
@@ -57,6 +57,23 @@ use Illuminate\Database\Eloquent\Model;
                         $this->nombre
                   ]);
                   return $this->idcategoria = DB::getPdo()->lastInsertId();   
+      }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $coulumns = array(
+                  0 => 'idcategoria',
+                  1 => 'nombre'
+            );
+            $sql = "SELECT
+            idcategoria,
+            nombre
+            FROM categorias WHERE 1 = 1";
+            //Filtrado
+            if(!empty($request['search']['value'])){
+                  $sql .= " AND ( nombre LIKE '%".$request['search']['value']."%' )";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
       }
 }
 

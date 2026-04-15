@@ -80,6 +80,13 @@ class ControladorCliente extends Controller{
             return json_encode($json_data);
 
       }
+      public function editar($idcliente){
+            $titulo = "Edición de cliente";
+            $cliente = new Cliente();
+            //$cliente->idcliente = $idcliente;
+            $cliente->obtenerPorId($idcliente);
+            return view("sistema.cliente-nuevo", compact("titulo", "cliente"));     //Los que tengan desplegables, hay que enviar también los desplegables
+      }
 }
 
 ?>

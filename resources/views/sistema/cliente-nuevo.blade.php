@@ -41,31 +41,31 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Nombre: </label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $cliente->nombre}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="">Dirección:</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtCorreo">Correo:</label>
-                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
+                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="{{ $cliente->correo}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtDni">DNI:</label>
-                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" required>
+                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" value="{{ $cliente->dni}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtTelefono">Teléfono:</label>
-                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" required>
+                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->telefono}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtClave">Clave:</label>
-                    <input type="password" id="txtClave" name="txtClave" class="form-control" required>
+                    <input type="password" id="txtClave" name="txtClave" class="form-control" value="{{ $cliente->clave}}" required>
                 </div>
             </div>
       </form>

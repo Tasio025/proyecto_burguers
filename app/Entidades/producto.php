@@ -41,7 +41,7 @@ use Illuminate\Database\Eloquent\Model;
             precio,
             imagen,
             fk_idcategoria
-            FROM productos WHERE idproducto = $idproducto";
+            FROM productos WHERE idproducto = ?";
             $lstRetorno = DB::select($sql, [$idproducto]);
             return $lstRetorno;
 
