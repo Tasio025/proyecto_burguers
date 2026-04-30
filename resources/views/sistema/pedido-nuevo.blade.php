@@ -41,17 +41,17 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Fecha </label>
-                    <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="" required>
+                    <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="{{$pedido->fecha ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="txtSucursal">Sucursal: </label>
-                        <input type="text" id="txtSucursal" name="txtSucursal" class="form-control" value="" required>
+                        <input type="text" id="txtSucursal" name="txtSucursal" class="form-control" value="{{$pedido->fk_idsucursal ?? ''}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtCliente">Cliente: </label>
-                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="" required>
+                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="{{$pedido->fk_idcliente ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtEstado">Estado del pedido</label>

@@ -41,27 +41,27 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Teléfono</label>
-                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="" required>
+                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{$sucursal->telefono ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="">Dirección:</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{$sucursal->direccion ?? ''}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtLink">Link: </label>
-                    <input type="url" id="txtLink" name="txtLink" class="form-control" value="" required>
+                    <input type="url" id="txtLink" name="txtLink" class="form-control" value="{{$sucursal->linkmapa ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtNombre">Nombre:</label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$sucursal->nombre ?? ''}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtHorario">Horario:</label>
-                    <input type="time" id="txtHorario" name="txtHorario" class="form-control" value="" required>
+                    <input type="time" id="txtHorario" name="txtHorario" class="form-control" value="{{$sucursal->horario ?? ''}}" required>
                 </div>
             </div>
       </form>

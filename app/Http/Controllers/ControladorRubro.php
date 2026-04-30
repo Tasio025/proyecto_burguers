@@ -11,11 +11,13 @@ class ControladorRubro extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo rubro";
-            return view('Sistema.rubro-nuevo', compact("titulo"));
+            $rubro = new Rubro();
+            return view('Sistema.rubro-nuevo', compact("titulo", "rubro"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de rubros";
-            return view('sistema.rubro-listado', compact("titulo"));
+            $rubro = new Rubro();
+            return view('sistema.rubro-listado', compact("titulo", "rubro"));
       }
       public function guardar(Request $request){
             try{
@@ -75,6 +77,12 @@ class ControladorRubro extends Controller{
                   "data" => $data,
             );
             return json_encode($json_data);
+      }
+      public function editar($idrubro){
+            $titulo = "Modificar rubro";
+            $rubro = new Rubro();
+            $rubro = $rubro->obtenerPorId($idrubro);
+            return view('sistema.rubro-nuevo', compact('titulo', 'rubro'));
       }
 
 }

@@ -10,11 +10,13 @@ require app_path() . '/start/constants.php';
       class ControladorCategoria extends Controller{
             public function nuevo(){
                   $titulo = "Nueva categoria";
-                  return view('Sistema.categoria-nuevo', compact("titulo"));
+                  $categoria = new Categoria();
+                  return view('Sistema.categoria-nuevo', compact("titulo", "categoria")); //Envía la variable título
             }
              public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de categorias";
-            return view('sistema.categoria-listado', compact("titulo"));
+            $categoria = new Categoria();
+            return view('sistema.categoria-listado', compact("titulo", "categoria"));
       }
             public function guardar(Request $request){
                   try{
@@ -72,6 +74,12 @@ require app_path() . '/start/constants.php';
                         "data" => $data
                   );
                   return json_encode($json_data);
+            }
+            public function editar($idcategoria){
+                  $titulo = "Editar categoria";
+                  $categoria = new Categoria();
+                  $categoria = $categoria->obtenerPorId($idcategoria);
+                  return view('sistema.categoria-nuevo', compact('titulo', 'categoria'));
             }
       }
 

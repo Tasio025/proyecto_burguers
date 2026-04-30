@@ -13,7 +13,7 @@ class Rubro extends Model{
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+            $this->idrubro = $request->input('idrubro') != "0" ? $request->input('idrubro') : $this->idrubro;
             $this->nombre = $request->input('txtNombre');
       } 
 

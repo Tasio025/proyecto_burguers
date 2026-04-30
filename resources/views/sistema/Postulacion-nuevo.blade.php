@@ -41,21 +41,21 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Nombre: </label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$postulacion->nombre ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="">Apellido: </label>
-                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="" required>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="{{$postulacion->apellido ?? ''}}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtCelular">Celular:</label>
-                    <input type="number" id="txtCelular" name="txtCelular" class="form-control" value="" required>
+                    <input type="number" id="txtCelular" name="txtCelular" class="form-control" value="{{$postulacion->celular ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtCorreo">Correo:</label>
-                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="" required>
+                    <input type="email" id="txtCorreo" name="txtCorreo" class="form-control" value="{{$postulacion->correo ?? ''}}" required>
                 </div>
             </div>
             <div class="row">

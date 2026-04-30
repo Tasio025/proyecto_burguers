@@ -85,5 +85,13 @@ class ControladorProducto extends Controller{
             );
             return json_encode($json_data);
       }
+      public function editar($idproducto){
+            $titulo = "Editar producto";
+            $producto = new Producto();
+            $producto = $producto->obtenerPorId($idproducto);
+            $categoria =  new Tipoproducto();
+            $aCategorias = $categoria->obtenerTodos();
+            return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));    
+      }
 }
 ?>

@@ -10,11 +10,13 @@ class ControladorCliente extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo clientes";
-            return view('sistema.cliente-nuevo', compact("titulo")); //Envía la variable título
+            $cliente = new Cliente();
+            return view('sistema.cliente-nuevo', compact("titulo", "cliente")); //Envía la variable título
       }
       public function index(){
             $titulo = "Listado de clientes";
-            return view('sistema.cliente-listar', compact("titulo"));
+            $cliente = new Cliente();
+            return view('sistema.cliente-listar', compact("titulo", "cliente"));
       }
       public function guardar(Request $request){
             try{
@@ -29,7 +31,7 @@ class ControladorCliente extends Controller{
                         $cliente = new Cliente();
                         return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["id"] > 0){   //Si el id es > a 0 es xq estamos editando, si no viene el id estamos insertando
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -61,8 +63,8 @@ class ControladorCliente extends Controller{
             $registros_por_pagina = $request['length'];
 
             for($i = $inicio; $i<count($aClientes) && $cont < $registros_por_pagina; $i++){ //Este for recorre el array de clientes y devuelve en formato Json
-                  $row = array();
-                  $row[] = '<a href="/admin/sistema/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>'; //El href acá me servirá para editar al cliente
+                  $row = array();   //Cada uno de estos campos son cada campo de la grilla
+                  $row[] = '<a href="/admin/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>'; //El href acá me servirá para editar al cliente
                   $row[] = $aClientes[$i]->direccion;
                   $row[] = $aClientes[$i]->correo;
                   $row[] = $aClientes[$i]->dni;
@@ -84,7 +86,7 @@ class ControladorCliente extends Controller{
             $titulo = "Edición de cliente";
             $cliente = new Cliente();
             //$cliente->idcliente = $idcliente;
-            $cliente->obtenerPorId($idcliente);
+            $cliente = $cliente->obtenerPorId($idcliente);
             return view("sistema.cliente-nuevo", compact("titulo", "cliente"));     //Los que tengan desplegables, hay que enviar también los desplegables
       }
 }

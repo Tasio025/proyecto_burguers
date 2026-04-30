@@ -10,11 +10,13 @@ class ControladorPostulacion extends Controller{
 
       public function nuevo(){
             $titulo = "Nueva Postulación";
-            return view('Sistema.postulacion-nuevo', compact("titulo")); //Envía la variable título   
+            $postulacion = new Postulacion();
+            return view('Sistema.postulacion-nuevo', compact("titulo", "postulacion")); //Envía la variable título   
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de postulaciones";
-            return view('sistema.postulacion-listado', compact("titulo"));
+            $postulacion = new Postulacion();
+            return view('sistema.postulacion-listado', compact("titulo", "postulacion"));
       }
       public function guardar(Request $request){
             try{
@@ -76,6 +78,12 @@ class ControladorPostulacion extends Controller{
                   "data" => $data,
             );
             return json_encode($json_data);
+      }
+      public function editar($idpostulacion){
+            $titulo = "Editar postulación";
+            $postulacion = new Postulacion();
+            $postulacion = $postulacion->obtenerPorId($idpostulacion);
+            return view('sistema.postulacion-nuevo', compact('titulo', 'postulacion'));
       }
 }
 

@@ -41,17 +41,17 @@ if (isset($msg)) {
                 <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Nombre: </label>
-                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="" required>
+                    <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $producto->nombre ?? '' }}" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="">Cantidad:</label>
-                        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="" required>
+                        <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="{{ $producto->cantidad ?? '' }}" required>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtCorreo">Precio:</label>
-                    <input type="number"  id="txtPrecio" name="txtPrecio" class="form-control" value="" required>
+                    <input type="number"  id="txtPrecio" name="txtPrecio" class="form-control" value="{{ $producto->precio ?? '' }}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label>Imagen:</label>
@@ -63,7 +63,8 @@ if (isset($msg)) {
                     <label for="lstTipoproducto">Tipo de producto: </label>
                     <select name="lstTipoproducto" id="lstTipoproducto" class="form-control">
                         @foreach($aCategorias as $categoria)
-                        <option value="{{$categoria->idtipoproducto}}">{{$categoria->nombre}}</option>
+                        <!--<option value="{{$categoria->idtipoproducto}}">{{$categoria->nombre}}</option>-->
+                        <option value="{{$categoria->idtipoproducto}}" {{ $producto->fk_idcategoria == $categoria->idtipoproducto ? 'selected' : '' }}>{{$categoria->nombre}}</option>
                         @endforeach
                     </select>
 

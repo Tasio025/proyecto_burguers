@@ -70,12 +70,7 @@ if (isset($msg)) {
             </div>
       </form>
       <script>
-
-    /*$(document).ready(function() {
-        if (typeof $.fn.validate === 'function') {
-            $("#form1").validate();
-        }
-    });*/
+        
     $("#form1").validate();
 
     function guardar(){

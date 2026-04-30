@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idcategoria = $request->input('id') != "0" ? $request->input('id') : $this->idcategoria;
+            $this->idcategoria = $request->input('idcategoria') != "0" ? $request->input('idcategoria') : $this->idcategoria;
             $this->nombre = $request->input('txtNombre');
       }
 

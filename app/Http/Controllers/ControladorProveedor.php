@@ -9,11 +9,13 @@ require app_path() . '/start/constants.php';
 class ControladorProveedor extends Controller{
       public function nuevo(){
             $titulo = "Nuevo Proveedor";
-            return view('Sistema.proveedor-nuevo', compact("titulo"));
+            $proveedor = new Proveedor();
+            return view('Sistema.proveedor-nuevo', compact("titulo", "proveedor"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de proveedores";
-            return view('sistema.proveedor-listado', compact("titulo"));
+            $proveedor = new Proveedor();
+            return view('sistema.proveedor-listado', compact("titulo", "proveedor"));
       }
       public function guardar(Request $request){
             try{
@@ -77,6 +79,12 @@ class ControladorProveedor extends Controller{
             );
             return json_encode($json_data);
 
+      }
+      public function edutar($idproveedor){
+            $titulo = "Modificar Proveedor";
+            $proveedor = new Proveedor();
+            $proveedor = $proveedor->cargarDesdeBD($idproveedor);
+            return view('sistema.proveedor-nuevo', compact('titulo', 'proveedor'));
       }
 }
 

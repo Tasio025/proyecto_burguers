@@ -10,11 +10,13 @@ class ControladorPedido extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo Pedido";
-            return view('sistema.pedido-nuevo', compact("titulo"));
+            $pedido = new Pedido();
+            return view('sistema.pedido-nuevo', compact("titulo", "pedido"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de pedidos";
-            return view('sistema.pedido-listado', compact("titulo"));
+            $pedido = new Pedido();
+            return view('sistema.pedido-listado', compact("titulo", "pedido"));
       }
       public function guardar(Request $request){
             try{
@@ -50,6 +52,40 @@ class ControladorPedido extends Controller{
                   $pedido = new Pedido();
                   return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
             }
+      }
+      public function cargarGrilla(Request $request){
+            $request = $_REQUEST;
+            $entidad = new Pedido();
+            $aPedidos = $entidad->obtenerFiltrado();
+            $data = array();
+            $cont = 0;
+            $inicio = $request['start'];
+            $registros_por_pagina = $request['length'];
+
+            for($i = $inicio; $i<count($aPedidos) && $cont < $registros_por_pagina; $i++){
+                  $row = array();
+                  $row[] = '<a href="/admin/sistema/pedido/' . $aPedidos[$i]->idpedido . '">' . $aPedidos[$i]->fecha . '</a>';
+                  $row[] = $aPedidos[$i]->descripcion;
+                  $row[] = $aPedidos[$i]->total;
+                  $row[] = $aPedidos[$i]->fk_idsucursal;
+                  $row[] = $aPedidos[$i]->fk_idcliente;
+                  $row[] = $aPedidos[$i]->fk_idestado;
+                  $cont++;
+                  $data[] = $row;
+            }
+            $json_data = array(
+                  "draw" => intval($request['draw']),
+                  "recordsTotal" => count($aPedidos),
+                  "recordsFiltered" => count($aPedidos),
+                  "data" => $data,
+            );
+            return json_encode($json_data);
+      }
+      public function editar($idpedido){
+            $titulo = "Edición de pedido";
+            $pedido =  new Pedido();
+            $pedido = $pedido->obtenerPorId($idpedido);
+            return view('sistema.pedido-nuevo', compact('titulo', 'pedido'));
       }
 }
 
