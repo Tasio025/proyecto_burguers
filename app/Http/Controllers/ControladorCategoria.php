@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Categoria;
+use App\Entidades\Pedido;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
 
@@ -80,6 +81,21 @@ require app_path() . '/start/constants.php';
                   $categoria = new Categoria();
                   $categoria = $categoria->obtenerPorId($idcategoria);
                   return view('sistema.categoria-nuevo', compact('titulo', 'categoria'));
+            }
+            public function eliminar(Request $request){
+                  $idcategoria = $request->input("idcategoria");
+                  $categoria = new Categoria();
+                  $producto = new Producto();
+                  if($producto->existePedidoPorCategoria($idcategoria)){
+                        $resultado["err"] = EXIT_FAILURE;
+                        $resultado["mensaje"] = "No se puede eliminar la categoria porque tiene pedidos asociados";
+                  }else{
+                        $categoria->idcategoria = $request->input("idcategoria");
+                        $categoria->eliminar();
+                        $resultado["err"] = EXIT_SUCCESS;
+                        $resultado["mensaje"] = "Registro eliminado exitosamente";
+                  }
+                  return json_encode($resultado);
             }
       }
 

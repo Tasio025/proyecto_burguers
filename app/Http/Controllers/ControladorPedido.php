@@ -87,6 +87,15 @@ class ControladorPedido extends Controller{
             $pedido = $pedido->obtenerPorId($idpedido);
             return view('sistema.pedido-nuevo', compact('titulo', 'pedido'));
       }
+      public function eliminar(Request $request){
+            $idpedido = $request->input("idpedido");
+            $pedido = new Pedido();
+            $pedido->idpedido = $request->input("idpedido");
+            $pedido->eliminar();
+            $resultado["err"] = EXIT_SUCCESS;
+            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            return json_encode($resultado);      
+      }
 }
 
 

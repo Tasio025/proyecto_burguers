@@ -79,6 +79,21 @@ use Illuminate\Database\Eloquent\Model;
             ]);
             return $this->idpedidos_productos = DB::getPdo()->lastInsertId();
       }
+      public function existePedidoPorProducto($idproducto){
+            $sql = "SELECT
+            idpedidos_productos,
+            cantidad,
+            precio_unitario,
+            total,
+            fk_idpedido,
+            fk_idproducto
+            FROM pedidos_productos WHERE fk_idproducto = $idproducto";
+            $lstRetorno = DB::select($sql, [$idproducto]);
+            if(count($lstRetorno) > 0){
+                  return true;
+            }
+            return false;
+      }
 
 }
 

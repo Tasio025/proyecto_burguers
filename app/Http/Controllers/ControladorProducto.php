@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
 use App\Entidades\Tipoproducto;
+use App\Entidades\Pedido_producto;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';   
 
@@ -92,6 +93,21 @@ class ControladorProducto extends Controller{
             $categoria =  new Tipoproducto();
             $aCategorias = $categoria->obtenerTodos();
             return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));    
+      }
+      public function eliminar(Request $request){
+            $idproducto = $request->input("idproducto");
+            $producto = new Producto();
+            $pedido = new Pedido();
+            if($pedido->existePedidoPorProducto($idproducto)){
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "No se puede eliminar el producto porque tiene pedidos asociados";
+            }else{
+                  $producto->idproducto = $request->input("idproducto");
+                  $producto->eliminar();
+                  $resultado["err"] = EXIT_SUCCESS;
+                  $resultado["mensaje"] = "Registro eliminado exitosamente";
+                  }
+            return json_encode($resultado);
       }
 }
 ?>

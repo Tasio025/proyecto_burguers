@@ -79,6 +79,23 @@ if (isset($msg)) {
             return false;
         }
     }
+    function eliminar(){
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('/admin/sucursal/eliminar')}}",
+            data: {idsucursal:globalId},
+            async: true,
+            dataType: "json",
+            success: function(data){
+                if(data.err == 0){
+                    msgShow(data.mensaje, "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $("#mdlEliminar").modal("toggle");
+                }
+            }
+        });
+    }
 </script>
 
 @endsection

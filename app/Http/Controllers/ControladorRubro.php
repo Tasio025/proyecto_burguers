@@ -84,6 +84,15 @@ class ControladorRubro extends Controller{
             $rubro = $rubro->obtenerPorId($idrubro);
             return view('sistema.rubro-nuevo', compact('titulo', 'rubro'));
       }
+      public function eliminar(Request $request){
+            $idrubro = $request->input("idrubro");
+            $rubro = new Rubro();
+            $rubro->idrubro = $request->input("idrubro");
+            $rubro->eliminar();
+            $resultado["err"] = EXIT_SUCCESS;
+            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            return json_encode($resultado);
+      }
 
 }
 

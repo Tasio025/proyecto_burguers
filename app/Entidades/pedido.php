@@ -113,9 +113,22 @@ use Illuminate\Database\Eloquent\Model;
                   return true;
             }
             return false;
-
       }
-
-
+      public function existePedidoPorSucursal($idsucursales){
+            $sql = "SELECT,
+            idpedido,
+            fecha,
+            descripcion,
+            total,
+            fk_idsucursal,
+            fk_idcliente,
+            fk_idestado
+            FROM pedidos WHERE fk_idsucursal = $idsucursales";
+            $lstRetorno = DB::select($sql);
+            if(count($lstRetorno) > 0){
+                  return true;
+            }
+            return false;
+      }
 }
 ?>

@@ -34,6 +34,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id = "msg"></div>
 <div class="panel-body">
       <form id="form1" method="POST" action="/admin/proveedor/nuevo">
             <div class="row">
@@ -71,6 +72,26 @@ if (isset($msg)) {
                     msgShow("Corrija los errores e intente nuevamente.", "danger");
                     return false;
                 }
+            }
+            function eliminar(){
+                $.ajax({
+                    type:"GET",
+                    url: "{{ asset('/admin/proveedor/eliminar)}}",
+                    data: {idproveedor:globalId},
+                    async: true,
+                    dataType: "json",
+                    success: function(data){
+                        if(data.err == 0){
+                            msgShow(data.mensaje, "success");
+                            $("#btnEnviar").hide();
+                            $("#btnEliminar").hide();
+                            $("#mdlEliminar").modal("toggle");
+                        }else{
+                            mgsShow(data.mensaje, "danger");
+                            $("#mdlEliminar").modal("toggle");
+                        }
+                    }
+                });
             }
 </script>
 

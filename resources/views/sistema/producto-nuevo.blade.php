@@ -34,6 +34,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id = "msg"></div>
 <div class="panel-body">
       <form id="form1" method="POST" action="/admin/producto/nuevo" enctype="multipart/form-data">
             <div class="row">
@@ -84,6 +85,25 @@ if (isset($msg)) {
             msgShow("Corrija los errores e intente nuevamente.", "danger");
             return false;
         }
+    }
+    function elimnar(){
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('/admin/prudcto/eliminar')}}",
+            data: {idproducto:globalId},
+            async: true,
+            success: function(data){
+                if(data.err == 0){
+                    msgShow(data.mensaje, "success");
+                    $("#btnEnviar").hide();
+                    $("#btnEliminar").hide();
+                    $("#mdlEliminar").modal("toggle");
+                }else{
+                    msgShow(data.mensaje, "danger");
+                    $("#mdlEliminar").modal("toggle");
+                }
+            }
+        })
     }
 </script>
 

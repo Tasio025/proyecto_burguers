@@ -80,11 +80,20 @@ class ControladorProveedor extends Controller{
             return json_encode($json_data);
 
       }
-      public function edutar($idproveedor){
+      public function editar($idproveedor){
             $titulo = "Modificar Proveedor";
             $proveedor = new Proveedor();
             $proveedor = $proveedor->cargarDesdeBD($idproveedor);
             return view('sistema.proveedor-nuevo', compact('titulo', 'proveedor'));
+      }
+      public function eliminar(Request $request){
+            $idproveedor = $request->input("idproveedor");
+            $proveedor = new Proveedor();
+            $proveedor->idproveedor = $request->input("idproveedor");
+            $proveedor->eliminar();
+            $resultado["err"] = EXIT_SUCCESS;
+            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            return json_encode($resultado);
       }
 }
 

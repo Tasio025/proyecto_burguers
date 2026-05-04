@@ -128,6 +128,21 @@ use Illuminate\Database\Eloquent\Model;
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
       }
+      public function existePedidoPorCategoria(){
+            $sql = "SELECT
+            idproducto,
+            nombre,
+            cantidad,
+            precio,
+            imagen,
+            fk_idcategoria
+            FROM productos WHERE fk_idcategoria = $idcategoria";
+            $lstRetorno = DB::select($sql);
+            if(count($lstRetorno)>0){
+                  return true;
+            }
+            return false;
+      }
 }
 
 ?>
