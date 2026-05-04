@@ -110,10 +110,11 @@ Route::post('/admin/cliente/nuevo', 'ControladorCliente@guardar');
 //Rutas del listado
 Route::get('/admin/clientes', 'ControladorCliente@index');
 Route::get('/admin/clientes/cargarGrilla', 'ControladorCliente@cargarGrilla')->name('cliente.cargarGrilla');
+//Ruta eliminación
+Route::get('/admin/cliente/eliminar', 'ControladorCliente@eliminar');
 //Ruta edición
-Route::get('/admin/cliente/{idcliente}', 'ControladorCliente@editar');
-Route::post('/admin/cliente/{idcliente}', 'ControladorCliente@guardar');
-
+Route::get('/admin/cliente/{idcliente}', 'ControladorCliente@editar');  //Estas dos rutas contienen una variable (idcliente), para evitar problemas
+Route::post('/admin/cliente/{idcliente}', 'ControladorCliente@guardar');//tendré que colocarlas al final de todas las rutas
 
 /* --------------------------------------------- */
 /* CONTROLADOR PRODUCTOS                           */

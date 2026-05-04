@@ -95,6 +95,27 @@ use Illuminate\Database\Eloquent\Model;
             ]);
             return $this->idpedido = DB::getPdo()->lastInsertId();
       }
+      public function existePedidoPorCliente($idcliente){
+            //Primero armamos la query
+            $sql = "SELECT
+            idpedido,
+            fecha,
+            descripcion,
+            total,
+            fk_idsucursal,
+            fk_idcliente,
+            fk_idestado
+            FROM pedidos WHERE fk_idcliente = $idcliente";
+            //Ejecutamos la query
+            $lstRetorno = DB::select($sql);
+            //Si el cliente tiene pedidos asociados, no se puede eliminar
+            if(count($lstRetorno) > 0){
+                  return true;
+            }
+            return false;
+
+      }
+
 
 }
 ?>

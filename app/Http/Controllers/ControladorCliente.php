@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Cliente;  
+use App\Entidades\Pedido;
 use Illuminate\Http\Request;  
 require app_path() . '/start/constants.php';
 
@@ -88,6 +89,24 @@ class ControladorCliente extends Controller{
             //$cliente->idcliente = $idcliente;
             $cliente = $cliente->obtenerPorId($idcliente);
             return view("sistema.cliente-nuevo", compact("titulo", "cliente"));     //Los que tengan desplegables, hay que enviar también los desplegables
+      }
+      public function eliminar(Request $request){
+            $idcliente = $request->input("idcliente");
+            $cliente = new Cliente();
+            $pedido = new Pedido();
+                    
+            //Si el cliente tiene un pedido asociado no se tiene que poder eliminar
+            if($pedido->existePedidoPorCliente($idcliente)){
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "No se puede eliminar el cliente porque tiene pedidos asociados";
+            }else{
+                  //Sino, si se puede eliminar
+                  $cliente->idcliente = $request->input("idcliente");
+                  $cliente->eliminar();
+                  $resultado["err"] = EXIT_SUCCESS; //EXIT_SUCCESS es una constante que se encuentra en el archivo constants.php que es igual a 0, es decir, no hubo error
+                  $resultado["mensaje"] = "Registro eliminado exitosamente";
+            }           
+            return json_encode($resultado);
       }
 }
 

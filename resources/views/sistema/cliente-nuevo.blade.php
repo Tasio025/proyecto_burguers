@@ -34,6 +34,7 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id = "msg"></div> <!--Este div deberá siempre estar visible para que al borrar a un cliente, se muestre el mensaje que da error si tiene pedidos asociados-->
 <div class="panel-body">
       <form id="form1" name="form1" method="POST" action="/admin/cliente/nuevo">
             <div class="row">
@@ -82,6 +83,26 @@ if (isset($msg)) {
             msgShow("Corrija los errores e intente nuevamente.", "danger");
             return false;
         }
-    }
+}
+    function eliminar(){
+        $.ajax({       //ajax es una funcion que nos permite hacer llamados al servidor, enviarle datos y que este nos los devuelva. El envío y recepcion de datos es en formato json
+            type: "GET",
+            url: "{{ asset('/admin/cliente/eliminar')}}",
+            data: {idcliente:globalId},
+            async: true,
+            dataType: "json",
+            success: function(data){    //data es una variable que lee lo que nosotros devolvemos
+            if(data.err == 0){
+                msgShow(data.mensaje, "success");
+                $("#btnEnviar").hide();
+                $("#btnEliminar").hide();
+                $('#mdlEliminar').modal('toggle');
+            }else{
+                msgShow(data.mensaje, "danger");
+                $('#mdlEliminar').modal('toggle'); 
+            }
+       }
+    });
+}        
 </script>
 @endsection
