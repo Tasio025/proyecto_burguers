@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Categoria;
-use App\Entidades\Pedido;
+use App\Entidades\Producto;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
 

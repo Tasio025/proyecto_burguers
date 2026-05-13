@@ -46,7 +46,7 @@ class ControladorProducto extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idproducto;
+                        $_POST["id"] = $entidad->idproducto;      //id o idproducto??????
                         return redirect('/admin/productos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -97,7 +97,7 @@ class ControladorProducto extends Controller{
       public function eliminar(Request $request){
             $idproducto = $request->input("idproducto");
             $producto = new Producto();
-            $pedido = new Pedido();
+            $pedido_producto = new Pedido_producto();
             if($pedido->existePedidoPorProducto($idproducto)){
                   $resultado["err"] = EXIT_FAILURE;
                   $resultado["mensaje"] = "No se puede eliminar el producto porque tiene pedidos asociados";

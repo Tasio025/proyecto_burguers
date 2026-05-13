@@ -30,7 +30,7 @@ require app_path() . '/start/constants.php';
                               $sucursal = new Sucursales();
                               return view('sistema.sucursal-nuevo', compact('titulo', 'msg', 'sucursal'));
                         } else {
-                              if($_POST["id"] > 0){
+                              if($_POST["id"] > 0){   //id o idsucursal????
                                     //Es actualización
                                     $entidad->guardar();
                                     $msg["ESTADO"] = MSG_SUCCESS;
@@ -80,14 +80,14 @@ require app_path() . '/start/constants.php';
                   );
                   return json_encode($json_data);
             }
-            public function editar($idsucursales){
+            public function editar($idsucursal){
                   $titulo = "Editar sucursal";
                   $sucursal = new Sucursales();
-                  $sucursal = $sucursal->obtenerPorId($idsucursales);
+                  $sucursal = $sucursal->obtenerPorId($idsucursal);
                   return view('sistema.sucursal-editar', compact('titulo', 'sucursal'));
             }
             public function eliminar(Request $request){
-                  $idsucursales = $request->input("idsucursal");
+                  $idsucursales = $request->input("idsucursales");
                   $sucursal = new Sucursales();
                   $pedido = new Pedido();
                   if($pedido->existePedidoPorSucursal($idsucursales)){

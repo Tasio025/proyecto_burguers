@@ -76,7 +76,7 @@ if (isset($msg)) {
             function eliminar(){
                 $.ajax({
                     type:"GET",
-                    url: "{{ asset('/admin/proveedor/eliminar)}}",
+                    url: "{{ asset('/admin/proveedor/eliminar')}}",
                     data: {idproveedor:globalId},
                     async: true,
                     dataType: "json",
@@ -87,7 +87,7 @@ if (isset($msg)) {
                             $("#btnEliminar").hide();
                             $("#mdlEliminar").modal("toggle");
                         }else{
-                            mgsShow(data.mensaje, "danger");
+                            msgShow(data.mensaje, "danger");
                             $("#mdlEliminar").modal("toggle");
                         }
                     }

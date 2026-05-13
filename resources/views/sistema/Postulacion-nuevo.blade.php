@@ -91,7 +91,7 @@ if (isset($msg)) {
                     msgShow(data.mensaje, "success");
                     $("#btnEnviar").hide();
                     $("#btnEliminar").hide();
-                    $("#mdlEliminar").modal(toggle);
+                    $("#mdlEliminar").modal("toggle");
                 }
             }
         });

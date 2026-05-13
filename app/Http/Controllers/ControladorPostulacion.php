@@ -88,7 +88,7 @@ class ControladorPostulacion extends Controller{
       public function eliminar(Request $request){
             $idpostulacion = $request->input("idpostulacion");
             $postulacion = new Postulacion();
-            $idpostulacion->idpostulacion = $request->input("idpostulacion");
+            $postulacion->idpostulacion = $request->input("idpostulacion");
             $postulacion->eliminar();
             $resultado["err"] = EXIT_SUCCESS;
             $resultado["mensaje"] = "Registro eliminado exitosamente";

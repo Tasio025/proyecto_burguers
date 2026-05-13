@@ -75,7 +75,7 @@ if (isset($msg)) {
                     $("#mdlEliminar").modal("toggle");
                 }else{
                     msgShow(data.mensaje, "danger");
-                    $("#mdlEliminar").mdl("toggle");
+                    $("#mdlEliminar").modal("toggle");
                 }
             }
         });

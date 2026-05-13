@@ -89,7 +89,7 @@ if (isset($msg)) {
     function elimnar(){
         $.ajax({
             type: "GET",
-            url: "{{ asset('/admin/prudcto/eliminar')}}",
+            url: "{{ asset('/admin/prducto/eliminar')}}",
             data: {idproducto:globalId},
             async: true,
             success: function(data){
