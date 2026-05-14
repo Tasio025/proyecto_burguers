@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idpedido = $request->input('idpedido') != "0" ? $request->input('idpedido') : $this->idpedido;
+            $this->idpedido = $request->input('id') != "0" ? $request->input('id') : $this->idpedido;
             $this->fecha = $request->input('txtFecha');
             $this->descripcion = $request->input('txtDescripcion');
             $this->total = $request->input('txtTotal');

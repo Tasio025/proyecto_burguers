@@ -77,7 +77,6 @@ if (isset($msg)) {
                         $("#mdlEliminar").modal("toggle");
                     }
                 }
-            }
         });
     }
 </script>

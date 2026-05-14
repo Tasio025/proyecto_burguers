@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idproveedor = $request->input('idproveedor') != "0" ? $request->input('idproveedor') : $this->idproveedor;
+            $this->idproveedor = $request->input('id') != "0" ? $request->input('id') : $this->idproveedor;
             $this->nombre = $request->input('txtNombre');
             $this->direccion = $request->input('txtDireccion');
             $this->telefono = $request->input('txtTelefono');

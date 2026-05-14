@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idsucursales = $request->input('idsucursales') != "0" ? $request->input('idsucursales') : $this->idsucursales;
+            $this->idsucursales = $request->input('id') != "0" ? $request->input('id') : $this->idsucursales;
             $this->telefono = $request->input('txtTelefono');
             $this->direccion = $request->input('txtDireccion');
-            $this->linkmapa = $request->input('txtLinkMapa');
+            $this->linkmapa = $request->input('txtLink');
             $this->nombre = $request->input('txtNombre');
             $this->horario = $request->input('txtHorario');
       } 
@@ -73,7 +73,9 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "INSERT INTO sucursales (
             telefono,
             direccion,
-            linkmapa
+            linkmapa,
+            nombre,
+            horario
             ) VALUES (?, ?, ?, ?, ?)";
             $result = DB::insert($sql, [
                   $this->telefono,

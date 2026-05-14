@@ -4,8 +4,8 @@
 <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 <script src="{{asset('js/datatables.min.js')}}"></script>
 <script>
-    globalId = '<?php echo isset($postulacion->idpostulacion) && $postulacion->idpostulacion > 0 ? $postulacion->idpostulacion : 0; ?>';
-    <?php $globalId = isset($postulacion->idpostulacion) ? $postulacion->idpostulacion : "0";?>
+    globalId = '<?php echo isset($sucursal->idsucursales) && $sucursal->idsucursales > 0 ? $sucursal->idsucursales : 0; ?>';
+    <?php $globalId = isset($sucursal->idsucursales) ? $sucursal->idsucursales : "0";?>
 </script>
 @endsection
 @section('breadcrumb')

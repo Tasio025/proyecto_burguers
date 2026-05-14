@@ -30,7 +30,7 @@ require app_path() . '/start/constants.php';
                               $sucursal = new Sucursales();
                               return view('sistema.sucursal-nuevo', compact('titulo', 'msg', 'sucursal'));
                         } else {
-                              if($_POST["id"] > 0){   //id o idsucursal????
+                              if($_POST["idsucursales"] > 0){   //id o idsucursal????
                                     //Es actualización
                                     $entidad->guardar();
                                     $msg["ESTADO"] = MSG_SUCCESS;
@@ -41,7 +41,7 @@ require app_path() . '/start/constants.php';
                                     $msg["ESTADO"] = MSG_SUCCESS;
                                     $msg["MSG"] = OKINSERT;
                               }
-                              $_POST["id"] = $entidad->idsucursales;
+                              $_POST["idsucursales"] = $entidad->idsucursales;
                               return redirect('/admin/sucursales')->with('msg', $msg);
                         }
                   } catch (\Exception $e) {
@@ -61,7 +61,7 @@ require app_path() . '/start/constants.php';
                   $inicio = $request['start'];
                   $registros_por_pagina = $request['length'];
 
-                  for($i = $inicio; $i<count($aSucursales) && cont < $registros_por_pagina; $i++){
+                  for($i = $inicio; $i<count($aSucursales) && $cont < $registros_por_pagina; $i++){
                         $row = array();
                         $row[] = '<a href="/admin/sistema/sucursales/' . $aSucursales[$i]->idsucursales . '">' . $aSucursales[$i]->idsucursales . '</a>';
                         $row[] = $aSucursales[$i]->telefono;
@@ -85,16 +85,16 @@ require app_path() . '/start/constants.php';
                   $sucursal = new Sucursales();
                   $sucursal = $sucursal->obtenerPorId($idsucursal);
                   return view('sistema.sucursal-editar', compact('titulo', 'sucursal'));
-            }
+            }                 //sucursal-nuevo o sucursal-editar????
             public function eliminar(Request $request){
-                  $idsucursales = $request->input("idsucursales");
+                  $idsucursales = $request->input("idsucursal");
                   $sucursal = new Sucursales();
                   $pedido = new Pedido();
                   if($pedido->existePedidoPorSucursal($idsucursales)){
                         $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No se puede eliminar la sucursal porque tiene pedidos asociados";
                   }else{
-                        $sucursal->idsucursal = $request->input("idsucursal");
+                        $sucursal->idsucursales  = $idsucursales;
                         $sucursal->eliminar();
                         $resultado["err"] = EXIT_SUCCESS;
                         $resultado["mensaje"] = "Registro eliminado exitosamente";
