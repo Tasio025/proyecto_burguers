@@ -32,7 +32,7 @@ require app_path() . '/start/constants.php';
                               $categoria = new Categoria();
                               return view('sistema.categoria-nuevo', compact('titulo', 'msg', 'categoria'));
                         } else {
-                              if($_POST["id"] > 0){
+                              if($_POST["idcategoria"] > 0){
                                     //Es actualización
                                     $entidad->guardar();
                                     $msg["ESTADO"] = MSG_SUCCESS;
@@ -43,7 +43,7 @@ require app_path() . '/start/constants.php';
                                     $msg["ESTADO"] = MSG_SUCCESS;
                                     $msg["MSG"] = OKINSERT;
                               }
-                              $_POST["id"] = $entidad->idcategoria;
+                              $_POST["idcategoria"] = $entidad->idcategoria;
                               return redirect('/admin/categorias')->with('msg', $msg);
                         }
                   } catch (\Exception $e) {
@@ -64,7 +64,7 @@ require app_path() . '/start/constants.php';
                   $registros_por_pagina = $request['length'];
                   for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
                         $row = array();
-                        $row[] = '<a href="/admin/categorias/' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
+                        $row[] = '<a href="/admin/categoria/' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
                         $cont++;
                         $data[] = $row;
                   }

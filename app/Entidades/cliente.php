@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idcliente = $request->input('id') != "0" ? $request->input('id') : $this->idcliente;
+            $this->idcliente = $request->input('idcliente') != "0" ? $request->input('idcliente') : $this->idcliente;
             $this->nombre = $request->input('txtNombre');
             $this->direccion = $request->input('txtDireccion');
             $this->correo = $request->input('txtCorreo');

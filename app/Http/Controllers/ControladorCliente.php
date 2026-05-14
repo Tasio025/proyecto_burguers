@@ -32,7 +32,7 @@ class ControladorCliente extends Controller{
                         $cliente = new Cliente();
                         return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
                   } else {
-                        if($_POST["id"] > 0){   //Si el id es > a 0 es xq estamos editando, si no viene el id estamos insertando
+                        if($_POST["idcliente"] > 0){   //Si el id es > a 0 es xq estamos editando, si no viene el id estamos insertando
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -43,7 +43,7 @@ class ControladorCliente extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idcliente;
+                        $_POST["idcliente"] = $entidad->idcliente;
                         return redirect('/admin/clientes')->with('msg', $msg);
                   }
             } catch (\Exception $e) {

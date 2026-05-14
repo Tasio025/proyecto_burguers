@@ -39,7 +39,7 @@ if (isset($msg)) {
       <form id="form1" name="form1" method="POST" action="/admin/cliente/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <input type="hidden" id="idcliente" name="idcliente" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Nombre: </label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $cliente->nombre}}" required>
@@ -62,7 +62,7 @@ if (isset($msg)) {
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtTelefono">Teléfono:</label>
-                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->telefono}}" required>
+                    <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->celular}}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtClave">Clave:</label>

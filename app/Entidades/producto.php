@@ -128,7 +128,7 @@ use Illuminate\Database\Eloquent\Model;
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
       }
-      public function existePedidoPorCategoria(){
+      public function existePedidoPorCategoria($idcategoria){
             $sql = "SELECT
             idproducto,
             nombre,
