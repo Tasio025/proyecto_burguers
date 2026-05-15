@@ -10,7 +10,7 @@ class ControladorProveedor extends Controller{
       public function nuevo(){
             $titulo = "Nuevo Proveedor";
             $proveedor = new Proveedor();
-            return view('Sistema.proveedor-nuevo', compact("titulo", "proveedor"));
+            return view('sistema.proveedor-nuevo', compact("titulo", "proveedor"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de proveedores";
@@ -24,13 +24,13 @@ class ControladorProveedor extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->telefono == "" || $entidad->ruc == ""){
+                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->telefono == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $proveedor = new Proveedor();
                         return view('sistema.proveedor-nuevo', compact('titulo', 'msg', 'proveedor'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["idproveedor"] > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -41,7 +41,7 @@ class ControladorProveedor extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idproveedor;
+                        $_POST["idproveedor"] = $entidad->idproveedor;
                         return redirect('/admin/proveedores')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -83,7 +83,7 @@ class ControladorProveedor extends Controller{
       public function editar($idproveedor){
             $titulo = "Modificar Proveedor";
             $proveedor = new Proveedor();
-            $proveedor = $proveedor->cargarDesdeBD($idproveedor);
+            $proveedor = $proveedor->cargarDesdeBD($idproveedor); //cargarDesdeBD es un método creado para cargar los datos del proveedor a modificar
             return view('sistema.proveedor-nuevo', compact('titulo', 'proveedor'));
       }
       public function eliminar(Request $request){

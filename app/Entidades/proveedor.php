@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idproveedor = $request->input('id') != "0" ? $request->input('id') : $this->idproveedor;
+            $this->idproveedor = $request->input('idproveedor') != "0" ? $request->input('idproveedor') : $this->idproveedor;
             $this->nombre = $request->input('txtNombre');
             $this->direccion = $request->input('txtDireccion');
             $this->telefono = $request->input('txtTelefono');
@@ -104,6 +104,25 @@ use Illuminate\Database\Eloquent\Model;
             }
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
+      }
+      public function cargarDesdeBd($idproveedor){
+            $sql = "SELECT
+            idproveedor,
+            nombre,
+            direccion,
+            telefono,
+            correo
+            FROM proveedores WHERE idproveedor = ?";
+            $lstRetorno = DB::select($sql, [$idproveedor]);
+            if(count($lstRetorno)>0){
+                  $this->idproveedor = $lstRetorno[0]->idproveedor;
+                  $this->nombre = $lstRetorno[0]->nombre;
+                  $this->direccion = $lstRetorno[0]->direccion;
+                  $this->telefono = $lstRetorno[0]->telefono;
+                  $this->correo = $lstRetorno[0]->correo;
+            }else{
+                  return null;
+            }
       }
 }     
 

@@ -39,7 +39,7 @@ if (isset($msg)) {
       <form id="form1" method="POST" action="/admin/postulacion/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <input type="hidden" id="idpostulacion" name="idpostulacion" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Nombre: </label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$postulacion->nombre ?? ''}}" required>
@@ -83,7 +83,7 @@ if (isset($msg)) {
         $.ajax({
             type: "GET",
             url: "{{ asset('/admin/postulacion/eliminar')}}",
-            data: {idpostulacion:globalId},
+            data: {idpostulacion: globalId},
             async: true,
             dataType: "json",
             success: function(data){

@@ -11,7 +11,7 @@ class ControladorPostulacion extends Controller{
       public function nuevo(){
             $titulo = "Nueva Postulación";
             $postulacion = new Postulacion();
-            return view('Sistema.postulacion-nuevo', compact("titulo", "postulacion")); //Envía la variable título   
+            return view('sistema.postulacion-nuevo', compact("titulo", "postulacion")); //Envía la variable título   
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de postulaciones";
@@ -25,13 +25,13 @@ class ControladorPostulacion extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == "" || $entidad->apellido == "" || $entidad->celular == "" || $entidad->dni == "" || $entidad->correo == "" || $entidad->clave == ""){
+                  if($entidad->nombre == "" || $entidad->apellido == "" || $entidad->celular == "" || $entidad->correo == "" || $entidad->CV == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $postulacion = new Postulacion();
                         return view('sistema.postulacion-nuevo', compact('titulo', 'msg', 'postulacion'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["idpostulacion"] > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -42,7 +42,7 @@ class ControladorPostulacion extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idpostulacion;
+                        $_POST["idpostulacion"] = $entidad->idpostulacion;
                         return redirect('/admin/postulaciones')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -63,10 +63,11 @@ class ControladorPostulacion extends Controller{
             $registros_por_pagina = $request['length'];
             for($i = $inicio; $i < count($aPostulaciones) && $cont < $registros_por_pagina; $i++){
                   $row = array();
-                  $row[] = '<a href="/admin/sistema/postulacion/' . $aPostulaciones[$i]->idpostulacion . '">' . $aPostulaciones[$i]->nombre . '</a>';
+                  $row[] = '<a href="/admin/postulacion/' . $aPostulaciones[$i]->idpostulacion . '">' . $aPostulaciones[$i]->nombre . '</a>';
                   $row[] = $aPostulaciones[$i]->apellido;
                   $row[] = $aPostulaciones[$i]->celular;
                   $row[] = $aPostulaciones[$i]->correo;
+                  $row[] = $aPostulaciones[$i]->CV;
                   $row[] = "<a href=''> . Descargar </a>" ;
                   $cont++;
                   $data[] = $row;

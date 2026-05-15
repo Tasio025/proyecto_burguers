@@ -4,8 +4,8 @@
 <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
 <script src="{{asset('js/datatables.min.js')}}"></script>
 <script>
-    globalId = '<?php echo isset($postulacion->idpostulacion) && $postulacion->idpostulacion > 0 ? $postulacion->idpostulacion : 0; ?>';
-    <?php $globalId = isset($postulacion->idpostulacion) ? $postulacion->idpostulacion : "0";?>
+    globalId = '<?php echo isset($pedido->idpedido) && $pedido->idpedido > 0 ? $pedido->idpedido : 0; ?>';
+    <?php $globalId = isset($pedido->idpedido) ? $pedido->idpedido : "0";?>
 </script>
 @endsection
 @section('breadcrumb')
@@ -15,7 +15,7 @@
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/pedidos/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/pedido/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
 <!--Acá el profe tiene RECARGAR, donde la ruta es "/admin/clientes/nuevo"-->
     <li class="btn-item"><a title="Recargar" href="#" class="fa fa-refresh" aria-hidden="true" onclick='window.location.replace("/admin/pedidos");'>Recargar</a></li>
     @if($globalId > 0)
@@ -25,7 +25,7 @@
 </ol>
 <script>
 function fsalir(){
-    location.href ="/admin/sistema/pedidos";
+    location.href ="/admin/sistema/pedido";
 }
 </script>
 @endsection

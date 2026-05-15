@@ -35,7 +35,7 @@ class ControladorProducto extends Controller{
             $aCategorias = $categoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["idproducto"] > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -46,7 +46,7 @@ class ControladorProducto extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idproducto;      //id o idproducto??????
+                        $_POST["idproducto"] = $entidad->idproducto;      //id o idproducto??????
                         return redirect('/admin/productos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -70,7 +70,7 @@ class ControladorProducto extends Controller{
 
             for($i = $inicio; $i<count($aProductos) && $cont < $registros_por_pagina; $i++){
                   $row = array();
-                  $row[] = '<a href="/admin/sistema/producto/' . $aProductos[$i]->idproducto . '">' . $aProductos[$i]->nombre . '</a>';
+                  $row[] = '<a href="/admin/producto/' . $aProductos[$i]->idproducto . '">' . $aProductos[$i]->nombre . '</a>';
                   $row[] = $aProductos[$i]->cantidad;
                   $row[] = $aProductos[$i]->precio;
                   $row[] = '<img src="/files/productos/' . $aProductos[$i]->imagen . '" class="img-thumbnail" width="100px">';
@@ -98,7 +98,7 @@ class ControladorProducto extends Controller{
             $idproducto = $request->input("idproducto");
             $producto = new Producto();
             $pedido_producto = new Pedido_producto();
-            if($pedido->existePedidoPorProducto($idproducto)){
+            if($pedido_producto->existePedidoPorProducto($idproducto)){
                   $resultado["err"] = EXIT_FAILURE;
                   $resultado["mensaje"] = "No se puede eliminar el producto porque tiene pedidos asociados";
             }else{

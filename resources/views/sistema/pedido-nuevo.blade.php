@@ -2,8 +2,8 @@
 @section('titulo', $titulo)
 @section('scripts')
 <script>
-    globalId = '<?php echo isset($pedidos->idpedido) && $pedidos->idpedido > 0 ? $pedidos->idpedido : 0; ?>';
-    <?php $globalId = isset($pedidos->idpedido) ? $pedidos->idpedido : "0";?>
+    globalId = '<?php echo isset($pedido->idpedido) && $pedido->idpedido > 0 ? $pedido->idpedido : 0; ?>';
+    <?php $globalId = isset($pedido->idpedido) ? $pedido->idpedido : "0";?>
 </script>
 @endsection 
 @section('breadcrumb')
@@ -39,24 +39,30 @@ if (isset($msg)) {
       <form id="form1" method="POST" action="/admin/pedido/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <input type="hidden" id="idpedido" name="idpedido" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Fecha </label>
                     <input type="date" id="txtFecha" name="txtFecha" class="form-control" value="{{$pedido->fecha ?? ''}}" required>
                 </div>
                 <div class="form-group col-lg-6">
-                        <label for="txtSucursal">Sucursal: </label>
-                        <input type="text" id="txtSucursal" name="txtSucursal" class="form-control" value="{{$pedido->fk_idsucursal ?? ''}}" required>
+                        <label for="lstSucursal">Sucursal: </label>
+                        <select name="lstSucursal" id="lstSucursal" class="form-control" required>
+                            <option value="">Seleccionar...</option>
+                            <!-- Opciones de sucursales -->
+                        </select>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="txtCliente">Cliente: </label>
-                    <input type="text" id="txtCliente" name="txtCliente" class="form-control" value="{{$pedido->fk_idcliente ?? ''}}" required>
+                    <label for="lstCliente">Cliente: </label>
+                    <select name="lstCliente" id="lstCliente" class="form-control" required>
+                        <option value="">Seleccionar...</option>
+                        <!-- Opciones de clientes -->
+                    </select>
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="txtEstado">Estado del pedido</label>
-                    <select name="txtEstado" id="txtEstado" class="form-control" required>
+                    <label for="lstEstado">Estado del pedido</label>
+                    <select name="lstEstado" id="lstEstado" class="form-control" required>
                         <option value="">Seleccionar...</option>
                         <option value="1">Pendiente (pendiente por pago)</option>
                         <option value="2">En preparacion</option>

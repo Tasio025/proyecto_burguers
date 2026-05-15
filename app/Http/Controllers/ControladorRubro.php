@@ -12,7 +12,7 @@ class ControladorRubro extends Controller{
       public function nuevo(){
             $titulo = "Nuevo rubro";
             $rubro = new Rubro();
-            return view('Sistema.rubro-nuevo', compact("titulo", "rubro"));
+            return view('sistema.rubro-nuevo', compact("titulo", "rubro"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de rubros";
@@ -32,7 +32,7 @@ class ControladorRubro extends Controller{
                         $rubro = new Rubro();
                         return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["idrubro"] > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -43,7 +43,7 @@ class ControladorRubro extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idrubro;
+                        $_POST["idrubro"] = $entidad->idrubro;
                         return redirect('/admin/rubros')->with('msg', $msg);
                   }
             } catch (\Exception $e) {

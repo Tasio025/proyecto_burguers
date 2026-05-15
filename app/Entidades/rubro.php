@@ -13,7 +13,7 @@ class Rubro extends Model{
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idrubro = $request->input('id') != "0" ? $request->input('id') : $this->idrubro;
+            $this->idrubro = $request->input('idrubro') != "0" ? $request->input('idrubro') : $this->idrubro;
             $this->nombre = $request->input('txtNombre');
       } 
 
@@ -67,7 +67,7 @@ class Rubro extends Model{
             $sql = "SELECT
             idrubro,
             nombre
-            FROM rubros WERE 1 = 1";
+            FROM rubros WHERE 1 = 1";
             //Filtrado
             if(!empty($request['search']['value'])){ 
                   $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%')";

@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Model;
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
-            $this->idpostulacion = $request->input('id') != "0" ? $request->input('id') : $this->idpostulacion;
+            $this->idpostulacion = $request->input('idpostulacion') != "0" ? $request->input('idpostulacion') : $this->idpostulacion;
             $this->nombre = $request->input('txtNombre');
             $this->apellido = $request->input('txtApellido');
-            $this->celular = $request->input('txtTelefono');
+            $this->celular = $request->input('txtCelular');
             $this->correo = $request->input('txtCorreo');
             $this->CV = $request->input('txtCV');
       }

@@ -39,7 +39,7 @@ if (isset($msg)) {
       <form id="form1" method="POST" action="/admin/rubro/nuevo">
             <div class="row">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                  <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                  <input type="hidden" id="idrubro" name="idrubro" class="form-control" value="{{$globalId}}" required>
                   <div class="form-group col-lg-6">
                     <label>Nombre:</label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$rubro->nombre ?? ''}}" required>
