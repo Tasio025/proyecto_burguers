@@ -106,6 +106,12 @@ use Illuminate\Database\Eloquent\Model;
             fk_idcliente,
             fk_idestado
             FROM pedidos WHERE fk_idcliente = $idcliente";
+
+            /*$sql = "SELECT  Esta query debería ir en alguna parte de pedido_producto
+            idpedido,
+            fk_idproducto,
+            fk_idpedido
+            FROM pedido_productos WHERE fk_idproducto = $idproducto";*/
             //Ejecutamos la query
             $lstRetorno = DB::select($sql);
             //Si el cliente tiene pedidos asociados, no se puede eliminar
@@ -114,8 +120,18 @@ use Illuminate\Database\Eloquent\Model;
             }
             return false;
       }
+      public function existePedidosPorProducto($idproducto){
+            $sql = "SELECT
+            idpedidoproducto,
+            fk_idproducto,
+            fk_idpedido
+            FROM pedido_productos WHERE fk_idproducto = $idproducto";
+            $lstRetorno = DB::select($sql);
+            
+            return (count($lstRetorno) > 0);
+      }
       public function existePedidoPorSucursal($idsucursales){
-            $sql = "SELECT,
+            $sql = "SELECT
             idpedido,
             fecha,
             descripcion,
@@ -129,6 +145,38 @@ use Illuminate\Database\Eloquent\Model;
                   return true;
             }
             return false;
+      }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $columns = array(
+                  0 => "idpedido",
+                  1 => "fecha",
+                  2 => "descripcion",
+                  3 => "total",
+                  4 => "fk_idsucursal",
+                  5 => "fk_idcliente",
+                  6 => "fk_idestado"
+            );
+            $sql = "SELECT
+            idpedido,
+            fecha,
+            descripcion,
+            total,
+            fk_idsucursal,
+            fk_idcliente,
+            fk_idestado
+            FROM pedidos WHERE 1 = 1";
+            //Acá se hace el filtrado
+            if(!empty($request['search']{'value'})){
+                  $sql .= " AND (fecha like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR descripcion like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR total like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR fk_idsucursal like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR fk_idcliente like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR fk_idestado like '%" . $request['search']['value'] . "%')";
+            }
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
       }
 }
 ?>

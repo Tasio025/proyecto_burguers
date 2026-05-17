@@ -4,20 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Cliente;  
 use App\Entidades\Pedido;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 use Illuminate\Http\Request;  
 require app_path() . '/start/constants.php';
 
 class ControladorCliente extends Controller{
 
       public function nuevo(){
-            $titulo = "Nuevo clientes";
-            $cliente = new Cliente();
-            return view('sistema.cliente-nuevo', compact("titulo", "cliente")); //Envía la variable título
+            $titulo = "Nuevo cliente";
+            if (Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("CLIENTEALTA")){
+                        $codigo = "CLIENTEALTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $cliente = new Cliente();
+                        return view('sistema.cliente-nuevo', compact("titulo", "cliente")); //Envía la variable título
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function index(){
             $titulo = "Listado de clientes";
-            $cliente = new Cliente();
-            return view('sistema.cliente-listar', compact("titulo", "cliente"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("CLIENTECONSULTA")){
+                        $codigo = "CLIENTECONSULTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        return view('sistema.pagina-listar', compact('titulo'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){
             try{
@@ -70,7 +91,6 @@ class ControladorCliente extends Controller{
                   $row[] = $aClientes[$i]->correo;
                   $row[] = $aClientes[$i]->dni;
                   $row[] = $aClientes[$i]->celular;
-                  $row[] = $aClientes[$i]->clave;
                   $cont++;
                   $data[] = $row;
             }
@@ -84,28 +104,48 @@ class ControladorCliente extends Controller{
 
       }
       public function editar($idcliente){
-            $titulo = "Edición de cliente";
-            $cliente = new Cliente();
-            //$cliente->idcliente = $idcliente;
-            $cliente = $cliente->obtenerPorId($idcliente);
-            return view("sistema.cliente-nuevo", compact("titulo", "cliente"));     //Los que tengan desplegables, hay que enviar también los desplegables
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("CLIENTEEDITAR")){
+                        $codigo = "CLIENTEEDITAR";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $titulo = "Edición de cliente";
+                        $cliente = new Cliente();
+                        //$cliente->idcliente = $idcliente;
+                        $cliente = $cliente->obtenerPorId($idcliente);
+                        return view('sistema.cliente-nuevo', compact('titulo', 'cliente'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
+      //Los que tengan desplegables, hay que enviar también los desplegables
       }
       public function eliminar(Request $request){
-            $idcliente = $request->input("idcliente");
-            $cliente = new Cliente();
-            $pedido = new Pedido();
-                    
-            //Si el cliente tiene un pedido asociado no se tiene que poder eliminar
-            if($pedido->existePedidoPorCliente($idcliente)){
-                  $resultado["err"] = EXIT_FAILURE;
-                  $resultado["mensaje"] = "No se puede eliminar el cliente porque tiene pedidos asociados";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("CLIENTEELIMINAR")){
+                        $resultado["err"] = EXIT_FAILURE;
+                        $resultado["mensaje"] = "No tiene permisos para la operación";
+                  }else{
+                        $idcliente = $request->input("idcliente");
+                        $pedido = new Pedido();
+                        //Si el cliente tiene un pedido asociado no se tiene que poder eliminar
+                        if($pedido->existePedidoPorCliente($idcliente)){
+                              $resultado["err"] = EXIT_FAILURE;
+                              $resultado["mensaje"] = "No se puede eliminar el cliente porque tiene pedidos asociados"; 
+                        }else{
+                              //sino si
+                              $cliente = new Cliente();
+                              $cliente->idcliente = $idcliente;
+                              $cliente->eliminar();
+                              $resultado["err"] = EXIT_SUCCESS;
+                              $resultado["mensaje"] = "Registro eliminado exitosamente";
+                        }
+                  }
             }else{
-                  //Sino, si se puede eliminar
-                  $cliente->idcliente = $request->input("idcliente");
-                  $cliente->eliminar();
-                  $resultado["err"] = EXIT_SUCCESS; //EXIT_SUCCESS es una constante que se encuentra en el archivo constants.php que es igual a 0, es decir, no hubo error
-                  $resultado["mensaje"] = "Registro eliminado exitosamente";
-            }           
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "Usuario no está autenticado";
+            }
             return json_encode($resultado);
       }
 }
