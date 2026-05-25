@@ -16,8 +16,8 @@
 
 
 -- Volcando estructura de base de datos para burguers_2026
-CREATE DATABASE IF NOT EXISTS `burguers_2026` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `burguers_2026`;
+CREATE DATABASE IF NOT EXISTS `burguers` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `burguers`;
 
 -- Volcando estructura para tabla burguers_2026.carrito_productos
 CREATE TABLE IF NOT EXISTS `carrito_productos` (

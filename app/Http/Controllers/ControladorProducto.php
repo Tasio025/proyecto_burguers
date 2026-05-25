@@ -12,9 +12,10 @@ class ControladorProducto extends Controller{
  
       public function nuevo(){
             $titulo = 'Nuevo Producto';   
+            $producto = new Producto();
             $categoria = new Tipoproducto(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
             $aCategorias = $categoria->obtenerTodos();
-            return view('sistema.producto-nuevo', compact("titulo", "aCategorias"));      //Esto lo pasa al blade via compact
+            return view('sistema.producto-nuevo', compact("titulo", "aCategorias", "producto"));      //Esto lo pasa al blade via compact
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de productos";

@@ -32,9 +32,9 @@ class ControladorCliente extends Controller{
                   if(!Patente::autorizarOperacion("CLIENTECONSULTA")){
                         $codigo = "CLIENTECONSULTA";
                         $mensaje = "No tiene permisos para la operación";
-                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                        return view('sistema.cliente-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
-                        return view('sistema.pagina-listar', compact('titulo'));
+                        return view('sistema.cliente-listar', compact('titulo'));
                   }
             }else{
                   return redirect('admin/login');

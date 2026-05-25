@@ -123,7 +123,7 @@ Route::post('/admin/cliente/{idcliente}', 'ControladorCliente@guardar');//tendrÃ
 Route::get('/admin/productos/nuevo', 'ControladorProducto@nuevo');
 Route::get('/admin/producto/nuevo', 'ControladorProducto@nuevo');
 Route::get('/admin/sistema/productos/nuevo', 'ControladorProducto@nuevo');
-Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');
+Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');//Envio de formulario
 //Rutas de listado
 Route::get('/admin/productos', 'ControladorProducto@index');
 Route::get('/admin/productos/cargarGrilla', 'ControladorProducto@cargarGrilla')->name('producto.cargarGrilla');

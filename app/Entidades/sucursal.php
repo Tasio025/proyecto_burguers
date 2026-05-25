@@ -4,7 +4,7 @@ namespace App\Entidades;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 
-      class Sucursales extends Model{
+      class Sucursal extends Model{
 
       protected $table = 'sucursales';
       public $timestamps = false;

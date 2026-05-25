@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Entidades\Sucursales;
+use App\Entidades\Sucursal;
 use App\Entidades\Pedido;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
       class ControladorSucursal extends Controller{
             public function nuevo(){
                   $titulo = "Nueva sucursal";
-                  $sucursal = new Sucursales();
+                  $sucursal = new Sucursal();
                   return view('sistema.sucursal-nuevo', compact("titulo", "sucursal"));
             }
             public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de sucursales";
-            $sucursal = new Sucursales();
+            $sucursal = new Sucursal();
             return view('sistema.sucursal-listado', compact("titulo", "sucursal"));
       }
             public function guardar(Request $request){
                   try{
                         $titulo = "Modificar sucursal";
-                        $entidad = new Sucursales();
+                        $entidad = new Sucursal();
                         $entidad->cargarDesdeRequest($request);
 
                         //Validaciones
                         if($entidad->telefono == "" || $entidad->direccion == "" || $entidad->linkmapa == "" || $entidad->nombre == "" || $entidad->horario == ""){
                               $msg["ESTADO"] = MSG_ERROR;
                               $msg["MSG"] = "Complete todos los datos";
-                              $sucursal = new Sucursales();
+                              $sucursal = new Sucursal();
                               return view('sistema.sucursal-nuevo', compact('titulo', 'msg', 'sucursal'));
                         } else {
                               if($_POST["idsucursales"] > 0){   //id o idsucursal????
@@ -48,13 +48,13 @@ require app_path() . '/start/constants.php';
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = $e->getMessage();
                         $titulo = "Modificar sucursal";
-                        $sucursal = new Sucursales();
+                        $sucursal = new Sucursal();
                         return view('sistema.sucursal-nuevo', compact('titulo', 'msg', 'sucursal'));
                   }
             }
             public function cargarGrilla(Request $request){
                   $request = $_REQUEST;
-                  $entidad = new Sucursales();
+                  $entidad = new Sucursal();
                   $aSucursales = $entidad->obtenerFiltrado();
                   $data = array();
                   $cont = 0;
@@ -82,13 +82,13 @@ require app_path() . '/start/constants.php';
             }
             public function editar($idsucursal){
                   $titulo = "Editar sucursal";
-                  $sucursal = new Sucursales();
+                  $sucursal = new Sucursal();
                   $sucursal = $sucursal->obtenerPorId($idsucursal);
                   return view('sistema.sucursal-editar', compact('titulo', 'sucursal'));
             }                 //sucursal-nuevo o sucursal-editar????
             public function eliminar(Request $request){
                   $idsucursales = $request->input("idsucursal");
-                  $sucursal = new Sucursales();
+                  $sucursal = new Sucursal();
                   $pedido = new Pedido();
                   if($pedido->existePedidoPorSucursal($idsucursales)){
                         $resultado["err"] = EXIT_FAILURE;
