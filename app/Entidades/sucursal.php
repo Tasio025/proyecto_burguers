@@ -86,6 +86,39 @@ use Illuminate\Database\Eloquent\Model;
             ]);
             return $this->idsucursales = DB::getPdo()->lastInsertId();
       }
+      public function obtenerFiltrado(){
+            $request = $_REQUEST;
+            $columns = array(
+                  0 => 'idsucursales',
+                  1 => 'telefono',
+                  2 => 'direccion',
+                  3 => 'linkmapa',
+                  4 => 'nombre',
+                  5 => 'horario'
+            );
+            $sql = "SELECT
+            idsucursales,
+            telefono,
+            direccion,
+            linkmapa,
+            nombre,
+            horario
+            FROM sucursales WHERE 1= 1";
+            //Ahora realizamos el filtrado
+            if(!empty($request['search']['value'])){
+                  $sql .= " AND (
+                        idsucursales LIKE '%".$request['search']['value']."%' OR
+                        telefono LIKE '%".$request['search']['value']."%' OR
+                        direccion LIKE '%".$request['search']['value']."%' OR
+                        linkmapa LIKE '%".$request['search']['value']."%' OR
+                        nombre LIKE '%".$request['search']['value']."%' OR
+                        horario LIKE '%".$request['search']['value']."%'
+                  )";
+            }
+            $sql .= " ORDER BY ".$columns[$request['order'][0]['column']]." ".$request['order'][0]['dir'];
+            $lstRetorno = DB::select($sql);
+            return $lstRetorno;
+      }
 }
 
 ?>
