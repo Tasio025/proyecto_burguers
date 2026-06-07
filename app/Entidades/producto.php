@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
       protected $table = 'productos';
       public $timestamps = false;
-      protected $fillable = ['idproducto', 'nombre', 'cantidad', 'precio', 'imagen', 'fk_idcategoria', 'descripcion', 'titulo'];
+      protected $fillable = ['idproducto', 'nombre', 'cantidad', 'precio', 'imagen', 'fk_idcategoria'];
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
@@ -17,19 +17,18 @@ use Illuminate\Database\Eloquent\Model;
             $this->nombre = $request->input('txtNombre');
             $this->cantidad = $request->input('txtCantidad');
             $this->precio = $request->input('txtPrecio');
-            $this->imagen = $request->input('txtImagen');
             $this->fk_idcategoria = $request->input('lstTipoproducto');
       }
 
       public function obtenerTodos(){
-            $sql = "SELECT
+            $sql = "SELECT 
                   idproducto,
                   nombre,
                   cantidad,
                   precio,
                   imagen,
                   fk_idcategoria
-                  FROM productos ORDER BY titulo ASC";
+                  FROM productos ORDER BY nombre ASC";
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
       }
@@ -43,8 +42,6 @@ use Illuminate\Database\Eloquent\Model;
             fk_idcategoria
             FROM productos WHERE idproducto = ?";
             $lstRetorno = DB::select($sql, [$idproducto]);
-            return $lstRetorno;
-
             if(count($lstRetorno)> 0){
                   $this->idproducto = $lstRetorno[0]->idproducto;
                   $this->nombre = $lstRetorno[0]->nombre;
@@ -76,7 +73,7 @@ use Illuminate\Database\Eloquent\Model;
             imagen = '$this->imagen',
             fk_idcategoria = $this->fk_idcategoria
             WHERE idproducto =?";
-            $affected = DB::update($sql[$this->idproducto]);
+            $affected = DB::update($sql, [$this->idproducto]);
       }
       public function eliminar(){
             $sql = "DELETE FROM productos WHERE idproducto = ?";

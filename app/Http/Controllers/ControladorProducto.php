@@ -36,6 +36,13 @@ class ControladorProducto extends Controller{
             $aCategorias = $categoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
                   } else {
+                        //Manejo de imagen
+                        if($request->hasFile('txtImagen')){
+                              $archivo = $request->file('txtImagen');
+                              $nombre = time() . '_' . $archivo->getClientOriginalName();
+                              $archivo->move(public_path('files/productos'), $nombre);
+                              $entidad->imagen = $nombre;
+                        }
                         if($_POST["idproducto"] > 0){
                               //Es actualización
                               $entidad->guardar();
