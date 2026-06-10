@@ -33,7 +33,7 @@ class ControladorProducto extends Controller{
                         $msg["MSG"] = "Complete todos los datos";
                         $producto = new Producto();
                         $categoria = new Tipoproducto(); 
-            $aCategorias = $categoria->obtenerTodos();
+                        $aCategorias = $categoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
                   } else {
                         //Manejo de imagen
@@ -43,7 +43,7 @@ class ControladorProducto extends Controller{
                               $archivo->move(public_path('files/productos'), $nombre);
                               $entidad->imagen = $nombre;
                         }
-                        if($_POST["idproducto"] > 0){
+                        if($request->input("idproducto") > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -54,7 +54,7 @@ class ControladorProducto extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["idproducto"] = $entidad->idproducto;      //id o idproducto??????
+                        $request->request->add(['idproducto' => $entidad->idproducto]);
                         return redirect('/admin/productos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -64,6 +64,7 @@ class ControladorProducto extends Controller{
                   $producto = new Producto();
                   $categoria = new Tipoproducto(); 
                   $aCategorias = $categoria->obtenerTodos();
+                  //dd($e->getMessage());
                   return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
             }
       }

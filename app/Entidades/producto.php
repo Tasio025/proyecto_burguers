@@ -61,8 +61,9 @@ use Illuminate\Database\Eloquent\Model;
             precio,
             imagen,
             fk_idcategoria
-            FROM productos WHERE fk_idcategoria = $idTipoProducto";
+            FROM productos WHERE fk_idcategoria = ?";
             $lstRetorno = DB::select($sql, [$idTipoProducto]);
+            return $lstRetorno;
 
       }
       public function guardar(){
@@ -116,11 +117,11 @@ use Illuminate\Database\Eloquent\Model;
             FROM productos A WHERE 1=1";
             //Acá se hace el filtrado
             if(!empty($request['search']['value'])){
-                  $sql .= "AND (nombre like '%" . $request['search']['value'] . "%')";
-                  $sql .= "OR cantidad like '%" . $request['search']['value'] . "%')";
-                  $sql .= "OR precio like '%" . $request['search']['value'] . "%')";
-                  $sql .= "OR imagen like '%" . $request['search']['value'] . "%')";
-                  $sql .= "OR fk_idcategoria like '%" . $request['search']['value'] . "%')";
+                  $sql .= " AND (nombre like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR cantidad like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR precio like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR imagen like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR fk_idcategoria like '%" . $request['search']['value'] . "%')";
             }
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
