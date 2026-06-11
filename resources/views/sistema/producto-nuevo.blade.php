@@ -92,6 +92,7 @@ if (isset($msg)) {
             url: "{{ asset('/admin/producto/eliminar')}}",
             data: {idproducto:globalId},
             async: true,
+            dataType: "json",
             success: function(data){
                 if(data.err == 0){
                     msgShow(data.mensaje, "success");
@@ -103,7 +104,7 @@ if (isset($msg)) {
                     $("#mdlEliminar").modal("toggle");
                 }
             }
-        })
+        });
     }
 </script>
 

@@ -79,6 +79,7 @@ use Illuminate\Database\Eloquent\Model;
       public function eliminar(){
             $sql = "DELETE FROM productos WHERE idproducto = ?";
             $affected = DB::delete($sql, [$this->idproducto]);
+            //Puedo probar cambiando affected por return
       }
       public function insertar(){
             $sql = "INSERT INTO productos(

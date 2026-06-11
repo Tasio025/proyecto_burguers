@@ -128,7 +128,7 @@ Route::post('/admin/producto/nuevo', 'ControladorProducto@guardar');//Envio de f
 Route::get('/admin/productos', 'ControladorProducto@index');
 Route::get('/admin/productos/cargarGrilla', 'ControladorProducto@cargarGrilla')->name('producto.cargarGrilla');
 //Ruta de eliminación
-Route::get('/admin/producto/eliminar', 'ControladorCliente@eliminar');
+Route::get('/admin/producto/eliminar', 'ControladorProducto@eliminar');
 //Ruta edición
 Route::get('/admin/producto/{idproducto}', 'ControladorProducto@editar');
 Route::post('/admin/producto/{idproducto}', 'ControladorProducto@guardar');

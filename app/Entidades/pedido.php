@@ -111,7 +111,7 @@ use Illuminate\Database\Eloquent\Model;
             idpedido,
             fk_idproducto,
             fk_idpedido
-            FROM pedido_productos WHERE fk_idproducto = $idproducto";*/
+            FROM pedidos_productos WHERE fk_idproducto = $idproducto";*/
             //Ejecutamos la query
             $lstRetorno = DB::select($sql);
             //Si el cliente tiene pedidos asociados, no se puede eliminar
@@ -125,7 +125,7 @@ use Illuminate\Database\Eloquent\Model;
             idpedidoproducto,
             fk_idproducto,
             fk_idpedido
-            FROM pedido_productos WHERE fk_idproducto = $idproducto";
+            FROM pedidos_productos WHERE fk_idproducto = $idproducto";
             $lstRetorno = DB::select($sql);
             
             return (count($lstRetorno) > 0);
