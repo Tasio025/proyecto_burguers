@@ -34,11 +34,12 @@ if (isset($msg)) {
     echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
 }
 ?>
+<div id= "msg"></div>
 <div class="panel-body">
       <form id="form1" method="POST" action="/admin/sucursal/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
-                <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
+                <input type="hidden" id="idsucursales" name="idsucursales" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
                     <label>Teléfono</label>
                     <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{$sucursal->telefono ?? ''}}" required>

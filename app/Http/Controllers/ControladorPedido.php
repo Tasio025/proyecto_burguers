@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Pedido;
+use App\Entidades\Sucursal;
+use App\Entidades\Cliente;
 use Illuminate\Http\Request;
 require app_path() . '/start/constants.php';
 
@@ -11,7 +13,11 @@ class ControladorPedido extends Controller{
       public function nuevo(){
             $titulo = "Nuevo Pedido";
             $pedido = new Pedido();
-            return view('sistema.pedido-nuevo', compact("titulo", "pedido"));
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+            $cliente = new Cliente();
+            $aClientes = $cliente->obtenerTodos();
+            return view('sistema.pedido-nuevo', compact("titulo", "pedido", "aSucursales", "aClientes"));
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de pedidos";

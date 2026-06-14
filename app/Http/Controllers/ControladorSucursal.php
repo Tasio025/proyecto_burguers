@@ -63,11 +63,10 @@ require app_path() . '/start/constants.php';
 
                   for($i = $inicio; $i<count($aSucursales) && $cont < $registros_por_pagina; $i++){
                         $row = array();
-                        $row[] = '<a href="/admin/sistema/sucursales/' . $aSucursales[$i]->idsucursales . '">' . $aSucursales[$i]->idsucursales . '</a>';
+                        $row[] = '<a href="/admin/sucursales/' . $aSucursales[$i]->idsucursales . '">' . $aSucursales[$i]->nombre . '</a>';
                         $row[] = $aSucursales[$i]->telefono;
                         $row[] = $aSucursales[$i]->direccion;
                         $row[] = $aSucursales[$i]->linkmapa;
-                        $row[] = $aSucursales[$i]->nombre;
                         $row[] = $aSucursales[$i]->horario;
                         $cont++;
                         $data[] = $row;
@@ -84,7 +83,7 @@ require app_path() . '/start/constants.php';
                   $titulo = "Editar sucursal";
                   $sucursal = new Sucursal();
                   $sucursal = $sucursal->obtenerPorId($idsucursal);
-                  return view('sistema.sucursal-editar', compact('titulo', 'sucursal'));
+                  return view('sistema.sucursal-nuevo', compact('titulo', 'sucursal'));
             }                 //sucursal-nuevo o sucursal-editar????
             public function eliminar(Request $request){
                   $idsucursales = $request->input("idsucursal");

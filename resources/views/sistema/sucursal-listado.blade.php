@@ -39,11 +39,12 @@ if (isset($msg)) {
 <table id="grilla" class="display">
       <thead>
             <tr>
-                  <th>Teléfono</th>
-                  <th>Dirección</th>
-                  <th>Ubicación</th>
-                  <th>Nombre</th>
-                  <th>Horario</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Ubicación</th>
+                <th>Link</th>
+                <th>Horario</th>
             </tr>
       </thead>
 </table>

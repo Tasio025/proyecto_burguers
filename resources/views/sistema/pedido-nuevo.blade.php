@@ -48,7 +48,12 @@ if (isset($msg)) {
                         <label for="lstSucursal">Sucursal: </label>
                         <select name="lstSucursal" id="lstSucursal" class="form-control" required>
                             <option value="">Seleccionar...</option>
-                            <!-- Opciones de sucursales -->
+                            @foreach($aSucursales as $sucursal)
+                                <option value="{{ $sucursal->idsucursal }}"
+                                {{ isset($pedido->fk_idsucursal) && $pedido->fk_idsucursal == $sucursal->idsucursal ? 'selected' : '' }}>
+                                    {{ $sucursal->nombre }}
+                                </option>
+                            @endforeach
                         </select>
                 </div>
             </div>
@@ -57,7 +62,12 @@ if (isset($msg)) {
                     <label for="lstCliente">Cliente: </label>
                     <select name="lstCliente" id="lstCliente" class="form-control" required>
                         <option value="">Seleccionar...</option>
-                        <!-- Opciones de clientes -->
+                        @foreach($aClientes as $cliente)
+                            <option value="{{ $cliente->idcliente }}"
+                            {{ isset($pedido->fk_idcliente) && $pedido->fk_idcliente == $cliente->idcliente ? 'selected' : '' }}>
+                                {{ $cliente->nombre }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-lg-6">
