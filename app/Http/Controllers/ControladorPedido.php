@@ -35,9 +35,13 @@ class ControladorPedido extends Controller{
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $pedido = new Pedido();
-                        return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
+                        $sucursal = new Sucursal();
+                        $aSucursales = $sucursal->obtenerTodos();
+                        $cliente = new Cliente();
+                        $aClientes = $cliente->obtenerTodos();
+                        return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido', 'aSucursales', 'aClientes'));
                   } else {
-                        if($_POST["id"] > 0){
+                        if($_POST["idpedido"] > 0){
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
@@ -48,7 +52,7 @@ class ControladorPedido extends Controller{
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["id"] = $entidad->idpedido;
+                        $_POST["idpedido"] = $entidad->idpedido;
                         return redirect('/admin/pedidos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
@@ -56,6 +60,10 @@ class ControladorPedido extends Controller{
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar Pedido";
                   $pedido = new Pedido();
+                  $sucursal = new Sucursal();
+                  $aSucursales = $sucursal->obtenerTodos();
+                  $cliente = new Cliente();
+                  $aClientes = $cliente->obtenerTodos();
                   return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
             }
       }

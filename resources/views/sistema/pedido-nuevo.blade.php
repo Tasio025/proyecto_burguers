@@ -49,8 +49,8 @@ if (isset($msg)) {
                         <select name="lstSucursal" id="lstSucursal" class="form-control" required>
                             <option value="">Seleccionar...</option>
                             @foreach($aSucursales as $sucursal)
-                                <option value="{{ $sucursal->idsucursal }}"
-                                {{ isset($pedido->fk_idsucursal) && $pedido->fk_idsucursal == $sucursal->idsucursal ? 'selected' : '' }}>
+                                <option value="{{ $sucursal->idsucursales }}"
+                                {{ isset($pedido->fk_idsucursal) && $pedido->fk_idsucursal == $sucursal->idsucursales ? 'selected' : '' }}>
                                     {{ $sucursal->nombre }}
                                 </option>
                             @endforeach

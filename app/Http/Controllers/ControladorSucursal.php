@@ -63,7 +63,7 @@ require app_path() . '/start/constants.php';
 
                   for($i = $inicio; $i<count($aSucursales) && $cont < $registros_por_pagina; $i++){
                         $row = array();
-                        $row[] = '<a href="/admin/sucursales/' . $aSucursales[$i]->idsucursales . '">' . $aSucursales[$i]->nombre . '</a>';
+                        $row[] = '<a href="/admin/sucursal/' . $aSucursales[$i]->idsucursales . '">' . $aSucursales[$i]->nombre . '</a>';
                         $row[] = $aSucursales[$i]->telefono;
                         $row[] = $aSucursales[$i]->direccion;
                         $row[] = $aSucursales[$i]->linkmapa;
