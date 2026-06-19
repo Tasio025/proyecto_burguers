@@ -170,7 +170,7 @@ Route::post('/admin/postulacion/{idpostulacion}', 'ControladorPostulacion@guarda
 /* --------------------------------------------- */
 /* CONTROLADOR CATEGORÍAS                           */
 /* --------------------------------------------- */
-//Rutas de forulario
+//Rutas de formulario
 Route::get('/admin/categorias/nuevo', 'ControladorCategoria@nuevo');
 Route::get('/admin/categoria/nuevo', 'ControladorCategoria@nuevo');
 Route::get('/admin/sistema/categorias/nuevo', 'ControladorCategoria@nuevo');

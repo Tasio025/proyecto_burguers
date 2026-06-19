@@ -52,6 +52,7 @@
 	    }
 
 	    function enviarFormulario() {
+        //modificado = false;//MODIFICO ESTA LINEA A VER SI ME DEJA GUARDAR LOS FORMULARIOS DE PEDIDOS
 	        var form = document.getElementById('form1');
 	        if (form) {
 	            form.submit();

@@ -25,6 +25,7 @@ class ControladorPedido extends Controller{
             return view('sistema.pedido-listado', compact("titulo", "pedido"));
       }
       public function guardar(Request $request){
+            //dd($request->all());  Esa función me permite mostrar que datos llegan en el request
             try{
                   $titulo = "Modificar Pedido";
                   $entidad = new Pedido();
@@ -41,21 +42,22 @@ class ControladorPedido extends Controller{
                         $aClientes = $cliente->obtenerTodos();
                         return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido', 'aSucursales', 'aClientes'));
                   } else {
-                        if($_POST["idpedido"] > 0){
+                        if($_POST["idpedido"] > 0){   //Si viene el id y es > a 0 estoy guardando, sino estoy insertando
                               //Es actualización
                               $entidad->guardar();
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
-                        } else {
+                        } else {    
                               //Es nuevo
                               $entidad->insertar();
                               $msg["ESTADO"] = MSG_SUCCESS;
                               $msg["MSG"] = OKINSERT;
                         }
-                        $_POST["idpedido"] = $entidad->idpedido;
+                        //$request->request->set('idpedido', $entidad->idpedido);
                         return redirect('/admin/pedidos')->with('msg', $msg);
                   }
             } catch (\Exception $e) {
+                  //dd($e->getMessage()); FUNCIÓN QUE MUESTRA LOS ERRORES QUE PUEDEN SURGIR EN EL CODIGO
                   $msg["ESTADO"] = MSG_ERROR;
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar Pedido";
@@ -64,7 +66,7 @@ class ControladorPedido extends Controller{
                   $aSucursales = $sucursal->obtenerTodos();
                   $cliente = new Cliente();
                   $aClientes = $cliente->obtenerTodos();
-                  return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido'));
+                  return view('sistema.pedido-nuevo', compact('titulo', 'msg', 'pedido', 'aSucursales', 'aClientes'));
             }
       }
       public function cargarGrilla(Request $request){
@@ -78,12 +80,12 @@ class ControladorPedido extends Controller{
 
             for($i = $inicio; $i<count($aPedidos) && $cont < $registros_por_pagina; $i++){
                   $row = array();
-                  $row[] = '<a href="/admin/sistema/pedido/' . $aPedidos[$i]->idpedido . '">' . $aPedidos[$i]->fecha . '</a>';
+                  $row[] = '<a href="/admin/pedido/' . $aPedidos[$i]->idpedido . '">' . $aPedidos[$i]->fecha . '</a>';
                   $row[] = $aPedidos[$i]->descripcion;
                   $row[] = $aPedidos[$i]->total;
-                  $row[] = $aPedidos[$i]->fk_idsucursal;
-                  $row[] = $aPedidos[$i]->fk_idcliente;
-                  $row[] = $aPedidos[$i]->fk_idestado;
+                  $row[] = $aPedidos[$i]->nombre_sucursal;
+                  $row[] = $aPedidos[$i]->nombre_cliente;
+                  $row[] = $aPedidos[$i]->nombre_estado;
                   $cont++;
                   $data[] = $row;
             }
@@ -99,12 +101,16 @@ class ControladorPedido extends Controller{
             $titulo = "Edición de pedido";
             $pedido =  new Pedido();
             $pedido = $pedido->obtenerPorId($idpedido);
-            return view('sistema.pedido-nuevo', compact('titulo', 'pedido'));
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+            $cliente = new Cliente();
+            $aClientes = $cliente->obtenerTodos();
+            return view('sistema.pedido-nuevo', compact('titulo', 'pedido', 'aSucursales', 'aClientes'));
       }
       public function eliminar(Request $request){
-            $idpedido = $request->input("idpedido");
+            $idpedido = $request->get("idpedido");
             $pedido = new Pedido();
-            $pedido->idpedido = $request->input("idpedido");
+            $pedido->idpedido = $request->get("idpedido");
             $pedido->eliminar();
             $resultado["err"] = EXIT_SUCCESS;
             $resultado["mensaje"] = "Registro eliminado exitosamente";

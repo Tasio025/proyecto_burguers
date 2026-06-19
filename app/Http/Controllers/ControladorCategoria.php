@@ -56,15 +56,15 @@ require app_path() . '/start/constants.php';
             }
             public function cargarGrilla(Request $request){
                   $request = $_REQUEST;
-                  $eentidad = new Categoria();
-                  $aCategorias = $eentidad->obtenerFiltrado(); 
+                  $entidad = new Categoria();
+                  $aCategorias = $entidad->obtenerFiltrado(); 
                   $data = array();
                   $cont  = 0;
                   $inicio = $request['start'];
                   $registros_por_pagina = $request['length'];
                   for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
                         $row = array();
-                        $row[] = '<a href="/admin/categoria/' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
+                        $row[] = '<a href="/admin/categoria' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
                         $cont++;
                         $data[] = $row;
                   }
@@ -90,6 +90,7 @@ require app_path() . '/start/constants.php';
                         $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No se puede eliminar la categoria porque tiene pedidos asociados";
                   }else{
+                        //Esto está medio raro, lo tengo que revisar
                         $categoria->idcategoria = $request->input("idcategoria");
                         $categoria->eliminar();
                         $resultado["err"] = EXIT_SUCCESS;

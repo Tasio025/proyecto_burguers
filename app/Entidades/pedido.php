@@ -46,7 +46,6 @@ use Illuminate\Database\Eloquent\Model;
             fk_idestado
             FROM pedidos WHERE idpedido = ?";
             $lstRetorno = DB::select($sql, [$idpedido]);
-            return $lstRetorno;
 
             if(count($lstRetorno)> 0){
                   $this->idpedido = $lstRetorno[0]->idpedido;
@@ -70,7 +69,8 @@ use Illuminate\Database\Eloquent\Model;
             fk_idestado = $this->fk_idestado
             WHERE idpedido = ?";
 
-      $affected = DB::update($sql, [$this->idpedido]);
+            $affected = DB::update($sql, [$this->idpedido]);
+            return $affected;
       }
       public function eliminar(){
             $sql = "DELETE FROM pedidos WHERE idpedido = ?";
@@ -158,14 +158,18 @@ use Illuminate\Database\Eloquent\Model;
                   6 => "fk_idestado"
             );
             $sql = "SELECT
-            idpedido,
-            fecha,
-            descripcion,
-            total,
-            fk_idsucursal,
-            fk_idcliente,
-            fk_idestado
-            FROM pedidos WHERE 1 = 1";
+            p.idpedido,
+            p.fecha,
+            p.descripcion,
+            p.total,
+            s.nombre AS nombre_sucursal,
+            c.nombre AS nombre_cliente,
+            e.nombre AS nombre_estado
+            FROM pedidos p
+            JOIN sucursales s ON p.fk_idsucursal = s.idsucursal
+            JOIN clientes c ON p.fk_idcliente = c.idcliente
+            JOIN estados e ON p.fk_idestado = e.idestadopedido
+            WHERE 1 = 1";
             //Acá se hace el filtrado
             if(!empty($request['search']{'value'})){
                   $sql .= " AND (fecha like '%" . $request['search']['value'] . "%'";
@@ -174,6 +178,12 @@ use Illuminate\Database\Eloquent\Model;
                   $sql .= " OR fk_idsucursal like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR fk_idcliente like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR fk_idestado like '%" . $request['search']['value'] . "%')";
+                  /*$sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.descripcion like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.total like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.fk_idsucursal like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.fk_idcliente like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.fk_idestado like '%" . $request['search']['value'] . "%')";*/ 
             }
             $lstRetorno = DB::select($sql);
             return $lstRetorno;

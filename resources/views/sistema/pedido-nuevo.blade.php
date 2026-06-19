@@ -9,13 +9,14 @@
 @section('breadcrumb')
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="/admin/pedido">Pedidos</a></li>
+    <li class="breadcrumb-item"><a href="/admin/pedidos">Pedidos</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>
 <ol class="toolbar">
-    <li class="btn-item"><a title="Nuevo" href="/admin/sistema/pedidos/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
+    <li class="btn-item"><a title="Nuevo" href="/admin/pedido/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: $('#modalGuardar').modal('toggle');"><span>Guardar</span></a>
-    </li>
+<!--    <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: guardar(); return false;"><span>Guardar</span></a>-->    
+</li>
     @if($globalId > 0)
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-trash-o" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');"><span>Eliminar</span></a></li>
     @endif
@@ -23,7 +24,7 @@
 </ol>
 <script>
 function fsalir(){
-    location.href ="/admin/sistema/pedidos";
+    location.href ="/admin/pedido";
 }
 </script>
 @endsection
@@ -36,7 +37,7 @@ if (isset($msg)) {
 ?>
 <div id = "msg"></div>
 <div class="panel-body">
-      <form id="form1" method="POST" action="/admin/pedido/nuevo">
+      <form id="form1" name="form1" method="POST" action="/admin/pedido/nuevo">
             <div class="row">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="idpedido" name="idpedido" class="form-control" value="{{$globalId}}" required>
@@ -87,6 +88,11 @@ if (isset($msg)) {
                     <label for="txtTotal">Total: </label>
                     <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
                 </div>
+            </div>
+           <div class="form-group col-lg-6">
+                <label for="txtDescripcion">Descripción del pedido: </label>
+                <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" rows="4" required>{{ old('txtDescripcion', $pedido->descripcion ?? '') }}</textarea>
+            </div>
       </form>
       <script>
 
