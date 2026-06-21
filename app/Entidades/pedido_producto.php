@@ -48,6 +48,10 @@ use Illuminate\Database\Eloquent\Model;
             }
             return null;
       }
+      public function eliminarPorPedido($idpedido){
+            $sql = "DELETE FROM pedidos_productos WHERE fk_idpedido = ?";
+            $affected = DB::delete($sql, [$idpedido]);
+      }
       public function guardar(){
             $sql = "UPDATE pedidos_productos SET
             cantidad = $this->cantidad,

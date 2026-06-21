@@ -65,8 +65,8 @@ class ControladorRubro extends Controller{
 
             for($i = $inicio; $i<count($aRubros) && $cont < $registros_por_pagina; $i++){
                   $row = array();
-                  $row[] = '<a href="/admin/rubros/' . $aRubros[$i]->idrubro . '" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                  $row[] = $aRubros[$i]->nombre;
+                  $row[] = '<a href="/admin/rubro/' . $aRubros[$i]->idrubro . '">' . $aRubros[$i]->nombre . '</a>';
+                  //$row[] = $aRubros[$i]->nombre;
                   $cont++;
                   $data[] = $row;
             }

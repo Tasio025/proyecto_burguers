@@ -63,8 +63,7 @@ class ControladorProveedor extends Controller{
 
             for($i = $inicio; $i < count($aProveedores) && $cont < $registros_por_pagina; $i++){
                   $row = array();
-                  $row[] = '<a href="/admin/proveedores/' . $aProveedores[$i]->idproveedor . '" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                  $row[] = $aProveedores[$i]->nombre;
+                  $row[] = '<a href="/admin/proveedor/' . $aProveedores[$i]->idproveedor . '">' . $aProveedores[$i]->nombre . '</a>';
                   $row[] = $aProveedores[$i]->direccion;
                   $row[] = $aProveedores[$i]->telefono;
                   $row[] = $aProveedores[$i]->correo;

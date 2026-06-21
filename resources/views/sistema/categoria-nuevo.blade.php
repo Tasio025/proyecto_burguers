@@ -41,7 +41,7 @@ if (isset($msg)) {
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
                 <input type="hidden" id="idcategoria" name="idcategoria" class="form-control" value="{{$globalId}}" required>
                 <div class="form-group col-lg-6">
-                    <label>Nombre: </label>
+                    <label>Nombre de categoria: </label>
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$categoria->nombre ?? ''}}" required>
                 </div>
       </form>

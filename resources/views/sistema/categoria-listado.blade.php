@@ -10,7 +10,7 @@
 @endsection
 @section('breadcrumb')
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/admin">Inicio</a></li> <!--En el href el profe tiene "/home"-->
+    <li class="breadcrumb-item"><a href="/admin">Inicio</a></li>
     <li class="breadcrumb-item"><a href="/admin/categorias">Categorias</a></li>
     <li class="breadcrumb-item active">Modificar</li>
 </ol>

@@ -62,7 +62,7 @@ if (isset($msg)) {
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtCV">CV:</label>
-                    <input type="file" id="txtCV" name="txtCV" class="form-control" accept=".pdf, .doc, .docx" required>
+                    <input type="file" id="txtCV" name="txtCV" class="form-control-file" accept=".pdf, .doc, .docx" required>
                 </div>
             </div>
       </form>

@@ -5,7 +5,7 @@ use DB;
 use Illuminate\Database\Eloquent\Model;
 
       class Categoria extends Model{
-      protected $table = 'categorias';
+      protected $table = 'categoria';
       public $timestamps = false;
       protected $fillable = ['idcategoria', 'nombre'];
       protected $hidden = [];
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
                   idcategoria,
                   nombre
-                  FROM categorias ORDER BY nombre ASC";
+                  FROM categoria ORDER BY nombre ASC";
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
       }
@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idcategoria,
             nombre
-            FROM categorias WHERE idcategoria = ?";
+            FROM categoria WHERE idcategoria = ?";
             $lstRetorno = DB::select($sql, [$idcategoria]);
 
             if(count($lstRetorno)> 0){
@@ -38,19 +38,19 @@ use Illuminate\Database\Eloquent\Model;
             return null;
       }
       public function guardar(){
-            $sql = "UPDATE categorias SET
+            $sql = "UPDATE categoria SET
             nombre = '$this->nombre'
             WHERE idcategoria = ?";
             $affected = DB::update($sql, [$this->idcategoria]);
            // return $affected;
       }
       public function eliminar(){
-            $sql = "DELETE FROM categorias WHERE idcategoria =?";
+            $sql = "DELETE FROM categoria WHERE idcategoria =?";
             $affected = DB::delete($sql, [$this->idcategoria]);
            // return $affected;
       }
       public function insertar(){
-            $sql = "INSERT INTO categorias (
+            $sql = "INSERT INTO categoria (
                   nombre
                   ) VALUES (?)";
                   $result = DB::insert($sql, [
@@ -67,7 +67,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idcategoria,
             nombre
-            FROM categorias WHERE 1 = 1";
+            FROM categoria WHERE 1 = 1";
             //Filtrado
             if(!empty($request['search']['value'])){
                   $sql .= " AND ( nombre LIKE '%".$request['search']['value']."%' )";

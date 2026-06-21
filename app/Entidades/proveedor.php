@@ -120,9 +120,9 @@ use Illuminate\Database\Eloquent\Model;
                   $this->direccion = $lstRetorno[0]->direccion;
                   $this->telefono = $lstRetorno[0]->telefono;
                   $this->correo = $lstRetorno[0]->correo;
-            }else{
-                  return null;
+                  return $this;
             }
+            return null;
       }
 }     
 

@@ -58,13 +58,14 @@ require app_path() . '/start/constants.php';
                   $request = $_REQUEST;
                   $entidad = new Categoria();
                   $aCategorias = $entidad->obtenerFiltrado(); 
+                  //dd($aCategorias);
                   $data = array();
                   $cont  = 0;
                   $inicio = $request['start'];
                   $registros_por_pagina = $request['length'];
                   for ($i = $inicio; $i < count($aCategorias) && $cont < $registros_por_pagina; $i++) {
                         $row = array();
-                        $row[] = '<a href="/admin/categoria' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
+                        $row[] = '<a href="/admin/categoria/' . $aCategorias[$i]->idcategoria . '">' . $aCategorias[$i]->nombre . '</a>';
                         $cont++;
                         $data[] = $row;
                   }

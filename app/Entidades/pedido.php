@@ -105,15 +105,9 @@ use Illuminate\Database\Eloquent\Model;
             fk_idsucursal,
             fk_idcliente,
             fk_idestado
-            FROM pedidos WHERE fk_idcliente = $idcliente";
-
-            /*$sql = "SELECT  Esta query debería ir en alguna parte de pedido_producto
-            idpedido,
-            fk_idproducto,
-            fk_idpedido
-            FROM pedidos_productos WHERE fk_idproducto = $idproducto";*/
+            FROM pedidos WHERE fk_idcliente = ?";
             //Ejecutamos la query
-            $lstRetorno = DB::select($sql);
+            $lstRetorno = DB::select($sql, [$idcliente]);
             //Si el cliente tiene pedidos asociados, no se puede eliminar
             if(count($lstRetorno) > 0){
                   return true;
@@ -125,8 +119,8 @@ use Illuminate\Database\Eloquent\Model;
             idpedidoproducto,
             fk_idproducto,
             fk_idpedido
-            FROM pedidos_productos WHERE fk_idproducto = $idproducto";
-            $lstRetorno = DB::select($sql);
+            FROM pedidos_productos WHERE fk_idproducto = ?";
+            $lstRetorno = DB::select($sql, [$idproducto]);
             
             return (count($lstRetorno) > 0);
       }
@@ -139,8 +133,8 @@ use Illuminate\Database\Eloquent\Model;
             fk_idsucursal,
             fk_idcliente,
             fk_idestado
-            FROM pedidos WHERE fk_idsucursal = $idsucursales";
-            $lstRetorno = DB::select($sql);
+            FROM pedidos WHERE fk_idsucursal = ?";
+            $lstRetorno = DB::select($sql, [$idsucursales]);
             if(count($lstRetorno) > 0){
                   return true;
             }
@@ -166,24 +160,24 @@ use Illuminate\Database\Eloquent\Model;
             c.nombre AS nombre_cliente,
             e.nombre AS nombre_estado
             FROM pedidos p
-            JOIN sucursales s ON p.fk_idsucursal = s.idsucursal
+            JOIN sucursales s ON p.fk_idsucursal = s.idsucursales
             JOIN clientes c ON p.fk_idcliente = c.idcliente
-            JOIN estados e ON p.fk_idestado = e.idestadopedido
+            JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
             WHERE 1 = 1";
             //Acá se hace el filtrado
             if(!empty($request['search']{'value'})){
-                  $sql .= " AND (fecha like '%" . $request['search']['value'] . "%'";
+                  /*$sql .= " AND (fecha like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR descripcion like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR total like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR fk_idsucursal like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR fk_idcliente like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR fk_idestado like '%" . $request['search']['value'] . "%')";
-                  /*$sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR fk_idestado like '%" . $request['search']['value'] . "%')";*/
+                  $sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.descripcion like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.total like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.fk_idsucursal like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.fk_idcliente like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR p.fk_idestado like '%" . $request['search']['value'] . "%')";*/ 
+                  $sql .= " OR p.fk_idestado like '%" . $request['search']['value'] . "%')"; 
             }
             $lstRetorno = DB::select($sql);
             return $lstRetorno;

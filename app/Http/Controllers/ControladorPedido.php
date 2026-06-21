@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Pedido;
+use App\Entidades\Pedido_producto;
 use App\Entidades\Sucursal;
 use App\Entidades\Cliente;
 use Illuminate\Http\Request;
@@ -109,12 +110,27 @@ class ControladorPedido extends Controller{
       }
       public function eliminar(Request $request){
             $idpedido = $request->get("idpedido");
+            //Primero eliminamos los productos asociados al pedido
+            $pedido_producto = new Pedido_producto();
+            $pedido_producto->eliminarPorPedido($idpedido);
+            //Después eliminamos el pedido
             $pedido = new Pedido();
-            $pedido->idpedido = $request->get("idpedido");
+            $pedido->idpedido = $idpedido;
             $pedido->eliminar();
             $resultado["err"] = EXIT_SUCCESS;
             $resultado["mensaje"] = "Registro eliminado exitosamente";
-            return json_encode($resultado);      
+            return json_encode($resultado);
+
+            /* VERSIÓN ANTERIOR SIN ELIMINAR LOS PRODUCTOS ASOCIADOS AL PEDIDO
+            $idpedido = $request->get("idpedido");
+            //Primero eliminamos los productos asaociados al pedido
+            $pedido = new Pedido();
+            $pedido->idpedido = $request->get("idpedido");
+            //Después eliminamos el pedido
+            $pedido->eliminar();
+            $resultado["err"] = EXIT_SUCCESS;
+            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            return json_encode($resultado);  */   
       }
 }
 

@@ -88,10 +88,10 @@ if (isset($msg)) {
                     <label for="txtTotal">Total: </label>
                     <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
                 </div>
-            </div>
-           <div class="form-group col-lg-6">
-                <label for="txtDescripcion">Descripción del pedido: </label>
-                <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" rows="4" required>{{ old('txtDescripcion', $pedido->descripcion ?? '') }}</textarea>
+                <div class="form-group col-lg-6">
+                    <label for="txtDescripcion">Descripción del pedido: </label>
+                    <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" rows="4" required>{{ old('txtDescripcion', $pedido->descripcion ?? '') }}</textarea>
+                </div>
             </div>
       </form>
       <script>

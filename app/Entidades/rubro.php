@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rubro extends Model{
 
-      protected $table = 'rubros';
+      protected $table = 'rubro';
       public $timestamps = false;
       protected $fillable = ['idrubro', 'nombre'];
       protected $hidden = [];
@@ -21,7 +21,7 @@ class Rubro extends Model{
             $sql = "SELECT
                   idrubro,
                   nombre
-                  FROM rubros ORDER BY nombre ASC";
+                  FROM rubro ORDER BY nombre ASC";
                   $lstRetorno = DB::select($sql);
                   return $lstRetorno;
       }
@@ -29,7 +29,7 @@ class Rubro extends Model{
             $sql = "SELECT
             idrubro,
             nombre
-            FROM rubros WHERE idrubro = ?";
+            FROM rubro WHERE idrubro = ?";
             $lstRetorno = DB::select($sql, [$idrubro]);
 
             if(count($lstRetorno)> 0){
@@ -40,17 +40,17 @@ class Rubro extends Model{
             return null;
       }
       public function guardar(){
-            $sql = "UPDATE rubros SET
+            $sql = "UPDATE rubro SET
                   nombre='$this->nombre'
                   WHERE idrubro=?";
             $affected = DB::update($sql, [$this->idrubro]);
       }
       public function eliminar(){
-            $sql = "DELETE FROM rubros WHERE idrubro=?";
+            $sql = "DELETE FROM rubro WHERE idrubro=?";
             $affected = DB::delete($sql, [$this->idrubro]);
       }
       public function insertar(){
-            $sql = "INSERT INTO rubros (
+            $sql = "INSERT INTO rubro (
                   nombre
             ) VALUES (?)";
             $result = DB::insert($sql, [
@@ -67,7 +67,7 @@ class Rubro extends Model{
             $sql = "SELECT
             idrubro,
             nombre
-            FROM rubros WHERE 1 = 1";
+            FROM rubro WHERE 1 = 1";
             //Filtrado
             if(!empty($request['search']['value'])){ 
                   $sql .= " AND ( nombre LIKE '%" . $request['search']['value'] . "%')";

@@ -135,8 +135,8 @@ use Illuminate\Database\Eloquent\Model;
             precio,
             imagen,
             fk_idcategoria
-            FROM productos WHERE fk_idcategoria = $idcategoria";
-            $lstRetorno = DB::select($sql);
+            FROM productos WHERE fk_idcategoria = ?";
+            $lstRetorno = DB::select($sql, [$idcategoria]);
             if(count($lstRetorno)>0){
                   return true;
             }
