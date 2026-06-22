@@ -159,19 +159,13 @@ use Illuminate\Database\Eloquent\Model;
             s.nombre AS nombre_sucursal,
             c.nombre AS nombre_cliente,
             e.nombre AS nombre_estado
-            FROM pedidos p
+            FROM pedidos p    /*Acá hacemos un inner join para unir las tablas y que me aparezcan los nombres de lo que paso en el listado*/ 
             JOIN sucursales s ON p.fk_idsucursal = s.idsucursales
             JOIN clientes c ON p.fk_idcliente = c.idcliente
             JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
             WHERE 1 = 1";
             //Acá se hace el filtrado
             if(!empty($request['search']{'value'})){
-                  /*$sql .= " AND (fecha like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR descripcion like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR total like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR fk_idsucursal like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR fk_idcliente like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR fk_idestado like '%" . $request['search']['value'] . "%')";*/
                   $sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.descripcion like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.total like '%" . $request['search']['value'] . "%'";

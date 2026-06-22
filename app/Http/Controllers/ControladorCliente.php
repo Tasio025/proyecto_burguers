@@ -26,7 +26,7 @@ class ControladorCliente extends Controller{
                   return redirect('admin/login');
             }
       }
-      public function index(){
+      public function index(){  //El cambio de las patentes se hace en el index porque es el que muestra el listado, si no tiene permiso para ver el listado no va a poder ver nada de clientes
             $titulo = "Listado de clientes";
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("CLIENTECONSULTA")){
@@ -104,13 +104,13 @@ class ControladorCliente extends Controller{
 
       }
       public function editar($idcliente){
+            $titulo = "Edición de cliente";
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("CLIENTEEDITAR")){
                         $codigo = "CLIENTEEDITAR";
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
-                        $titulo = "Edición de cliente";
                         $cliente = new Cliente();
                         //$cliente->idcliente = $idcliente;
                         $cliente = $cliente->obtenerPorId($idcliente);
