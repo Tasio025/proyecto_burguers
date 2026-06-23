@@ -7,23 +7,46 @@ use App\Entidades\Pedido_producto;
 use App\Entidades\Sucursal;
 use App\Entidades\Cliente;
 use Illuminate\Http\Request;
+use APP\Entidades\Sistema\Usuario;
+use APP\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 class ControladorPedido extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo Pedido";
-            $pedido = new Pedido();
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PEDIDOALTA")){
+                        $codigo = "PEDIDOALTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+            }else{
+                  $pedido = new Pedido();
+                  return view('sistema.pedido-nuevo', compact("titulo", "pedido"));
+            }
+            /*$pedido = new Pedido();
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
             $cliente = new Cliente();
             $aClientes = $cliente->obtenerTodos();
-            return view('sistema.pedido-nuevo', compact("titulo", "pedido", "aSucursales", "aClientes"));
+            return view('sistema.pedido-nuevo', compact("titulo", "pedido", "aSucursales", "aClientes"));*/
+      }else{
+            return redirect('admin/login');
+      }
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de pedidos";
-            $pedido = new Pedido();
-            return view('sistema.pedido-listado', compact("titulo", "pedido"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PEDIDOCONSULTA")){
+                        $codigo = "PEDIDOCONSULTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        return view('sistema.pedido-listado', compact("titulo", "pedido"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){
             //dd($request->all());  Esa función me permite mostrar que datos llegan en el request
@@ -100,25 +123,42 @@ class ControladorPedido extends Controller{
       }
       public function editar($idpedido){
             $titulo = "Edición de pedido";
-            $pedido =  new Pedido();
-            $pedido = $pedido->obtenerPorId($idpedido);
-            $sucursal = new Sucursal();
-            $aSucursales = $sucursal->obtenerTodos();
-            $cliente = new Cliente();
-            $aClientes = $cliente->obtenerTodos();
-            return view('sistema.pedido-nuevo', compact('titulo', 'pedido', 'aSucursales', 'aClientes'));
+            if(Usuario::aautenticacion()){
+                  if(!Patente::autorizarOperacion("PEDIDOEDITAR")){
+                        $codigo = "PEDIDOEDITAR";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $pedido = new Pedido();
+                        $pedido = $pedido->obtenerPorId($idpedido);
+                        return view('sistema.pedido-nuevo', compact('titulo', 'pedido'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function eliminar(Request $request){
-            $idpedido = $request->get("idpedido");
-            //Primero eliminamos los productos asociados al pedido
-            $pedido_producto = new Pedido_producto();
-            $pedido_producto->eliminarPorPedido($idpedido);
-            //Después eliminamos el pedido
-            $pedido = new Pedido();
-            $pedido->idpedido = $idpedido;
-            $pedido->eliminar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PEDIDOELIMINAR")){
+                        $resultado["err"] == EXIT_FAILURE;
+                        $resultado["mensaje"] = "No tiene permisos para la operación";
+                  }else{
+                        $idpedido = $request->input("idpedido");
+                        $pedido = new Pedido();
+                        if($pedido = $pedido->obtenerPorId($idpedido)){
+                              $resultado["err"] = EXIT_SUCCESS;
+                              $resultado["mensaje"] = "Registro eliminado exitosamente";
+                        }else{
+                              $pedido->idpedido = $request->input("idpedido");
+                              $pedido->eliminar();
+                              $resultado["err"] = EXIT_SUCCESS;
+                              $resultado["mensaje"] = "Registro eliminado exitosamente";
+                        }
+                  }
+            }else{
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "Usuario no está autenticado";
+            }
             return json_encode($resultado);
 
             /* VERSIÓN ANTERIOR SIN ELIMINAR LOS PRODUCTOS ASOCIADOS AL PEDIDO
