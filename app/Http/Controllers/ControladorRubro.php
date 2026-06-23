@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Rubro;
 use Illuminate\Http\Request;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 
@@ -11,13 +13,34 @@ class ControladorRubro extends Controller{
 
       public function nuevo(){
             $titulo = "Nuevo rubro";
-            $rubro = new Rubro();
-            return view('sistema.rubro-nuevo', compact("titulo", "rubro"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("RUBROALTA")){
+                        $codigo = "RUBROALTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{            
+                        $rubro = new Rubro();
+                        return view('sistema.rubro-nuevo', compact("titulo", 'codigo', 'mensaje', "rubro"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de rubros";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("RUBROCONSULTA")){
+                        $codigo = "RUBROCONSULTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        
             $rubro = new Rubro();
-            return view('sistema.rubro-listado', compact("titulo", "rubro"));
+            return view('sistema.rubro-listado', compact("titulo", 'codigo', 'mensaje', "rubro"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){
             try{
@@ -80,17 +103,38 @@ class ControladorRubro extends Controller{
       }
       public function editar($idrubro){
             $titulo = "Modificar rubro";
-            $rubro = new Rubro();
-            $rubro = $rubro->obtenerPorId($idrubro);
-            return view('sistema.rubro-nuevo', compact('titulo', 'rubro'));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("RUBROEDITAR")){
+                        $codigo = "RUBROEDIAR";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{      
+                        $rubro = new Rubro();
+                        $rubro = $rubro->obtenerPorId($idrubro);
+                        return view('sistema.rubro-nuevo', compact('titulo','codigo', 'mensaje', 'rubro'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function eliminar(Request $request){
-            $idrubro = $request->input("idrubro");
-            $rubro = new Rubro();
-            $rubro->idrubro = $request->input("idrubro");
-            $rubro->eliminar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("RUBROELIMINAR")){
+                        $codigo = "RUBROELIMINAR";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{            
+                        $idrubro = $request->input("idrubro");
+                        $rubro = new Rubro();
+                        $rubro->idrubro = $request->input("idrubro");
+                        $rubro->eliminar();
+                        $resultado["err"] = EXIT_SUCCESS;
+                        $resultado["mensaje"] = "Registro eliminado exitosamente";
+                  }
+            }else{
+                  $resultado["err"] = EXIT_SUCCESS;
+                  $resultado["mensaje"] = "Registro eliminado exitosamente";
+            }
             return json_encode($resultado);
       }
 

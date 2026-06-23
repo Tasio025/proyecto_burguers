@@ -6,20 +6,44 @@ use App\Entidades\Producto;
 use App\Entidades\Tipoproducto;
 use App\Entidades\Pedido_producto;
 use Illuminate\Http\Request;
+use App\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Usuario;
 require app_path() . '/start/constants.php';   
 
 class ControladorProducto extends Controller{
  
       public function nuevo(){
             $titulo = 'Nuevo Producto';   
-            $producto = new Producto();
-            $categoria = new Tipoproducto(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
-            $aCategorias = $categoria->obtenerTodos();
-            return view('sistema.producto-nuevo', compact("titulo", "aCategorias", "producto"));      //Esto lo pasa al blade via compact
-      }
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PRODUCTOSALTA")){
+                        $codigo = "PRODUCTOSALTA";
+                        $mensaje = "No tiene permisos para la operaci&oacute;n";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $producto = new Producto();
+                        $categoria = new Tipoproducto(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
+                        $aCategorias = $categoria->obtenerTodos();
+                        return view('sistema.producto-nuevo', compact("titulo", "aCategorias", "producto"));      //Esto lo pasa al blade via compact
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
+}
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de productos";
-            return view('sistema.producto-listado', compact("titulo"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PRODUCTOCONSULTA")){
+                        $codigo = "PRODUCTOCONSULTA";
+                        $mensaje = "No tiene permisos para la operaci&oacute;n";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $producto = new Producto();
+                        $aProductos = $producto->obtenerTodos();
+                        return view('sistema.producto-listado', compact("titulo", "aProductos"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){ 
             try{
@@ -97,25 +121,46 @@ class ControladorProducto extends Controller{
       }
       public function editar($idproducto){
             $titulo = "Editar producto";
-            $producto = new Producto();
-            $producto = $producto->obtenerPorId($idproducto);
-            $categoria =  new Tipoproducto();
-            $aCategorias = $categoria->obtenerTodos();
-            return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));    
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PRODUCTOEDITAR")){
+                        $codigo = "PRODUCTOEDITAR";
+                        $mensaje = "No tiene permisos para la operaci&oacute;n";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $producto = new Producto();
+                        $producto = $producto->obtenerPorId($idproducto);
+                        $aCategoria = new Tipoproducto();
+                        $aCategorias = $aCategoria->obtenerTodos();
+                        return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            } 
       }
       public function eliminar(Request $request){
-            $idproducto = $request->input("idproducto");
-            $producto = new Producto();
-            $pedido_producto = new Pedido_producto();
-            if($pedido_producto->existePedidoPorProducto($idproducto)){
-                  $resultado["err"] = EXIT_FAILURE;
-                  $resultado["mensaje"] = "No se puede eliminar el producto porque tiene pedidos asociados";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PRODUCTOELIMINAR")){
+                        $codigo = "PRODUCTOELIMINAR";
+                        $mensaje = "No tiene permisos para la operaci&oacute;n";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $idproducto = $request->input("idproducto");
+                        $producto = new Producto();
+                        $pedido_producto = new Pedido_producto();
+                        if($pedido_producto->existePedidoPorProducto($idproducto)){
+                              $resultado["err"] = EXIT_FAILURE;
+                              $resultado["mensaje"] = "No se puede eliminar el producto porque tiene pedidos asociados";
+                        }else{
+                              $producto->idproducto = $request->input("idproducto");
+                              $producto->eliminar();
+                              $resultado["err"] = EXIT_SUCCESS;
+                              $resultado["mensaje"] = "Registro eliminado exitosamente";
+                        }
+                  }     
             }else{
-                  $producto->idproducto = $request->input("idproducto");
-                  $producto->eliminar();
-                  $resultado["err"] = EXIT_SUCCESS;
-                  $resultado["mensaje"] = "Registro eliminado exitosamente";
-                  }
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "No tiene permisos para la operaci&oacute;n";
+            }
             return json_encode($resultado);
       }
 }

@@ -12,13 +12,32 @@ class ControladorPostulacion extends Controller{
 
       public function nuevo(){
             $titulo = "Nueva Postulación";
-            $postulacion = new Postulacion();
-            return view('sistema.postulacion-nuevo', compact("titulo", "postulacion")); //Envía la variable título   
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("POSTULACIONALTA")){
+                        $codigo = "POSTULACIONALTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $postulacion = new Postulacion();
+                        return view('sistema.postulacion-nuevo', compact("titulo", "postulacion")); //Envía la variable título
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de postulaciones";
-            $postulacion = new Postulacion();
-            return view('sistema.postulacion-listado', compact("titulo", "postulacion"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("POSTULACIONCONSULTA")){
+                        $codigo = "POSTTULACIONCONSULTA";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        return view('sistema.postulacion-listado', compact("titulo", "postulacion"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){
             try{
@@ -84,17 +103,37 @@ class ControladorPostulacion extends Controller{
       }
       public function editar($idpostulacion){
             $titulo = "Editar postulación";
-            $postulacion = new Postulacion();
-            $postulacion = $postulacion->obtenerPorId($idpostulacion);
-            return view('sistema.postulacion-nuevo', compact('titulo', 'postulacion'));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("POSTULACIONEDITAR")){
+                        $codigo = "POSTULACIONEDITAR";
+                        $mensaje = "No tiene permisos para la operación";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        return view('sistema.postulacion-nuevo', compact('titulo', 'postulacion'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function eliminar(Request $request){
-            $idpostulacion = $request->input("idpostulacion");
-            $postulacion = new Postulacion();
-            $postulacion->idpostulacion = $request->input("idpostulacion");
-            $postulacion->eliminar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("POSTTULACIONBAJA")){
+                        $resultado["err"] = EXIT_FAILURE;
+                        $resultado["mensaje"] = "No tiene permisos para la operación";
+                  }else{
+                        $idpostulacion = $request->input("idpostulacion");
+                        $postulacion = new Postulacion();
+                        $postulacion->idpostulacion = $request->input("idpostulacion");
+                        $postulacion->eliminar();
+                        $resultado["err"] = EXIT_SUCCESS;
+                        $resultado["mensaje"] = "Registro eliminado exitosamente";
+                        return json_encode($resultado);
+                  }
+            }else{
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "No tiene permisos para la operación";
+                  
+            }
             return json_encode($resultado);
       }
 }

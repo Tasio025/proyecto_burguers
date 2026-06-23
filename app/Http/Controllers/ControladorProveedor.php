@@ -4,18 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Proveedor;
 use Illuminate\Http\Request;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 class ControladorProveedor extends Controller{
       public function nuevo(){
             $titulo = "Nuevo Proveedor";
-            $proveedor = new Proveedor();
-            return view('sistema.proveedor-nuevo', compact("titulo", "proveedor"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PROVEEDORESALTA")) {
+                        $codigo = "PROVEEDORESALTA";
+                        $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $proveedor = new Proveedor();
+                        return view('sistema.proveedor-nuevo', compact("titulo", "proveedor"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de proveedores";
-            $proveedor = new Proveedor();
-            return view('sistema.proveedor-listado', compact("titulo", "proveedor"));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PROVEEDORCONSULTA")){
+                        $codigo = "PROVEEDORCONSULTA";
+                        $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $proveedor = new Proveedor();
+                        return view('sistema.proveedor-listado', compact("titulo", "proveedor"));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function guardar(Request $request){
             try{
@@ -81,17 +103,37 @@ class ControladorProveedor extends Controller{
       }
       public function editar($idproveedor){
             $titulo = "Modificar Proveedor";
-            $proveedor = new Proveedor();
-            $proveedor = $proveedor->cargarDesdeBD($idproveedor); //cargarDesdeBD es un método creado para cargar los datos del proveedor a modificar
-            return view('sistema.proveedor-nuevo', compact('titulo', 'proveedor'));
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PROVEEDORMODIFICACION")){
+                        $codigo = "PROVEEDORMODIFICACION";
+                        $mensaje = "No tiene pemisos para la operaci&oacute;n.";
+                        return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                  }else{
+                        $proveedor = new Proveedor();
+                        $proveedor = $proveedor->cargarDesdeBD($idproveedor); //cargarDesdeBD es un método creado para cargar los datos del proveedor a modificar
+                        return view('sistema.proveedor-nuevo', compact('titulo', 'proveedor'));
+                  }
+            }else{
+                  return redirect('admin/login');
+            }
       }
       public function eliminar(Request $request){
-            $idproveedor = $request->input("idproveedor");
-            $proveedor = new Proveedor();
-            $proveedor->idproveedor = $request->input("idproveedor");
-            $proveedor->eliminar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Registro eliminado exitosamente";
+            if(Usuario::autenticado() == true){
+                  if(!Patente::autorizarOperacion("PROVEEDORELIMINAR")){
+                        $resultado["err"] = EXIT_FAILURE;
+                        $resultado["mensaje"] = "No tiene pemisos para la operaci&oacute;n.";
+                  }else{
+                        $idproveedor = $request->input("idproveedor");
+                        $proveedor = new Proveedor();
+                        $proveedor->idproveedor = $request->input("idproveedor");
+                        $proveedor->eliminar();
+                        $resultado["err"] = EXIT_SUCCESS;
+                        $resultado["mensaje"] = "Registro eliminado exitosamente";
+                  }
+            }else{
+                  $resultado["err"] = EXIT_FAILURE;
+                  $resultado["mensaje"] = "No tiene pemisos para la operaci&oacute;n.";   
+            }
             return json_encode($resultado);
       }
 }

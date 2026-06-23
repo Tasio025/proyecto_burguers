@@ -22,18 +22,16 @@ class ControladorPedido extends Controller{
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             }else{
                   $pedido = new Pedido();
-                  return view('sistema.pedido-nuevo', compact("titulo", "pedido"));
+                  $sucursal = new Sucursal();
+                  $aSucursales = $sucursal->obtenerTodos();
+                  $cliente = new Cliente();
+                  $aClientes = $cliente->obtenerTodos();
+                  return view('sistema.pedido-nuevo', compact("titulo", "pedido", "aSucursales", "aClientes")); //Envía la variable título
             }
-            /*$pedido = new Pedido();
-            $sucursal = new Sucursal();
-            $aSucursales = $sucursal->obtenerTodos();
-            $cliente = new Cliente();
-            $aClientes = $cliente->obtenerTodos();
-            return view('sistema.pedido-nuevo', compact("titulo", "pedido", "aSucursales", "aClientes"));*/
       }else{
             return redirect('admin/login');
       }
-      }
+}
       public function index(){      //El index va a ser basicamente el listado
             $titulo = "Listado de pedidos";
             if(Usuario::autenticado() == true){
@@ -42,6 +40,7 @@ class ControladorPedido extends Controller{
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
+                        $pedido = new Pedido();
                         return view('sistema.pedido-listado', compact("titulo", "pedido"));
                   }
             }else{
@@ -131,7 +130,11 @@ class ControladorPedido extends Controller{
                   }else{
                         $pedido = new Pedido();
                         $pedido = $pedido->obtenerPorId($idpedido);
-                        return view('sistema.pedido-nuevo', compact('titulo', 'pedido'));
+                        $sucursal = new Sucursal();
+                        $aSucursales = $sucursal->obtenerTodos();
+                        $cliente = new Cliente();
+                        $aClientes = $cliente->obtenerTodos();
+                        return view('sistema.pedido-nuevo', compact('titulo', 'pedido', 'aSucursales', 'aClientes'));
                   }
             }else{
                   return redirect('admin/login');
@@ -140,37 +143,23 @@ class ControladorPedido extends Controller{
       public function eliminar(Request $request){
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("PEDIDOELIMINAR")){
-                        $resultado["err"] == EXIT_FAILURE;
+                        $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No tiene permisos para la operación";
                   }else{
                         $idpedido = $request->input("idpedido");
+                        $pedido_producto = new pedido_producto();
+                        $pedido_producto->eliminarPorPedido($idpedido); //Elimina los productos asociados al pedido
                         $pedido = new Pedido();
-                        if($pedido = $pedido->obtenerPorId($idpedido)){
-                              $resultado["err"] = EXIT_SUCCESS;
-                              $resultado["mensaje"] = "Registro eliminado exitosamente";
-                        }else{
-                              $pedido->idpedido = $request->input("idpedido");
-                              $pedido->eliminar();
-                              $resultado["err"] = EXIT_SUCCESS;
-                              $resultado["mensaje"] = "Registro eliminado exitosamente";
-                        }
+                        $pedido->idpedido = $idpedido;
+                        $pedido->eliminar();
+                        $resultado["err"] = EXIT_SUCCESS;
+                        $resultado["mensaje"] = "Registro eliminado exitosamente";
                   }
             }else{
                   $resultado["err"] = EXIT_FAILURE;
                   $resultado["mensaje"] = "Usuario no está autenticado";
             }
             return json_encode($resultado);
-
-            /* VERSIÓN ANTERIOR SIN ELIMINAR LOS PRODUCTOS ASOCIADOS AL PEDIDO
-            $idpedido = $request->get("idpedido");
-            //Primero eliminamos los productos asaociados al pedido
-            $pedido = new Pedido();
-            $pedido->idpedido = $request->get("idpedido");
-            //Después eliminamos el pedido
-            $pedido->eliminar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Registro eliminado exitosamente";
-            return json_encode($resultado);  */   
       }
 }
 
