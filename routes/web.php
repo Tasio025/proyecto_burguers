@@ -17,15 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(array('domain' => '127.0.0.1'), function () {
 
+/* --------------------------------------------- */
+/* WEB ECOMMERCE                                 */
+/* --------------------------------------------- */
+
+
     Route::get('/', 'ControladorWebHome@index');
  
-
-    Route::get('/admin', 'ControladorHome@index');
-    Route::post('/admin/patente/nuevo', 'ControladorPatente@guardar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
 /* --------------------------------------------- */
+    Route::get('/admin', 'ControladorHome@index');
     Route::get('/admin/login', 'ControladorLogin@index');
     Route::get('/admin/logout', 'ControladorLogin@logout');
     Route::post('/admin/logout', 'ControladorLogin@entrar');
