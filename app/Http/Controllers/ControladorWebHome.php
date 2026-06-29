@@ -13,3 +13,4 @@ class ControladorWebHome extends Controller
             return view("web.index");   //Esto nos devolvera el index.blade.php(el incex de la plantilla) pero hay que armarlo xq aparece todo roto
     }
 }
+?>
