@@ -34,4 +34,5 @@
                                           </button>
                                     </div>
                               </form>
+<!--Acá me falta cerrar todos los div y terminar de armar bien todo este formulario de registro-->
 @endsection
