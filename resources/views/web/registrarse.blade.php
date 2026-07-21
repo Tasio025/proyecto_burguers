@@ -11,22 +11,22 @@
                         <div class="form_container">
                               <form action="" method="POST">
                                     <div>
-                                          <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder=""  > 
+                                          <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre completo"  > 
                                     </div>
                                     <div>
-                                          <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" placeholder=""  >   
+                                          <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" placeholder="Número de telefono"  >   
                                     </div>
                                     <div>
-                                          <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" placeholder=""  >
+                                          <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" placeholder="Email"  >
                                     </div>
                                     <div>
-                                          <input type="text" id="txtDni" name="txtDni" class="form-control" placeholder=""  >
+                                          <input type="text" id="txtDni" name="txtDni" class="form-control" placeholder="DNI"  >
                                     </div>
                                     <div>
-                                          <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" placeholder=""  >
+                                          <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" placeholder="Dirección"  >
                                     </div>
                                     <div>
-                                          <input type="text" id="txtClave" name="txtClave" class="form-control" placeholder=""  >
+                                          <input type="text" id="txtClave" name="txtClave" class="form-control" placeholder="Clave"  >
                                     </div>
                                     <div class="btn_box">
                                           <button>
@@ -34,5 +34,10 @@
                                           </button>
                                     </div>
                               </form>
-<!--Acá me falta cerrar todos los div y terminar de armar bien todo este formulario de registro-->
+                        </div>
+                  </div>
+            </div>
+      </div>
+</section>
+<!--Faltaría revisar si los datos se envían bien-->
 @endsection

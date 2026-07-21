@@ -1,13 +1,12 @@
 @extends("web.plantilla")
 @section("contenido")
 
-<section class="book_section layout_padding">
+<section>
       <div class="container">
-            
+            <div class="row">
+
+            </div>
       </div>
-
 </section>
-
-
 
 @endsection 
