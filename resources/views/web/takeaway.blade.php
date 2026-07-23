@@ -6,38 +6,40 @@
     <div class="container">
       <div class="heading_container heading_center">
         <h2>
-          Our Menu
+          Nuestro Menú
         </h2>
       </div>
 
+      <!--Acá tendria que venir un foreach de categorías el cual me devuelva todas las categorias de la base de datos-->
       <ul class="filters_menu">
-        <li class="active" data-filter="*">All</li>
-        <li data-filter=".burger">Burger</li>
-        <li data-filter=".pizza">Pizza</li>
-        <li data-filter=".pasta">Pasta</li>
-        <li data-filter=".fries">Fries</li>
+        <li class="active" data-filter="*">TODO</li>
+        <li data-filter=".burger">Hamburguesas</li>
+        <li data-filter=".pizza">Pizzas</li>
+        <li data-filter=".pasta">Pastas</li>
+        <li data-filter=".fries">Papas Fritas</li>
       </ul>
-
       <div class="filters-content">
+<!--Acá debería haber un foreach que me devuelva todos los productos o tipo de productos que haya en la base de datos-->
         <div class="row grid">
+          @foreach($aProductos as $producto)
           <div class="col-sm-6 col-lg-4 all pizza">
             <div class="box">
               <div>
                 <div class="img-box">
-                  <img src="web/images/f1.png" alt="">
+                  <img src="/files/productos/{{ $producto->imagen }}" alt="">
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Pizza
+                    {{ $producto->nombre }}
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    {{ $producto->descripcion ?? ''}}  
                   </p>
                   <div class="options">
                     <h6>
-                      $20
+                      {{ $producto->precio }}
                     </h6>
-                    <a href="">
+                    <a href="/carrito?idproducto={{ $producto->idproducto }}">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                           <g>
@@ -104,10 +106,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Burger
+                    Hamburguesa completa (Simple)
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Carne, Queso cheddar, Lechuga, Tomate, Cebolla, pepino, ketchuo y mostaza
                   </p>
                   <div class="options">
                     <h6>
@@ -180,10 +182,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Pizza
+                    Pizza Margherita
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Salsa de tomate, Queso mozzarella y Albahaca
                   </p>
                   <div class="options">
                     <h6>
@@ -256,10 +258,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Pasta
+                    Pasta Mediterranea
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Macarrones, aceitunas negras, tomates y queso parmesano rallado
                   </p>
                   <div class="options">
                     <h6>
@@ -335,7 +337,7 @@
                     French Fries
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Plato de papas fritas para acompañar
                   </p>
                   <div class="options">
                     <h6>
@@ -408,10 +410,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Pizza
+                    Pizza suprema
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Pizza completa en combinación de jamón, queso, aceitunas, pimientos, tomates, albahaca, salsa de tomate y champiniones
                   </p>
                   <div class="options">
                     <h6>
@@ -484,10 +486,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Tasty Burger
+                    Hamburguesa Tasty de Pollo 
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Carne de pollo, Queso cheddar, Lechuga, Tomate, Cebolla, pepino, bakon y salsa Tasty
                   </p>
                   <div class="options">
                     <h6>
@@ -560,10 +562,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Tasty Burger
+                    Hamburguesa simple de pollo a la plancha
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Carne de pollo a la plancha, Queso, tomate, lechuga
                   </p>
                   <div class="options">
                     <h6>
@@ -636,10 +638,10 @@
                 </div>
                 <div class="detail-box">
                   <h5>
-                    Delicious Pasta
+                    Pasta deliciosa
                   </h5>
                   <p>
-                    Veniam debitis quaerat officiis quasi cupiditate quo, quisquam velit, magnam voluptatem repellendus sed eaque
+                    Ingredientes: Fideos tirabuzón, salsa de tomate, queso parmesano rallado y albahaca
                   </p>
                   <div class="options">
                     <h6>

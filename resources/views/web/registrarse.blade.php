@@ -9,7 +9,8 @@
             <div class="row">
                   <div class="col-md-6">
                         <div class="form_container">
-                              <form action="" method="POST">
+                              <form id="form1" action="/registrarse" method="POST">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div>
                                           <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre completo"  > 
                                     </div>
@@ -29,7 +30,7 @@
                                           <input type="text" id="txtClave" name="txtClave" class="form-control" placeholder="Clave"  >
                                     </div>
                                     <div class="btn_box">
-                                          <button>
+                                          <button type="submit" class="btn btn-primary">
                                                 Registrarse
                                           </button>
                                     </div>
@@ -39,5 +40,6 @@
             </div>
       </div>
 </section>
-<!--Faltaría revisar si los datos se envían bien-->
+<!--Faltaría revisar si los datos se envían bien. También tengo que hacer que se linkee con el botón de la personita que está
+al lado del carrito-->
 @endsection

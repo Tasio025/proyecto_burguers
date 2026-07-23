@@ -28,6 +28,9 @@ require app_path() . '/start/constants.php';
                   }
             }
              public function index(){      //El index va a ser basicamente el listado
+             $permisos = session()->get('array_permisos');
+             $nombres = array_map(function($p){ return $p->nombre; }, $permisos);
+             dd($nombres);
             $titulo = "Listado de categorias";
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("CATEGORIACONSULTA")){
@@ -109,7 +112,7 @@ require app_path() . '/start/constants.php';
                         }else{
                               $categoria = new Categoria();
                               $categoria = $categoria->obtenerPorId($idcategoria);
-                              return view('sistema.categoria-nuevo', compact('titulo', 'categoria'));
+                              return view('sistema.categoria-nuevo', compact('titulo'));
                         }
                   }else{
                         return redirect('admin/login');
@@ -117,7 +120,7 @@ require app_path() . '/start/constants.php';
             }
             public function eliminar(Request $request){
                   if(Usuario::autenticado() == true){
-                        if(Patente::autorizarOperacion("CATEGORIAELIMINAR")){
+                        if(!Patente::autorizarOperacion("CATEGORIAELIMINAR")){
                               $resultado["err"] = EXIT_FAILURE;
                               $resultado["mensaje"] = "No tiene permisos para la operación";
                         }else{    
