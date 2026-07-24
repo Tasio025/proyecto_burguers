@@ -260,7 +260,8 @@ class ControladorPermiso extends Controller
                 $patenteFamilia = new Patente_familia();
                 $patenteFamilia->eliminarPorFamilia($entidad->idfamilia);
                 foreach ($_POST as $nombre => $valor) {
-                    if (substr($nombre, 0, strlen("chk_PatenteFamilia_") - strlen($nombre)) == "chk_PatenteFamilia_") {
+                    //if (substr($nombre, 0, strlen("chk_PatenteFamilia_") - strlen($nombre)) == "chk_PatenteFamilia_") {
+                    if (substr($nombre, 0, strlen("chk_PatenteFamilia_")) === "chk_PatenteFamilia_") {    //En teoría el bug de guardado de patentes se arregla así
                         $patenteFamilia->fk_idfamilia = $entidad->idfamilia;
                         $patenteFamilia->fk_idpatente = $valor;
                         $patenteFamilia->insertar();

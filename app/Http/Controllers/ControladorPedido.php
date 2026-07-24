@@ -7,8 +7,8 @@ use App\Entidades\Pedido_producto;
 use App\Entidades\Sucursal;
 use App\Entidades\Cliente;
 use Illuminate\Http\Request;
-use APP\Entidades\Sistema\Usuario;
-use APP\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 class ControladorPedido extends Controller{

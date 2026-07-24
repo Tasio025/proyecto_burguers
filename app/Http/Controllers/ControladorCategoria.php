@@ -28,9 +28,6 @@ require app_path() . '/start/constants.php';
                   }
             }
              public function index(){      //El index va a ser basicamente el listado
-             $permisos = session()->get('array_permisos');
-             $nombres = array_map(function($p){ return $p->nombre; }, $permisos);
-             dd($nombres);
             $titulo = "Listado de categorias";
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("CATEGORIACONSULTA")){
@@ -38,7 +35,7 @@ require app_path() . '/start/constants.php';
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
-                        return view('sistema.categoria-listado', compact("titulo", "categoria"));
+                        return view('sistema.categoria-listado', compact("titulo"));
                   }
             }else{
                   return redirect('admin/login');

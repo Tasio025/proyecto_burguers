@@ -20,7 +20,7 @@ class ControladorRubro extends Controller{
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{            
                         $rubro = new Rubro();
-                        return view('sistema.rubro-nuevo', compact("titulo", 'codigo', 'mensaje', "rubro"));
+                        return view('sistema.rubro-nuevo', compact("titulo", "rubro"));
                   }
             }else{
                   return redirect('admin/login');
@@ -36,7 +36,7 @@ class ControladorRubro extends Controller{
                   }else{
                         
             $rubro = new Rubro();
-            return view('sistema.rubro-listado', compact("titulo", 'codigo', 'mensaje', "rubro"));
+            return view('sistema.rubro-listado', compact("titulo"));
                   }
             }else{
                   return redirect('admin/login');
@@ -74,7 +74,7 @@ class ControladorRubro extends Controller{
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar rubro";
                   $rubro = new Rubro();
-                  return view('sistema.rubro-nuevo', compact('titulo', 'msg', 'rubro'));
+                  return view('sistema.rubro-nuevo', compact('titulo', 'mensaje', 'rubro'));
             }
       }
       public function cargarGrilla(Request $request){
@@ -105,13 +105,13 @@ class ControladorRubro extends Controller{
             $titulo = "Modificar rubro";
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("RUBROEDITAR")){
-                        $codigo = "RUBROEDIAR";
+                        $codigo = "RUBROEDITAR";
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{      
                         $rubro = new Rubro();
                         $rubro = $rubro->obtenerPorId($idrubro);
-                        return view('sistema.rubro-nuevo', compact('titulo','codigo', 'mensaje', 'rubro'));
+                        return view('sistema.rubro-nuevo', compact('titulo', 'rubro'));
                   }
             }else{
                   return redirect('admin/login');

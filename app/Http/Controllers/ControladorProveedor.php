@@ -33,7 +33,7 @@ class ControladorProveedor extends Controller{
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
                         $proveedor = new Proveedor();
-                        return view('sistema.proveedor-listado', compact("titulo", "proveedor"));
+                        return view('sistema.proveedor-listado', compact("titulo"));
                   }
             }else{
                   return redirect('admin/login');

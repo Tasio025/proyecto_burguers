@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Postulacion;
 use Illuminate\Http\Request;
-use APP\Entidades\Sistema\Usuario;
-use APP\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sistema\Patente;
 require app_path() . '/start/constants.php';
 
 class ControladorPostulacion extends Controller{
@@ -33,7 +33,7 @@ class ControladorPostulacion extends Controller{
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
-                        return view('sistema.postulacion-listado', compact("titulo", "postulacion"));
+                        return view('sistema.postulacion-listado', compact("titulo"));
                   }
             }else{
                   return redirect('admin/login');
@@ -109,6 +109,8 @@ class ControladorPostulacion extends Controller{
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
+                        $postulacion = new Postulacion();
+                        $postulacion = $postulacion->obtenerPorId($idpostulacion);
                         return view('sistema.postulacion-nuevo', compact('titulo', 'postulacion'));
                   }
             }else{
@@ -117,7 +119,7 @@ class ControladorPostulacion extends Controller{
       }
       public function eliminar(Request $request){
             if(Usuario::autenticado() == true){
-                  if(!Patente::autorizarOperacion("POSTTULACIONBAJA")){
+                  if(!Patente::autorizarOperacion("POSTULACIONBAJA")){
                         $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No tiene permisos para la operación";
                   }else{
