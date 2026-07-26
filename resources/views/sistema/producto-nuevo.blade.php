@@ -45,7 +45,7 @@ if (isset($msg)) {
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $producto->nombre ?? '' }}" required>
                 </div>
                 <div class="form-group col-lg-6">
-                        <label for="">Cantidad:</label>
+                        <label for="">Descripción:</label>
                         <input type="number" id="txtCantidad" name="txtCantidad" class="form-control" value="{{ $producto->cantidad ?? '' }}" required>
                 </div>
             </div>

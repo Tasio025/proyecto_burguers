@@ -544,7 +544,7 @@ INSERT INTO `sistema_patentes` (`idpatente`, `tipo`, `submodulo`, `nombre`, `mod
 	(221, 'ALTA', 'Postulacion', 'POSTULANTEALTA', 'Postulacion', 1, 'permite agregar un nuevo postulante'),
 	(222, 'CONSULTA', 'Postulacion', 'POSTULANTECONSULTA', 'Postulacion', 1, 'permite modificar un nuevo postulante'),
 	(223, 'EDITAR', 'Postulacion', 'POSTULANTEEDITAR', 'Postulacion', 1, 'permite modificar un nuevo postulante'),
-	(224, 'BAJA', 'Postulacion', 'POSTULANTEBAJA', 'Postulacion', 1, 'permite dar de baja un postulante'),
+	(224, 'BAJA', 'Postulacion', 'POSTULACIONBAJA', 'Postulacion', 1, 'permite dar de baja un postulante'),
 	(225, 'CONSULTA', 'Pedido', 'PEDIDOVER', 'Pedido', 1, 'Permite ver por pedido');
 
 -- Volcando estructura para tabla burguers_2026.sistema_usuario

@@ -11,19 +11,25 @@
       </div>
 
       <!--Acá tendria que venir un foreach de categorías el cual me devuelva todas las categorias de la base de datos-->
-      <ul class="filters_menu">
+      <!--<ul class="filters_menu">
         <li class="active" data-filter="*">TODO</li>
         <li data-filter=".burger">Hamburguesas</li>
         <li data-filter=".pizza">Pizzas</li>
         <li data-filter=".pasta">Pastas</li>
         <li data-filter=".fries">Papas Fritas</li>
+      </ul>-->
+      <ul class="filters_menu">
+        <li class="active" data-filter="*">TODO</li>
+        @foreach($aCategorias as $categoria)
+          <li data-filter=".{{ $categoria->idcategoria }}">{{ $categoria->nombre }}</li>
+        @endforeach
       </ul>
       <div class="filters-content">
 <!--Acá debería haber un foreach que me devuelva todos los productos o tipo de productos que haya en la base de datos-->
         <div class="row grid">
-          @foreach($aProductos as $producto)
-          <div class="col-sm-6 col-lg-4 all pizza">
-            <div class="box">
+         @foreach($aProductos as $producto)
+          <div class="col-sm-6 col-lg-4 all {{ $producto->fk_idcategoria }}">
+            <div class="box"> 
               <div>
                 <div class="img-box">
                   <img src="/files/productos/{{ $producto->imagen }}" alt="">
@@ -98,6 +104,7 @@
               </div>
             </div>
           </div>
+         @endforeach
           <div class="col-sm-6 col-lg-4 all burger">
             <div class="box">
               <div>

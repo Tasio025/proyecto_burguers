@@ -104,7 +104,7 @@ class ControladorPostulacion extends Controller{
       public function editar($idpostulacion){
             $titulo = "Editar postulación";
             if(Usuario::autenticado() == true){
-                  if(!Patente::autorizarOperacion("POSTULACIONEDITAR")){
+                  if(!Patente::autorizarOperacion("POSTULACIONEDITAR")){      
                         $codigo = "POSTULACIONEDITAR";
                         $mensaje = "No tiene permisos para la operación";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
@@ -119,7 +119,7 @@ class ControladorPostulacion extends Controller{
       }
       public function eliminar(Request $request){
             if(Usuario::autenticado() == true){
-                  if(!Patente::autorizarOperacion("POSTULACIONBAJA")){
+                  if(!Patente::autorizarOperacion("POSTULACIONBAJA")){  
                         $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No tiene permisos para la operación";
                   }else{

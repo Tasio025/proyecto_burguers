@@ -109,7 +109,7 @@ require app_path() . '/start/constants.php';
                         }else{
                               $categoria = new Categoria();
                               $categoria = $categoria->obtenerPorId($idcategoria);
-                              return view('sistema.categoria-nuevo', compact('titulo'));
+                              return view('sistema.categoria-nuevo', compact('titulo', 'categoria'));
                         }
                   }else{
                         return redirect('admin/login');

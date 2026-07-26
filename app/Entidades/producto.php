@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 
       protected $table = 'productos';
       public $timestamps = false;
-      protected $fillable = ['idproducto', 'nombre', 'cantidad', 'precio', 'imagen', 'fk_idcategoria'];
+      protected $fillable = ['idproducto', 'nombre', 'descripcion', 'precio', 'imagen', 'fk_idcategoria'];
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
             $this->idproducto = $request->input('idproducto') != "0" ? $request->input('idproducto') : $this->idproducto;
             $this->nombre = $request->input('txtNombre');
-            $this->cantidad = $request->input('txtCantidad');
+            $this->descripcion = $request->input('txtDescripcion');
             $this->precio = $request->input('txtPrecio');
             $this->fk_idcategoria = $request->input('lstTipoproducto');
       }
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT 
                   idproducto,
                   nombre,
-                  cantidad,
+                  Descripcion,
                   precio,
                   imagen,
                   fk_idcategoria
@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idproducto,
             nombre,
-            cantidad,
+            descripcion,
             precio,
             imagen,
             fk_idcategoria
@@ -45,7 +45,7 @@ use Illuminate\Database\Eloquent\Model;
             if(count($lstRetorno)> 0){
                   $this->idproducto = $lstRetorno[0]->idproducto;
                   $this->nombre = $lstRetorno[0]->nombre;
-                  $this->cantidad = $lstRetorno[0]->cantidad;
+                  $this->descripcion = $lstRetorno[0]->descripcion;
                   $this->precio = $lstRetorno[0]->precio;
                   $this->imagen = $lstRetorno[0]->imagen;
                   $this->fk_idcategoria = $lstRetorno[0]->fk_idcategoria;
@@ -57,7 +57,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT 
             idproducto,
             nombre,
-            cantidad,
+            descripcion,
             precio,
             imagen,
             fk_idcategoria
@@ -69,7 +69,7 @@ use Illuminate\Database\Eloquent\Model;
       public function guardar(){
             $sql = "UPDATE productos SET
             nombre = '$this->nombre',
-            cantidad = $this->cantidad,
+            descripcion = '$this->descripcion',
             precio = $this->precio,
             imagen = '$this->imagen',
             fk_idcategoria = $this->fk_idcategoria
@@ -84,14 +84,14 @@ use Illuminate\Database\Eloquent\Model;
       public function insertar(){
             $sql = "INSERT INTO productos(
             nombre,
-            cantidad,
+            descripcion,
             precio,
             imagen,
             fk_idcategoria
             ) VALUES (?, ?, ?, ?, ?)";
             $result = DB::insert($sql, [
                   $this->nombre,
-                  $this->cantidad,
+                  $this->descripcion,
                   $this->precio,
                   $this->imagen,
                   $this->fk_idcategoria
@@ -103,7 +103,7 @@ use Illuminate\Database\Eloquent\Model;
             $columns = array(
                   0 => 'A.idproducto',
                   1 => 'A.nombre',
-                  2 => 'A.cantidad',
+                  2 => 'A.descripcion',
                   3 => 'A.precio',
                   4 => 'A.imagen',
                   5 => 'A.fk_idcategoria'
@@ -111,7 +111,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idproducto,
             nombre,
-            cantidad,
+            Descripcion,
             precio,
             imagen,
             fk_idcategoria
@@ -119,7 +119,7 @@ use Illuminate\Database\Eloquent\Model;
             //Acá se hace el filtrado
             if(!empty($request['search']['value'])){
                   $sql .= " AND (nombre like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR cantidad like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR descripcion like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR precio like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR imagen like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR fk_idcategoria like '%" . $request['search']['value'] . "%')";
@@ -131,7 +131,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idproducto,
             nombre,
-            cantidad,
+            descripcion,
             precio,
             imagen,
             fk_idcategoria

@@ -66,6 +66,8 @@ class ControladorProducto extends Controller{
                               $nombre = time() . '_' . $archivo->getClientOriginalName();
                               $archivo->move(public_path('files/productos'), $nombre);
                               $entidad->imagen = $nombre;
+                        }else{
+                              $entidad->imagen = "sin_imagen.jpg";  //Es temporal, primero quiero armar bien los productos y luego les pondré las imagenes
                         }
                         if($request->input("idproducto") > 0){
                               //Es actualización
