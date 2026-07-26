@@ -111,7 +111,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "SELECT
             idproducto,
             nombre,
-            Descripcion,
+            descripcion,
             precio,
             imagen,
             fk_idcategoria
