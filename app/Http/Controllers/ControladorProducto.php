@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Entidades\Producto;
-use App\Entidades\Tipoproducto;
+use App\Entidades\Categoria;
 use App\Entidades\Pedido_producto;
 use Illuminate\Http\Request;
 use App\Entidades\Sistema\Patente;
@@ -21,7 +21,7 @@ class ControladorProducto extends Controller{
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
                         $producto = new Producto();
-                        $categoria = new Tipoproducto(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
+                        $categoria = new Categoria(); //->(entidad categoria) Esto se hace para todas las clases que tengan un desplegable, ya que es necesario traer todos
                         $aCategorias = $categoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact("titulo", "aCategorias", "producto"));      //Esto lo pasa al blade via compact
                   }
@@ -52,11 +52,11 @@ class ControladorProducto extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == "" || $entidad->cantidad == "" || $entidad->precio == "" || $entidad->fk_idcategoria == ""){
+                  if($entidad->nombre == "" || $entidad->descripcion == "" || $entidad->precio == "" || $entidad->fk_idcategoria == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $producto = new Producto();
-                        $categoria = new Tipoproducto(); 
+                        $categoria = new Categoria(); 
                         $aCategorias = $categoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
                   } else {
@@ -66,9 +66,9 @@ class ControladorProducto extends Controller{
                               $nombre = time() . '_' . $archivo->getClientOriginalName();
                               $archivo->move(public_path('files/productos'), $nombre);
                               $entidad->imagen = $nombre;
-                        }else{
+                        }/*else{
                               $entidad->imagen = "sin_imagen.jpg";  //Es temporal, primero quiero armar bien los productos y luego les pondré las imagenes
-                        }
+                        }*/
                         if($request->input("idproducto") > 0){
                               //Es actualización
                               $entidad->guardar();
@@ -88,7 +88,7 @@ class ControladorProducto extends Controller{
                   $msg["MSG"] = $e->getMessage();
                   $titulo = "Modificar producto";
                   $producto = new Producto();
-                  $categoria = new Tipoproducto(); 
+                  $categoria = new Categoria(); 
                   $aCategorias = $categoria->obtenerTodos();
                   //dd($e->getMessage());
                   return view('sistema.producto-nuevo', compact('titulo', 'msg', 'producto', 'aCategorias'));
@@ -106,7 +106,7 @@ class ControladorProducto extends Controller{
             for($i = $inicio; $i<count($aProductos) && $cont < $registros_por_pagina; $i++){
                   $row = array();
                   $row[] = '<a href="/admin/producto/' . $aProductos[$i]->idproducto . '">' . $aProductos[$i]->nombre . '</a>';
-                  $row[] = $aProductos[$i]->cantidad;
+                  $row[] = $aProductos[$i]->descripcion;
                   $row[] = $aProductos[$i]->precio;
                   $row[] = '<img src="/files/productos/' . $aProductos[$i]->imagen . '" class="img-thumbnail" width="100px">';
                   $row[] = $aProductos[$i]->fk_idcategoria;
@@ -131,7 +131,7 @@ class ControladorProducto extends Controller{
                   }else{
                         $producto = new Producto();
                         $producto = $producto->obtenerPorId($idproducto);
-                        $aCategoria = new Tipoproducto();
+                        $aCategoria = new Categoria();
                         $aCategorias = $aCategoria->obtenerTodos();
                         return view('sistema.producto-nuevo', compact('titulo', 'producto', 'aCategorias'));
                   }

@@ -61,11 +61,10 @@ if (isset($msg)) {
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
-                    <label for="lstTipoproducto">Tipo de producto: </label>
-                    <select name="lstTipoproducto" id="lstTipoproducto" class="form-control">
+                    <label for="lstCategoria">Categoria: </label>
+                    <select name="lstCategoria" id="lstCategoria" class="form-control">
                         @foreach($aCategorias as $categoria)
-                        <!--<option value="{{$categoria->idtipoproducto}}">{{$categoria->nombre}}</option>-->
-                        <option value="{{$categoria->idtipoproducto}}" {{ $producto->fk_idcategoria == $categoria->idtipoproducto ? 'selected' : '' }}>{{$categoria->nombre}}</option>
+                        <option value="{{$categoria->idcategoria}}" {{ $producto->fk_idcategoria == $categoria->idcategoria ? 'selected' : '' }}>{{$categoria->nombre}}</option>
                         @endforeach
                     </select>
 

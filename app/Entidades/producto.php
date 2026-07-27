@@ -17,14 +17,14 @@ use Illuminate\Database\Eloquent\Model;
             $this->nombre = $request->input('txtNombre');
             $this->descripcion = $request->input('txtDescripcion');
             $this->precio = $request->input('txtPrecio');
-            $this->fk_idcategoria = $request->input('lstTipoproducto');
+            $this->fk_idcategoria = $request->input('lstCategoria');
       }
 
       public function obtenerTodos(){
             $sql = "SELECT 
                   idproducto,
                   nombre,
-                  Descripcion,
+                  descripcion,
                   precio,
                   imagen,
                   fk_idcategoria
