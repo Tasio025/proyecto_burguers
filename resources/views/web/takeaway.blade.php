@@ -9,15 +9,6 @@
           Nuestro Menú
         </h2>
       </div>
-
-      <!--Acá tendria que venir un foreach de categorías el cual me devuelva todas las categorias de la base de datos-->
-      <!--<ul class="filters_menu">
-        <li class="active" data-filter="*">TODO</li>
-        <li data-filter=".burger">Hamburguesas</li>
-        <li data-filter=".pizza">Pizzas</li>
-        <li data-filter=".pasta">Pastas</li>
-        <li data-filter=".fries">Papas Fritas</li>
-      </ul>-->
       <ul class="filters_menu">
         <li class="active" data-filter="*">TODO</li>
         @foreach($aCategorias as $categoria)
