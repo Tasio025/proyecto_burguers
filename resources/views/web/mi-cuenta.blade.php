@@ -1,7 +1,7 @@
 @extends("web.plantilla")
 @section("contenido")
 
-<section class="book_sectin layout_padding">
+<section class="book_section layout_padding">
       <div class="container-fluid">
             <!--Acá van los datos del usuario-->
             <div class="heading_container heading_center mb-4">

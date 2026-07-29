@@ -29,11 +29,13 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/postulacion-gracias', 'ControladorWebPostulacionGracias@index');
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
+    Route::Post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
+    Route::Post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
     Route::get('/contacto-gracias', 'ControladorWebContactoGracias@index');
     Route::get('/login', 'ControladorWebLogin@index');
     Route::get('/registrarse', 'ControladorWebRegistrarse@index');
-    Route::post('/registrarse', 'ControladorWebRegistrarse@registrarse');
+    Route::post('/registrarse', 'ControladorWebRegistrarse@guardar');
     Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
  
 
