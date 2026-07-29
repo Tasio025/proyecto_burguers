@@ -45,8 +45,8 @@ if (isset($msg)) {
                     <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{ $cliente->nombre}}" required>
                 </div>
                 <div class="form-group col-lg-6">
-                        <label for="">Dirección:</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion}}" required>
+                        <label for="">Apellido:</label>
+                        <input type="text" id="txtApellido" name="txtApellido" class="form-control" value="{{ $cliente->apellido}}" required>
                 </div>
             </div>
             <div class="row">
@@ -65,8 +65,18 @@ if (isset($msg)) {
                     <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" value="{{ $cliente->celular}}" required>
                 </div>
                 <div class="form-group col-lg-6">
+                    <label for="txtWhatsapp">Whatsapp:</label>
+                    <input type="number" id="txtWhatsapp" name="txtWhatsapp" class="form-control" value="{{ $cliente->whatsapp }}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-lg-6">
                     <label for="txtClave">Clave:</label>
                     <input type="password" id="txtClave" name="txtClave" class="form-control" value="{{ $cliente->clave}}" required>
+                </div>
+                <div class="form-group col-lg-6">
+                        <label for="">Dirección:</label>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion}}" required>
                 </div>
             </div>
       </form>

@@ -47,7 +47,7 @@ class ControladorCliente extends Controller{
                   $entidad->cargarDesdeRequest($request);
 
                   //Validaciones
-                  if($entidad->nombre == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->dni == "" || $entidad->celular == "" || $entidad->clave == ""){
+                  if($entidad->nombre == "" || $entidad->apellido == "" || $entidad->direccion == "" || $entidad->correo == "" || $entidad->dni == "" || $entidad->celular == "" || $entidad->whatsapp == "" || $entidad->clave == ""){
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "Complete todos los datos";
                         $cliente = new Cliente();
@@ -87,10 +87,12 @@ class ControladorCliente extends Controller{
             for($i = $inicio; $i<count($aClientes) && $cont < $registros_por_pagina; $i++){ //Este for recorre el array de clientes y devuelve en formato Json
                   $row = array();   //Cada uno de estos campos son cada campo de la grilla
                   $row[] = '<a href="/admin/cliente/' . $aClientes[$i]->idcliente . '">' . $aClientes[$i]->nombre . '</a>'; //El href acá me servirá para editar al cliente
+                  $row[] = $aClientes[$i]->apellido;
                   $row[] = $aClientes[$i]->direccion;
                   $row[] = $aClientes[$i]->correo;
                   $row[] = $aClientes[$i]->dni;
                   $row[] = $aClientes[$i]->celular;
+                  $row[] = $aClientes[$i]->whatsapp;
                   $cont++;
                   $data[] = $row;
             }

@@ -40,10 +40,12 @@ if (isset($msg)) {
       <thead>
             <tr>
                   <th>Nombre</th>
+                  <th>Apellido</th>
                   <th>Direccion</th>
                   <th>Correo</th>
                   <th>Documento</th>
                   <th>Teléfono</th>
+                  <th>Whatsapp</th>
             </tr>
       </thead>
 </table>
