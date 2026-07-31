@@ -12,10 +12,16 @@
                               <form id="form1" action="/registrarse" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div>
-                                          <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre completo"  > 
+                                          <input type="text" id="txtNombre" name="txtNombre" class="form-control" placeholder="Nombre"  > 
                                     </div>
                                     <div>
-                                          <input type="text" id="txtTelefono" name="txtTelefono" class="form-control" placeholder="Número de telefono"  >   
+                                          <input type="text" id="txtApellido" name="txtApellido" class="form-control" placeholder="Apellido"  > 
+                                    </div>
+                                    <div>
+                                          <input type="number" id="txtTelefono" name="txtTelefono" class="form-control" placeholder="Número de telefono"  >   
+                                    </div>
+                                    <div>
+                                          <input type="number" id="txtWhatsapp" name="txtWhatsapp" class="form-control" placeholder="Número de Whatsapp"  >   
                                     </div>
                                     <div>
                                           <input type="text" id="txtCorreo" name="txtCorreo" class="form-control" placeholder="Email"  >

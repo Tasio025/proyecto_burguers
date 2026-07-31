@@ -62,6 +62,14 @@ if (isset($msg)) {
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="lstCategoria">Categoria: </label>
+                    <!--<option value="" disabled selected>Seleccionar</option>
+                    @foreach($aCategoria as $categoria)
+                    @if($categoria->idtipoproducto == $producto->fk_idtipoproducto)
+                    <option selected value="{{ $categoria->idtipoproducto }}">{{ $categoria->nombre }}</option>
+                    @else
+                    <option value="{{ $categoria->idtipoproducto }}">{{ $categoria->nombre }}</option>
+                    @endif
+                    @endforeach-->
                     <select name="lstCategoria" id="lstCategoria" class="form-control">
                         @foreach($aCategorias as $categoria)
                         <option value="{{$categoria->idcategoria}}" {{ $producto->fk_idcategoria == $categoria->idcategoria ? 'selected' : '' }}>{{$categoria->nombre}}</option>

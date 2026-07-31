@@ -99,6 +99,7 @@ use Illuminate\Database\Eloquent\Model;
             $this->clave,
             $this->idcliente
            ]);
+           //dd($affected);
       }
       public function eliminar(){
             $sql = "DELETE FROM clientes WHERE idcliente = ?";

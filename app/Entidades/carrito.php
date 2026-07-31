@@ -5,7 +5,7 @@
       use DB;
       use Illuminate\Database\Eloquent\Model;
 
-      class Carritos extends Model{
+      class Carrito extends Model{
 
       protected $table = 'carritos';
       public $timestamps = false;
@@ -28,9 +28,8 @@
             idcarrito,
             fk_idcliente,
             fk_idproductos
-            FROM carritos WHERE idcarrito = $idcarrito";
+            FROM carritos WHERE idcarrito = ?";
             $lstRetorno = DB::select($sql, [$idcarrito]);
-            return $lstRetorno;
 
             if(count($lstRetorno)> 0){
                   $this->idcarrito = $lstRetorno[0]->idcarrito;
@@ -42,10 +41,14 @@
       }
       public function guardar(){
             $sql = "UPDATE carritos SET
-            fk_idclientes = $this->fk_idclientes,
-            fk_idproductos = $this->fk_idproductos
+            fk_idcliente = ?,
+            fk_idproductos = ?
             WHERE idcarrito = ?";
-      $affected = DB::update($sql, [$this->idcarrito]);
+            $affected = DB::update($sql, [
+                  $this->fk_idcliente,
+                  $this->fk_idproductos,
+                  $this->idcarrito
+            ]);
       }
       public function eliminar(){
             $sql = "DELETE FROM carritos WHERE idcarrito = $this->idcarrito";
@@ -53,11 +56,11 @@
       }
       public function insertar(){
             $sql = "INSERT INTO carritos(
-            fk_idclientes,
-            fk_idcproductos
-            ) VALUES (?, ?";
+            fk_idcliente,
+            fk_idproductos
+            ) VALUES (?, ?)";
             $result = DB::insert($sql, [
-                  $this->fk_idclientes,
+                  $this->fk_idcliente,
                   $this->fk_idproductos
             ]);
             return $this->idcarrito = DB::getPdo()->lastInsertId();

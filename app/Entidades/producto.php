@@ -109,20 +109,23 @@ use Illuminate\Database\Eloquent\Model;
                   5 => 'A.fk_idcategoria'
             );
             $sql = "SELECT
-            idproducto,
-            nombre,
-            descripcion,
-            precio,
-            imagen,
-            fk_idcategoria
-            FROM productos A WHERE 1=1";
+            A.idproducto,
+            A.nombre,
+            A.descripcion,
+            A.precio,
+            A.imagen,
+            A.fk_idcategoria,
+            B.nombre AS nombre_categoria
+            FROM productos A 
+            INNER JOIN categoria B ON A.fk_idcategria = B.idcategoria
+            WHERE 1=1";
             //Acá se hace el filtrado
             if(!empty($request['search']['value'])){
-                  $sql .= " AND (nombre like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR descripcion like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR precio like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR imagen like '%" . $request['search']['value'] . "%'";
-                  $sql .= " OR fk_idcategoria like '%" . $request['search']['value'] . "%')";
+                  $sql .= " AND (A.nombre LIKE '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR A.descripcion LIKE '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR A.precio LIKE '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR A.imagen LIKE '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR B.nombre LIKE '%" . $request['search']['value'] . "%')";
             }
             $lstRetorno = DB::select($sql);
             return $lstRetorno;

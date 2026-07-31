@@ -15,6 +15,7 @@
                               <form class="text-center" id="form1" name="form1" method="POST" action='/mi-cuenta'>
                                     <div class="row mb-4">
                                           <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+                                          <input type="hidden" name="idcliente" value="{{ $cliente->idcliente }}">
                                           <div class="col-md-6">
                                                 <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Nombre" value="{{ $cliente->nombre ?? '' }}" required>
                                           </div>
@@ -27,7 +28,7 @@
                                                 <input type="number" class="form-control" name="txtTelefono" id="txtTelefono" placeholder="Teléfono" value="{{ $cliente->celular ?? '' }}" required>
                                           </div>
                                           <div class="col-md-6">
-                                                <input type="number" class="form-control" name="txtWpp" id="txtWpp" placeholder="WhatsApp" value="{{ $cliente->whatsapp ?? '' }}" required>
+                                                <input type="number" class="form-control" name="txtWhatsapp" id="txtWhatsapp" placeholder="WhatsApp" value="{{ $cliente->whatsapp ?? '' }}" required>
                                           </div>
                                     </div>
                                     <div class="row mb-4">

@@ -5,26 +5,32 @@
     <div class="container">
       <div class="heading_container">
         <h2>
-          Book A Table
+          Contactanos
         </h2>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="">
+            <form action="" name="form1" id="form1" method="POST">
               <div>
-                <input type="text" class="form-control" placeholder="Your Name" />
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Phone Number" />
+                <input type="text" class="form-control" placeholder="Tu nombre" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Your Email" />
+                <input type="text" class="form-control" placeholder="Número de teléfono" />
+              </div>
+              <div>
+                <input type="email" class="form-control" placeholder="Tu correo electrónico" />
               </div>
               <div>
                 <select class="form-control nice-select wide">
                   <option value="" disabled selected>
-                    How many persons?
+                    Cuantas personas?
+                  </option>
+                  <option value="">
+                    1
                   </option>
                   <option value="">
                     2
