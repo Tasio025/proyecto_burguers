@@ -65,6 +65,35 @@ use Illuminate\Database\Eloquent\Model;
             }
             return null;
       }
+      public function obtenerPorCorreo($correo){
+            $sql = "SELECT
+            idcliente,
+            nombre,
+            apellido,
+            direccion,
+            correo,
+            dni,
+            celular,
+            whatsapp,
+            clave
+            FROM clientes
+            WHERE correo = ?";
+            $lstRetorno = DB::select($sql, [$correo]);
+            if(count($lstRetorno) > 0){
+                  $this->idcliente = $lstRetorno[0]->idcliente;
+                  $this->nombre = $lstRetorno[0]->nombre;
+                  $this->apellido = $lstRetorno[0]->apellido;
+                  $this->direccion = $lstRetorno[0]->direccion;
+                  $this->correo = $lstRetorno[0]->correo;
+                  $this->dni = $lstRetorno[0]->dni;
+                  $this->celular = $lstRetorno[0]->celular;
+                  $this->whatsapp = $lstRetorno[0]->whatsapp;
+                  $this->clave = $lstRetorno[0]->clave;
+
+                  return $this;
+            }
+            return null;
+      }
       public function guardar(){
            /* $sql = "UPDATE clientes SET
             nombre = '$this->nombre',
