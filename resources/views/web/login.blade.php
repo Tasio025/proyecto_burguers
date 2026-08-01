@@ -9,6 +9,11 @@
             <div class="row">
                   <div class="col-md-6">
                         <div class="form_container">
+                               @if (session('msg'))
+                        <div class="alert alert-{{ session('msg')['ESTADO'] }}">
+                              {{ session('msg')['MSG'] }}
+                        </div>
+                        @endif
                               <form action="/login" id="form1" name="form1" method="POST">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div>

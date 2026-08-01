@@ -5,20 +5,20 @@ use Illuminate\Http\Request;
 use App\Entidades\Cliente;
 class ControladorWebLogin extends Controller{
       public function index(){
-            return view("web.login");
+            return view("web.login"); 
       }
       public function loguearse(Request $request){
             $titulo = "Iniciar sesión";
+            $correo = $request->input('txtCorreo');
+            $clave = $request->input('txtClave');
             $cliente = new Cliente();
-            $cliente = $request->input('txtCorreo');
-            $cliente = $request->input('txtClave');
-            $cliente = $cliente->obtenerPorCorreo($request->input('txtCorreo'));
+            $cliente = $cliente->obtenerPorCorreo($correo);
             if($cliente != null){
-                  if(password_verify($request->input('txtClave'), $cliente->clave)){
+                  if(password_verify($clave, $cliente->clave)){
                   //login correcto
                   session(['usuario_id' => $cliente->idcliente]);
                   session(['usuario_nombre' => $cliente->nombre]);
-                  return redirect("web.takeaway");
+                  return redirect("/takeaway");
                   }else{
                   //Contraseña incorrecta
                   return redirect('/login')->with('msg', [
