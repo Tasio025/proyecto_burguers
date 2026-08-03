@@ -56,7 +56,7 @@ if (isset($msg)) {
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtDni">DNI:</label>
-                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" value="{{ $cliente->dni}}" required>
+                    <input type="number" id="txtDni" name="txtDni" class="form-control" min="1000000" max="99999999" value="{{ $cliente->dni}}"  required>
                 </div>
             </div>
             <div class="row">
@@ -72,11 +72,11 @@ if (isset($msg)) {
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtClave">Clave:</label>
-                    <input type="password" id="txtClave" name="txtClave" class="form-control" value="{{ $cliente->clave}}" required>
+                    <input type="password" id="txtClave" name="txtClave" class="form-control" value="" placeholder="Ingrese una contraseña" required>
                 </div>
                 <div class="form-group col-lg-6">
                         <label for="">Dirección:</label>
-                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion}}" required>
+                        <input type="text" id="txtDireccion" name="txtDireccion" class="form-control" value="{{ $cliente->direccion}}" placeholder="Ingrese su dirección" required>
                 </div>
             </div>
       </form>

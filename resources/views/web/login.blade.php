@@ -4,7 +4,7 @@
 <section class="book_section layout_padding">
       <div class="container">
             <div class="heading_container">
-                  <h2>Iniciar sessión</h2>
+                  <h2>Iniciar sesión</h2>
             </div>
             <div class="row">
                   <div class="col-md-6">

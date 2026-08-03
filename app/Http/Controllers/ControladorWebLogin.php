@@ -14,6 +14,11 @@ class ControladorWebLogin extends Controller{
             $cliente = new Cliente();
             $cliente = $cliente->obtenerPorCorreo($correo);
             if($cliente != null){
+                  dd([
+                        'clave_ingresada' => $clave,
+                        'clave_bd' => $cliente->clave,
+                        'verifica' => password_verify($clave, $cliente->clave)
+                        ]);
                   if(password_verify($clave, $cliente->clave)){
                   //login correcto
                   session(['usuario_id' => $cliente->idcliente]);

@@ -53,6 +53,7 @@ class ControladorCliente extends Controller{
                         $cliente = new Cliente();
                         return view('sistema.cliente-nuevo', compact('titulo', 'msg', 'cliente'));
                   } else {
+                        $entidad->clave = password_hash($entidad->clave, PASSWORD_DEFAULT); //Encripta la contraseña antes de guardarla en la base de datos
                         if($_POST["idcliente"] > 0){   //Si el id es > a 0 es xq estamos editando, si no viene el id estamos insertando
                               //Es actualización
                               $entidad->guardar();
