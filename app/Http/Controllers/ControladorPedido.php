@@ -122,7 +122,7 @@ class ControladorPedido extends Controller{
       }
       public function editar($idpedido){
             $titulo = "Edición de pedido";
-            if(Usuario::aautenticacion()){
+            if(Usuario::autenticado()){
                   if(!Patente::autorizarOperacion("PEDIDOEDITAR")){
                         $codigo = "PEDIDOEDITAR";
                         $mensaje = "No tiene permisos para la operación";
@@ -142,12 +142,12 @@ class ControladorPedido extends Controller{
       }
       public function eliminar(Request $request){
             if(Usuario::autenticado() == true){
-                  if(!Patente::autorizarOperacion("PEDIDOELIMINAR")){
+                  if(!Patente::autorizarOperacion("PEDIDOBAJA")){
                         $resultado["err"] = EXIT_FAILURE;
                         $resultado["mensaje"] = "No tiene permisos para la operación";
                   }else{
                         $idpedido = $request->input("idpedido");
-                        $pedido_producto = new pedido_producto();
+                        $pedido_producto = new Pedido_producto();
                         $pedido_producto->eliminarPorPedido($idpedido); //Elimina los productos asociados al pedido
                         $pedido = new Pedido();
                         $pedido->idpedido = $idpedido;

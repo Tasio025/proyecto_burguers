@@ -165,7 +165,7 @@ use Illuminate\Database\Eloquent\Model;
             JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
             WHERE 1 = 1";
             //Acá se hace el filtrado
-            if(!empty($request['search']{'value'})){
+            if(!empty($request['search']['value'])){
                   $sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.descripcion like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.total like '%" . $request['search']['value'] . "%'";
