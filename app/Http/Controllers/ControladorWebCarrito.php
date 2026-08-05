@@ -6,9 +6,9 @@ use App\Entidades\Producto;
 
 class ControladorWebCarrito extends Controller{
       public function index(){
-            $idcarrito = 1;
-            $carrito = new Carrito();
-            $aCarritos = $carrito->obtenerPorId($idcarrito);
+            $idcarritos = 1;
+            $carritos = new Carrito();
+            $aCarritos = $carritos->obtenerPorId($idcarritos);
             return view("web.carrito", compact('carritos', 'aCarritos'));   //Esto nos devolvera el carrito.blade.php(el carrito de la plantilla) pero hay que armarlo xq aparece todo roto
       }
       public function agregarProducto($idproducto){

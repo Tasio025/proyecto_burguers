@@ -17,9 +17,9 @@
                         </thead>
                         <tbody>
                               <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
-                                    <td>{{ $carrito->precio }}</td>
-                                    <td>{{ $carrito->cantidad }}</td>
-                                    <td>{{ $carrito->total }}</td>
+                                    <td>{{ $carritos->precio }}</td>
+                                    <td>{{ $carritos->cantidad }}</td>
+                                    <td>{{ $carritos->total }}</td>
                               </tr>
                         </tbody>
                   </table>
