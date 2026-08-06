@@ -2,6 +2,7 @@
 
 namespace App\Entidades;
 use DB;   
+use Session;
 use Illuminate\Database\Eloquent\Model;
 
       class Cliente extends Model{
@@ -193,7 +194,10 @@ use Illuminate\Database\Eloquent\Model;
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
       }
-      }     
+      public function autenticado(){
+            return Session::get("idcliente") != null;
+      }
+}     
 
 
 ?>

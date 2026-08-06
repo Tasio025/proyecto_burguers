@@ -21,8 +21,8 @@ class ControladorWebLogin extends Controller{
                         ]);*/
                   if(password_verify($clave, $cliente->clave)){
                   //login correcto
-                  session(['usuario_id' => $cliente->idcliente]);
-                  session(['usuario_nombre' => $cliente->nombre]);
+                  session(['idcliente' => $cliente->idcliente]);
+                  session(['cliente_nombre' => $cliente->nombre]);
                   return redirect("/takeaway");
                   }else{
                   //Contraseña incorrecta
