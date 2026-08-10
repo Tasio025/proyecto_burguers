@@ -11,7 +11,7 @@
             <!--Iniciar sesión-->
             <div class="alert alert-warning">
                   Debe iniciar sesión para poder ver su carrito 
-                  <a href="{{ route('web.login') }}">Iniciar sesión</a>
+                  <a href="/login">Iniciar sesión</a>
             </div>
             @elseif($aCarritos == NULL)
             <!--Mostrar tabla vacía ("No hay productos seleccionados")-->

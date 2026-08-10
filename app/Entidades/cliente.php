@@ -194,7 +194,7 @@ use Illuminate\Database\Eloquent\Model;
             $lstRetorno = DB::select($sql);
             return $lstRetorno;
       }
-      public function autenticado(){
+      public static function autenticado(){
             return Session::get("idcliente") != null;
       }
 }     
