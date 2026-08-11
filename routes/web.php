@@ -24,20 +24,23 @@ Route::group(array('domain' => '127.0.0.1'), function () {
 
     Route::get('/', 'ControladorWebHome@index');
     Route::get('/takeaway', 'ControladorWebTakeaway@index');
+    Route::post('/takeaway', 'ControladorWebTakeaway@insertar');
     Route::get('/nosotros', 'ControladorWebNosotros@index');
+    Route::post('/nosotros', 'ControladorWebNosotros@insertarPostulacion');
     Route::get('/contacto', 'ControladorWebContacto@index');
     Route::get('/postulacion-gracias', 'ControladorWebPostulacionGracias@index');
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
-    Route::Post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
+    Route::post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
-    Route::Post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
+    Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
     Route::get('/contacto-gracias', 'ControladorWebContactoGracias@index');
     Route::get('/login', 'ControladorWebLogin@index');
-    Route::Post('/login', 'ControladorWebLogin@loguearse');
+    Route::post('/login', 'ControladorWebLogin@loguearse');
     Route::get('/registrarse', 'ControladorWebRegistrarse@index');
     Route::post('/registrarse', 'ControladorWebRegistrarse@registrarse');
     Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
+    Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@guardar');
  
 
 /* --------------------------------------------- */

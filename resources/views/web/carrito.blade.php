@@ -13,7 +13,7 @@
                   Debe iniciar sesión para poder ver su carrito 
                   <a href="/login">Iniciar sesión</a>
             </div>
-            @elseif($aCarritos == NULL)
+            @elseif($aCarritos == null)
             <!--Mostrar tabla vacía ("No hay productos seleccionados")-->
             <div class="alert alert-warning">
                   No hay productos seleccionados.      
@@ -26,16 +26,24 @@
                                     <th>Producto</th>
                                     <th>Precio</th>
                                     <th>Cantidad</th>
+                                    <th>Imagen</th>
                                     <th>Subtotal</th>
+                                    <th>Eliminar</th>
                               </tr>
                         </thead>
                         <tbody>
+                               @foreach($aCarritos as $carritos)
                               <tr>  <!--Esto lo tengo que revisar, no se si está bien-->                        
-                                    <td>{{ $carritos->nombre }}</td>
+                                    <td>{{ $carritos->producto }}</td>
                                     <td>{{ $carritos->precio }}</td>
                                     <td>{{ $carritos->cantidad }}</td>
-                                    <td>{{ $carritos->total }}</td>
+                                    <td><img src="{{ $carritos->imagen }}" alt="{{ $carritos->nombre }}" width="100"></td>
+                                    <td>{{ $carritos->precio * $carritos->cantidad }}</td>
+                                    <td>
+                                          <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
+                                    </td>
                               </tr>
+                              @endforeach
                         </tbody>
                   </table>
             </div>

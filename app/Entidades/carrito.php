@@ -14,6 +14,10 @@
 
       protected $hidden = [];
 
+      private $producto;
+      private $precio;
+      private $cantidad;
+
       public function obtenerTodos(){
             $sql = "SELECT
                   idcarritos,
@@ -44,24 +48,28 @@
       }
       public function obtenerPorCliente($idcliente){
             $sql = "SELECT
-            A.idcarrito,
+            A.idcarritos,
             A.cantidad,
             A.fk_idcliente,
             A.fk_idproductos,
-            B.nombre AS producto
+            B.nombre AS producto,
+            B.precio AS precio,
+            B.imagen AS imagen
             FROM carritos A
             INNER JOIN productos B ON A.fk_idproductos = B.idproducto
             WHERE fk_idcliente = ?";
             $lstRetorno = DB::select($sql, [$idcliente]);
-            if(count($lstRetorno)>0){
+            return $lstRetorno;
+            /*if(count($lstRetorno)>0){
                   $this->idcarritos = $lstRetorno[0]->idcarritos;
                   $this->cantidad = $lstRetorno[0]->cantidad;
                   $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;
                   $this->fk_idproductos = $lstRetorno[0]->fk_idproductos;
                   $this->producto = $lstRetorno[0]->producto;
+                  $this->precio = $lstRetorno[0]->precio;
                   return $this;
             }
-            return null;
+            return null;*/
       }
       public function cargarDesdeRequest($request){
             $this->idcarritos = $request->input('idcarritos');
