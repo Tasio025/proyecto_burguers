@@ -48,6 +48,13 @@ class ControladorWebRecuperarClave extends Controller{
                         $claveEncriptada = password_hash($clave, PASSWORD_DEFAULT);
                         $cliente->clave = $claveEncriptada;
                         $cliente->guardar();
+
+                        dd([
+                              'correo' => $cliente->correo,
+                              'clave_nueva' => $clave,
+                              'clave_encriptada' => $cliente->clave
+                        ]);
+
                         $mensaje = "La nueva clave es $clave, y te la hemos enviado a tu correo";
                         return view('web.recuperar-clave', compact('titulo', 'mensaje'));
                   }catch(Exception $e){

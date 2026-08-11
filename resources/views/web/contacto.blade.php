@@ -11,21 +11,21 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="" name="form1" id="form1" method="POST">
+            <form action="/contacto" name="form1" id="form1" method="POST">
               <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Tu nombre" />
+                <input type="text" name="txtNombre" class="form-control" placeholder="Tu nombre" />
               </div>
               <div>
-                <input type="text" class="form-control" placeholder="Número de teléfono" />
+                <input type="text" name="txtTelefono" class="form-control" placeholder="Número de teléfono" />
               </div>
               <div>
-                <input type="email" class="form-control" placeholder="Tu correo electrónico" />
+                <input type="email" name="txtCorreo" class="form-control" placeholder="Tu correo electrónico" />
               </div>
-              <div>
-                <select class="form-control nice-select wide">
+             <!-- <div>
+                <select name="txtPersonas" class="form-control nice-select wide">
                   <option value="" disabled selected>
                     Cuantas personas?
                   </option>
@@ -47,13 +47,21 @@
                 </select>
               </div>
               <div>
-                <input type="date" class="form-control">
+                <input type="date" name="txtFecha" class="form-control">
+              </div>-->
+              <div>
+                <textarea class="form-control" name="txtComentarios" placeholder="Dejanos un comentario" rows="5"></textarea>
               </div>
               <div class="btn_box">
                 <button>
-                  Book Now
+                  Enviar
                 </button>
               </div>
+               @if(session('msg'))
+                <div class="alert alert-{{ session('msg')['ESTADO'] }}">
+                    {{ session('msg')['MSG'] }}
+              </div>
+              @endif
             </form>
           </div>
         </div>
