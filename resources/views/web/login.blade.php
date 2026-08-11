@@ -9,9 +9,9 @@
             <div class="row">
                   <div class="col-md-6">
                         <div class="form_container">
-                               @if (session('msg'))
-                        <div class="alert alert-{{ session('msg')['ESTADO'] }}">
-                              {{ session('msg')['MSG'] }}
+                               @if (isset($mensaje))
+                        <div class="alert alert-danger">
+                              {{ $mensaje }}
                         </div>
                         @endif
                               <form action="/login" id="form1" name="form1" method="POST">

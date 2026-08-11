@@ -3,41 +3,39 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
+use App\Entidades\Sucursal;
+use Session;
 class ControladorWebLogin extends Controller{
       public function index(){
             return view("web.login"); 
       }
       public function loguearse(Request $request){
             $titulo = "Iniciar sesión";
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
             $correo = $request->input('txtCorreo');
-            $clave = $request->input('txtClave');
+            $clave =  $request->input('txtClave');
             $cliente = new Cliente();
-            $cliente = $cliente->obtenerPorCorreo($correo);
-            if($cliente != null){
-                  /*dd([
-                        'clave_ingresada' => $clave,
-                        'clave_bd' => $cliente->clave,
-                        'verifica' => password_verify($clave, $cliente->clave)
-                        ]);*/
+            $cliente->obtenerPorCorreo($correo);
+            if($cliente->correo != null){
                   if(password_verify($clave, $cliente->clave)){
-                  //login correcto
-                  session(['idcliente' => $cliente->idcliente]);
-                  session(['cliente_nombre' => $cliente->nombre]);
-                  return redirect("/takeaway");
+                        //Usamos variables de sesión en este caso para almacenar el id del cliente, en este caso, el idcliente que está
+                        //Entre comillas es un nombre que inventamos para este caso en este momento, el que esta en $cliente->idcliente
+                        //Es el que viene desde la base de datos
+                        Session::put("idcliente", $cliente->idcliente); //Así definimos la variable de sesión
+                        return redirect('/'); //Redireccionamos a la página principal
                   }else{
-                  //Contraseña incorrecta
-                  return redirect('/login')->with('msg', [
-                        'ESTADO' => 'danger',
-                        'MSG' => 'La contraseña ingresada es incorrecta!'
-                  ]);
+                        $mensaje = "Credenciales incorrectas. ";
+                        return view("web.login", compact('aSucursales', 'mensaje'));
                   }
             }else{
-                  //usuario no existe
-                  return redirect('/login')->with('msg',[
-                        'ESTADO' => 'danger',
-                        'MSG' => 'El correco electrónico no se encuentra!'
-                  ]);
+                  $mensaje = "Credenciales incorrectas.";
+                  return view("web.login", compact('aSucursales', 'mensaje'));
             }
+      }
+      public function logout(){
+            Session::put("idcliente", ""); //Le envía comillas vacías así elimina el numero
+            return redirect('/');
       }
 }
 
