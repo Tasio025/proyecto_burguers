@@ -22,6 +22,7 @@ class ControladorWebCarrito extends Controller{
             $titulo = "Agregar productos";
             $producto = new Producto();
             $aProductos = $producto->obtenerTodos();
+            //Le voy a pedir a Claude que me ayude a revisar bien este método
       }
 }
 

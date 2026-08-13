@@ -34,20 +34,20 @@
                   </p>
                   <div class="options">
                     <h6>
-                     $ {{ number_format($producto->precio, 2) }}
+                     $ {{ number_format($producto->precio, 0, ',', '.') }}
                     </h6>
                     <!--Cantidad del producto que desea agregar al carrito-->
-                    <form id="" method="POST">
+                    <form action="/carrito" method="POST" class="d-flex align-items-center">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input type="text" id="txtProducto" name="txtProducto" class="form-control" style="width: 50px;" value="{{ $producto->nombre }}" required>
-                      <input type="text" name="txtCantidad" id="txtCantidad" class="form-control" style="width: 50px;" value="0" required>
-                      <!--Esto ya está quedando emjor, como el profe dijo, pero necesito mejorarlo todo. Aparece ya el cuadrito para agregar las
-                      cantidades de productos que quiero llevar pero tengo que arreglarlo-->
+                      <input type="hidden" id="idproducto" name="idproducto" class="form-control" style="width: 50px;" value="{{ $producto->idproducto }}" required>
+                      <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" style="width: 50px;" value="0" required>
+                      <!--Acá cambié el nombre del producto por el id del producto como campo oculto así el formulario sabe que producto 
+                      estamos agregando-->
+                      <button type="submit" class="btn btn-warning d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart-plus-fill"></i>      
+                      </button>
                     </form>
-                    <button type="submit">
-                      Agregar <!--agregarle un botón de bootstrap para cambiarlo por el del carrito-->
-                    </button>
-                    <a href="/carrito?idproducto={{ $producto->idproducto }}">
+                    <!--<a href="/carrito?idproducto={{ $producto->idproducto }}">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
                           <g>
@@ -100,7 +100,7 @@
                         <g>
                         </g>
                       </svg>
-                    </a>
+                    </a>-->
                   </div>
                 </div>
               </div>

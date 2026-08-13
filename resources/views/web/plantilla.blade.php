@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ==" crossorigin="anonymous" />
   <!-- font awesome style -->
   <link href="web/css/font-awesome.min.css" rel="stylesheet" />
+  <!-- bootstrap icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 
   <!-- Custom styles for this template -->
   <link href="web/css/style.css" rel="stylesheet" />
@@ -143,7 +145,7 @@
      @yield("banner")
   </div>
 
- @yield("contenido")   <!--Usamos "yield" para definir-->
+  @yield("contenido")
 
   <!-- footer section -->
   <footer class="footer_section">
