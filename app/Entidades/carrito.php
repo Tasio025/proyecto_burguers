@@ -60,16 +60,6 @@
             WHERE fk_idcliente = ?";
             $lstRetorno = DB::select($sql, [$idcliente]);
             return $lstRetorno;
-            /*if(count($lstRetorno)>0){
-                  $this->idcarritos = $lstRetorno[0]->idcarritos;
-                  $this->cantidad = $lstRetorno[0]->cantidad;
-                  $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;
-                  $this->fk_idproductos = $lstRetorno[0]->fk_idproductos;
-                  $this->producto = $lstRetorno[0]->producto;
-                  $this->precio = $lstRetorno[0]->precio;
-                  return $this;
-            }
-            return null;*/
       }
       public function cargarDesdeRequest($request){
             $this->idcarritos = $request->input('idcarritos');
@@ -106,6 +96,20 @@
                   $this->fk_idproductos
             ]);
             return $this->idcarritos = DB::getPdo()->lastInsertId();
+      }
+      //REVISAR ESTA FUNCIÓN
+      public function agregarProducto($idproducto, $idcliente, $cantidad){
+            $sql = "SELECT idcarritos, cantidad FROM carritos WHERE fk_idcliente = ? AND fk_idproductos = ?";
+            $existente = DB::select($sql, [$idcliente, $idproducto]);
+            if(count($existente) > 0){
+                  //Ya tiene ese producto en el carrito, suma una cantidad nueva
+                  $nuevaCantidad = $existente[0]->cantidad + $cantidad;
+                  DB::update("UPDATE carritos SET cantidad = ? WHERE idcarritos = ?", [$nuevaCantidad, $existente[0]->idcarritos]);
+            }else{
+                  //Primera vez que se agrega este producto => insertamos nueva fila
+                  DB::insert("INSERT INTO carritos(cantidad, fk_idcliente, fk_idproductos) VALUES (?,?,?)",
+                  [$cantidad, $idcliente, $idproducto]);
+            }
       }
 }
 

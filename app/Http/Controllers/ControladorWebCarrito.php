@@ -9,7 +9,6 @@ use Session;
 
 class ControladorWebCarrito extends Controller{
       public function index(){
-            //idcliente harcodeado
             $idcliente = Session::get("idcliente"); // Este debería ser el ID del cliente logueado
             $carritos = new Carrito();
             //Acá el profe llama a la función obtenerPorCliente y le pasa el idcliente, porque hay que traer los carritos del cliente logueado
@@ -22,7 +21,7 @@ class ControladorWebCarrito extends Controller{
             $titulo = "Agregar productos";
             $producto = new Producto();
             $aProductos = $producto->obtenerTodos();
-            //Le voy a pedir a Claude que me ayude a revisar bien este método
+            return redirect('/takeaway');
       }
 }
 

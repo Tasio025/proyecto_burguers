@@ -36,17 +36,25 @@
                     <h6>
                      $ {{ number_format($producto->precio, 0, ',', '.') }}
                     </h6>
-                    <!--Cantidad del producto que desea agregar al carrito-->
-                    <form action="/carrito" method="POST" class="d-flex align-items-center">
+                    <form action="/carrito" method="POST" class="d-flex align-items-center gap-2">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <input type="hidden" id="idproducto" name="idproducto" class="form-control" style="width: 50px;" value="{{ $producto->idproducto }}" required>
-                      <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" style="width: 50px;" value="0" required>
-                      <!--Acá cambié el nombre del producto por el id del producto como campo oculto así el formulario sabe que producto 
-                      estamos agregando-->
+                      <input type="hidden" name="idproducto" id="idproducto-{{ $producto->idproducto }}" value="{{ $producto->idproducto }}">
+                      <input type="number" name="txtCantidad" id="txtCantidad-{{ $producto->idproducto }}" class="form-control text-center" style="width: 65px;" calue="0" required>
                       <button type="submit" class="btn btn-warning d-flex align-items-center justify-content-center">
-                        <i class="bi bi-cart-plus-fill"></i>      
+                        <i class="bi bi-cart-plus-fill"></i>
                       </button>
                     </form>
+                    <!--Cantidad del producto que desea agregar al carrito-->
+                    <!--<form action="/carrito" method="POST" class="d-flex align-items-center">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <input type="hidden" id="idproducto" name="idproducto" class="form-control" style="width: 50px;" value="{{ $producto->idproducto }}" required>
+                      <input type="number" name="txtCantidad" id="txtCantidad" class="form-control" style="width: 50px; text-align:center; margin-right: 100px" value="0" required>-->
+                      <!--Acá cambié el nombre del producto por el id del producto como campo oculto así el formulario sabe que producto 
+                      estamos agregando-->
+                      <!--<button type="submit" class="btn btn-warning d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cart-plus-fill"></i>      
+                      </button>
+                    </form>-->
                     <!--<a href="/carrito?idproducto={{ $producto->idproducto }}">
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                         <g>
