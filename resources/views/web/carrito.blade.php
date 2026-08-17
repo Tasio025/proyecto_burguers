@@ -1,13 +1,12 @@
 @extends("web.plantilla")
 @section("contenido")
-
-@php use App\Entidades\Cliente; @endphp
 <section class="book_section layout_padding">
       <div class="heading_container mt-5">
             <h2>Mi carrito</h2>
       </div>
       <div class="row">
-            @if(!Cliente::autenticado())
+            <!--Pregunta: Podría ir un if con "!Cliente::autenticado()" ?--> 
+            @if(!Session::get("idcliente"))
             <!--Iniciar sesión-->
             <div class="alert alert-warning">
                   Debe iniciar sesión para poder ver su carrito 

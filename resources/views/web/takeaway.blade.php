@@ -1,7 +1,6 @@
 @extends("web.plantilla")
 @section("contenido")
   <!-- food section -->
-
   <section class="food_section layout_padding">
     <div class="container">
       <div class="heading_container heading_center">
@@ -36,12 +35,16 @@
                     <h6>
                      $ {{ number_format($producto->precio, 0, ',', '.') }}
                     </h6>
-                    <form action="/carrito" method="POST" class="d-flex align-items-center gap-2">
+                    <form action="" method="POST" class="d-flex align-items-center gap-2">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="idproducto" id="idproducto-{{ $producto->idproducto }}" value="{{ $producto->idproducto }}">
                       <input type="number" name="txtCantidad" id="txtCantidad-{{ $producto->idproducto }}" class="form-control text-center" style="width: 65px;" calue="0" required>
                       <button type="submit" class="btn btn-warning d-flex align-items-center justify-content-center">
-                        <i class="bi bi-cart-plus-fill"></i>
+                        <i class="bi bi-cart-plus-fill">
+                          @if($msg)
+                            {{ $msg["MSG"] }}
+                          @endif
+                        </i>
                       </button>
                     </form>
                     <!--Cantidad del producto que desea agregar al carrito-->

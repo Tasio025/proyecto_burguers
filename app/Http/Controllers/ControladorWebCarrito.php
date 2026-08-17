@@ -19,6 +19,14 @@ class ControladorWebCarrito extends Controller{
       }                                        //Por que el profe sacó carritos y sucursal de acá?
       public function guardar(Request $request){
             $titulo = "Agregar productos";
+            $idcliente = Session::get("idcliente");
+            if($idcliente){
+                  return redirect('/login');
+            }
+            $idproducto = $request->input('idproducto');
+            $cantidad = $request->input('txtCantidad');
+            $carrito = new Carrito();
+            
             $producto = new Producto();
             $aProductos = $producto->obtenerTodos();
             return redirect('/takeaway');

@@ -99,7 +99,10 @@
       }
       //REVISAR ESTA FUNCIÓN
       public function agregarProducto($idproducto, $idcliente, $cantidad){
-            $sql = "SELECT idcarritos, cantidad FROM carritos WHERE fk_idcliente = ? AND fk_idproductos = ?";
+            $sql = "SELECT
+            idcarritos,
+            cantidad FROM carritos WHERE fk_idcliente = ? AND fk_idproductos = ?
+            ";
             $existente = DB::select($sql, [$idcliente, $idproducto]);
             if(count($existente) > 0){
                   //Ya tiene ese producto en el carrito, suma una cantidad nueva
