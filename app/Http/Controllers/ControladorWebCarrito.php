@@ -6,8 +6,9 @@ use App\Entidades\Carrito;
 use App\Entidades\Producto;
 use App\Entidades\Sucursal;
 use Session;
-
+require app_path() . '/start/constants.php'; 
 class ControladorWebCarrito extends Controller{
+      //REVISAR ESE REQUIRE APP_PATH!!!!!!!!!!!!!!!!
       public function index(){
             $idcliente = Session::get("idcliente"); // Este debería ser el ID del cliente logueado
             $carritos = new Carrito();
@@ -20,7 +21,7 @@ class ControladorWebCarrito extends Controller{
       public function guardar(Request $request){
             $titulo = "Agregar productos";
             $idcliente = Session::get("idcliente");
-            if($idcliente){
+            if(!$idcliente){
                   return redirect('/login');
             }
             $idproducto = $request->input('idproducto');
