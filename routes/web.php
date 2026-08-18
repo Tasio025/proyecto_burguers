@@ -31,7 +31,8 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/contacto', 'ControladorWebContacto@enviar');
     Route::get('/postulacion-gracias', 'ControladorWebPostulacionGracias@index');
     Route::get('/carrito', 'ControladorWebCarrito@index');
-    Route::post('/carrito', 'ControladorWebCarrito@guardar');
+    //Route::post('/carrito', 'ControladorWebCarrito@guardar');
+    Route::get('/carrito/eliminar/{idcarritos}', 'ControladorWebCarrito@eliminar');
     Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
     Route::post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');

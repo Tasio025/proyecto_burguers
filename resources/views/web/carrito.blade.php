@@ -36,7 +36,7 @@
                                     <td>{{ $carritos->producto }}</td>
                                     <td>{{ $carritos->precio }}</td>
                                     <td>{{ $carritos->cantidad }}</td>
-                                    <td><img src="{{ $carritos->imagen }}" alt="{{ $carritos->nombre }}" width="100"></td>
+                                    <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                     <td>{{ $carritos->precio * $carritos->cantidad }}</td>
                                     <td>
                                           <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>

@@ -1,5 +1,8 @@
 @extends("web.plantilla")
 @section("contenido")
+@if(isset($msg))
+  {{ $msg["MSG"] }}
+@endif
   <!-- food section -->
   <section class="food_section layout_padding">
     <div class="container">
@@ -35,15 +38,12 @@
                     <h6>
                      $ {{ number_format($producto->precio, 0, ',', '.') }}
                     </h6>
-                    <form action="" method="POST" class="d-flex align-items-center gap-2">
+                    <form action="/takeaway" method="POST" class="d-flex align-items-center gap-2">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="idproducto" id="idproducto-{{ $producto->idproducto }}" value="{{ $producto->idproducto }}">
-                      <input type="number" name="txtCantidad" id="txtCantidad-{{ $producto->idproducto }}" class="form-control text-center" style="width: 65px;" calue="0" required>
+                      <input type="number" name="txtCantidad" id="txtCantidad-{{ $producto->idproducto }}" class="form-control text-center" style="width: 65px;" value="0" required>
                       <button type="submit" class="btn btn-warning d-flex align-items-center justify-content-center">
                         <i class="bi bi-cart-plus-fill">
-                          @if($msg)
-                            {{ $msg["MSG"] }}
-                          @endif
                         </i>
                       </button>
                     </form>

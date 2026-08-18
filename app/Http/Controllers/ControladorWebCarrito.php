@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use App\Entidades\Carrito;
-use App\Entidades\Producto;
 use App\Entidades\Sucursal;
 use Session;
-require app_path() . '/start/constants.php'; 
+
 class ControladorWebCarrito extends Controller{
-      //REVISAR ESE REQUIRE APP_PATH!!!!!!!!!!!!!!!!
       public function index(){
             $idcliente = Session::get("idcliente"); // Este debería ser el ID del cliente logueado
             $carritos = new Carrito();
@@ -18,19 +15,14 @@ class ControladorWebCarrito extends Controller{
             $aSucursales = $sucursal->obtenerTodos();
             return view("web.carrito", compact('carritos', 'aCarritos', 'aSucursales', 'sucursal'));   //Esto nos devolvera el carrito.blade.php(el carrito de la plantilla) pero hay que armarlo xq aparece todo roto
       }                                        //Por que el profe sacó carritos y sucursal de acá?
-      public function guardar(Request $request){
-            $titulo = "Agregar productos";
-            $idcliente = Session::get("idcliente");
-            if(!$idcliente){
-                  return redirect('/login');
-            }
-            $idproducto = $request->input('idproducto');
-            $cantidad = $request->input('txtCantidad');
+     //Hace falta la función guardar?
+      //Dudas acá en esta función
+      public function eliminar($idcarritos){
             $carrito = new Carrito();
-            
-            $producto = new Producto();
-            $aProductos = $producto->obtenerTodos();
-            return redirect('/takeaway');
+            $carrito->idcarritos = $idcarritos;
+            $carrito->eliminar();
+
+            return redirect('/carrito');
       }
 }
 

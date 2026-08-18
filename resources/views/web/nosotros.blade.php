@@ -85,8 +85,47 @@
         </div>
       </div>
     </div>
+    <!--FALTA AGREGAR EL "TRABAJÁ CON NOSOTROS"-->
   </section>
 
   <!-- end client section --> 
+   <section class="layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center mb_45">
+        <h2>¡Trabajá con nosotros!</h2>
+      </div>
+      @if(isset($msg))
+        <div class="alert alert-{{ $msg['ESTADO'] }}">
+          {{ $msg['MSG'] }}
+        </div>
+        @endif
 
+        <form action="/nosotros" method="POST" class="row justify-content-center">
+          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+          <div class="col-md-6 mb-3">
+            <label for="txtNombre" class="form-label">Nombre</label>
+            <input type="text" name="txtNombre" id="txtNombre" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="txtApellido" class="form-label">Apellido</label>
+            <input type="text" name="txtApellido" id="txtApellido" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="txtCelular" class="form-label">Número de teléfono</label>
+            <input type="text" name="txtCelular" id="txtCelular" class="form-control" placeholder="+54..." required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="txtCorreo" class="form-label">Correo electrónico</label>
+            <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="txtCV" class="form-label">Link a tu CV</label>
+            <input type="text" name="txtCV" id="txtCV" class="form-control" placeholder="Linkedin, Drive, etc...">
+          </div>
+          <div class="col-md-12 text center">
+            <button type="submit" class="btn btn-warning">Enviar postulación</button>
+          </div>
+        </form>
+    </div>
+   </section>
   @endsection
