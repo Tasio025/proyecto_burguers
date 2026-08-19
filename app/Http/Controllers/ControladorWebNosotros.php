@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Entidades\Postulacion;
 use App\Entidades\Sucursal;
+use Illuminate\Http\Request;
 
 class ControladorWebNosotros extends Controller{
       public function index(){
-            $postulacion = new Postulacion();
-            $aPostulacion = $postulacion->obtenerTodos();
+            /*$postulacion = new Postulacion();
+            $aPostulacion = $postulacion->obtenerTodos();*/
 
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
@@ -20,11 +21,13 @@ class ControladorWebNosotros extends Controller{
             $postulacion->apellido = $request->input("txtApellido");
             $postulacion->celular = $request->input("txtCelular");
             $postulacion->correo = $request->input("txtCorreo");
-            $postulacion->correo = $request->input("txtCV");
-            $postulacion->guardar();
+            $postulacion->CV = $request->input("txtCV");
+            $postulacion->insertar();
 
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
+
+            return view("web.nosotros", compact("aSucursales"));
       }
 
 }

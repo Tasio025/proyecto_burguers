@@ -100,7 +100,7 @@
         </div>
         @endif
 
-        <form action="/nosotros" method="POST" class="row justify-content-center">
+        <form action="/nosotros" method="POST" class="row justify-content-center" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="col-md-6 mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
@@ -119,8 +119,9 @@
             <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" required>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="txtCV" class="form-label">Link a tu CV</label>
-            <input type="text" name="txtCV" id="txtCV" class="form-control" placeholder="Linkedin, Drive, etc...">
+            <label for="">Cargar CV</label>
+            <input type="file" name="txtCV" id="txtCV" class="form-control" accept=".pdf, .doc, .docx" required>
+            <small class="d-block">Archivos admitidos: .pdf, .doc, .docx</small>
           </div>
           <div class="col-md-12 text center">
             <button type="submit" class="btn btn-warning">Enviar postulación</button>
