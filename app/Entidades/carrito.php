@@ -14,9 +14,9 @@
 
       protected $hidden = [];
 
-      private $producto;
+     /* private $producto;
       private $precio;
-      private $cantidad;
+      private $cantidad;*/
 
       public function obtenerTodos(){
             $sql = "SELECT
