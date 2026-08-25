@@ -99,8 +99,8 @@
           {{ $msg['MSG'] }}
         </div>
         @endif
-
-        <form action="/nosotros" method="POST" class="row justify-content-center" enctype="multipart/form-data">
+        
+        <form action="" method="POST" class="row justify-content-center" enctype="multipart/form-data">
           <input type="hidden" name="_token" value="{{ csrf_token() }}">
           <div class="col-md-6 mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
