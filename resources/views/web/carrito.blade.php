@@ -32,15 +32,44 @@
                         </thead>
                         <tbody>
                                @foreach($aCarritos as $carritos)
-                              <tr>  <!--Esto lo tengo que revisar, no se si está bien-->                        
-                                    <td>{{ $carritos->producto }}</td>
-                                    <td>{{ $carritos->precio }}</td>
-                                    <td>{{ $carritos->cantidad }}</td>
-                                    <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
-                                    <td>{{ $carritos->precio * $carritos->cantidad }}</td>
-                                    <td>
-                                          <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
-                                    </td>
+                              <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
+                                    <<!--Version mia-->      
+                                    <form action="" method="POST">                  
+                                          <td>{{ $carritos->producto }}</td>
+                                          <td>{{ $carritos->precio }}</td>
+                                          <td>{{ $carritos->cantidad }}</td>
+                                          <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
+                                          <td>{{ $carritos->precio * $carritos->cantidad }}</td>
+                                          <td>
+                                                <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
+                                          </td>
+                                    </form>
+                                    <!--Version del profe-->
+                                    <form action="" method="POST">
+                                          <td style="width: 0px;">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" id="txtCarrito" name="txtCarrito" class="form-control">
+                                          </td>
+                                          <td style="width: 100px;">
+                                                <img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" class="img-thumbnail">
+                                          </td>
+                                          <td>
+                                                {{ $carrito->producto }}
+                                          </td>
+                                          <td>
+                                                ${{ $carrito->precio }}
+                                          </td>
+                                          <td style="width: 15px">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="number" class="form-contol" value="{{ $carrito->cantidad }}">
+                                          </td>
+                                          <td>
+                                                <div class="btn-group">
+                                                      <button type="submit" class="btn btn-info" id="btnActualizar" name="btnActualizar"></button>
+                                                      <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar"></button>
+                                                </div>
+                                          </td>
+                                    </form>
                               </tr>
                               @endforeach
                         </tbody>
