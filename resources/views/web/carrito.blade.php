@@ -36,44 +36,92 @@
                                     <<!--Version mia-->      
                                     <form action="" method="POST">                  
                                           <td>{{ $carritos->producto }}</td>
-                                          <td>{{ $carritos->precio }}</td>
-                                          <td>{{ $carritos->cantidad }}</td>
+                                          <td>${{ $carritos->precio }}</td>
+                                          <td>
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
+                                                <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1">
+                                          </td>
                                           <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
-                                          <td>{{ $carritos->precio * $carritos->cantidad }}</td>
+                                          <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
                                           <td>
                                                 <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                           </td>
+                                          <td>
+                                                <button type="submit" class="btn btn-info">Actualizar</button>
+                                          </td>
                                     </form>
                                     <!--Version del profe-->
-                                    <form action="" method="POST">
+                                        <!--  <td>{{ $carritos->producto }}</td>
+                                          <td>${{ number_format($carritos->precio, 2) }}</td>
                                           <td style="width: 0px;">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="hidden" id="txtCarrito" name="txtCarrito" class="form-control">
+                                                <form action="">
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="hidden" id="txtCarrito" name="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
+                                                      <input type="number" id="txtCantidad" name="txtCantidad" min="0" class="form-control" style="width: 65px;" value="{{ $carritos->cantidad }}">
+                                                </form>
                                           </td>
-                                          <td style="width: 100px;">
+                                          <td>
                                                 <img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" class="img-thumbnail">
                                           </td>
-                                          <td>
-                                                {{ $carrito->producto }}
-                                          </td>
-                                          <td>
-                                                ${{ $carrito->precio }}
-                                          </td>
-                                          <td style="width: 15px">
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                <input type="number" class="form-contol" value="{{ $carrito->cantidad }}">
-                                          </td>
+                                          <td>${{ number_format($carritos->precio * $carritos->cantidad, 2) }}</td>
                                           <td>
                                                 <div class="btn-group">
-                                                      <button type="submit" class="btn btn-info" id="btnActualizar" name="btnActualizar"></button>
-                                                      <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar"></button>
+                                                      <button type="submit" class="btn btn-info" id="btnActualizar" name="btnActualizar" form="formCarrito{{ $carritos->idcarritos }}">
+                                                            <i class="bi bi-arrow-clockwise">Actualizar</i>
+                                                      </button>
+                                                      <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar" form="formCarrito{{ $carritos->idcarritos }}">
+                                                            <i class="bi bi-trash">Eliminar</i>
+                                                      </button>
                                                 </div>
-                                          </td>
-                                    </form>
+                                          </td>-->
                               </tr>
                               @endforeach
                         </tbody>
                   </table>
+            </div>
+            <div class="col-md-3">
+                  <div class="row mt-2 p-2">
+                        <div class="col-md-12">
+                              <table class="table">
+                                    <thead>
+                                          <tr>
+                                                <th>TOTAL: </th>
+                                          </tr>
+                                    </thead>
+                                    <form action="" method="POST">
+                                    <tbody>
+                                          <tr>
+                                                <td>
+                                                      <label>Sucursal: </label>
+                                                      <select name="lstSucursal" id="lstSucursal" class="form-select">
+                                                            <option value="" disabled selected>Seleccionar</option>
+                                                            @foreach($aSucursales as $sucursal)
+                                                            <option value="{{ $sucursal->idsucursal }}">{{ $sucursal->idsucursal }}</option>
+                                                            @endforeach
+                                                      </select>
+                                                </td>
+                                          </tr>
+                                          <tr>
+                                                <label>Método de pago:</label>
+                                                <select name="lstPago" id="lstPago" class="form-select" required>
+                                                      <option value="" disabled selected>Seleccionar</option>
+                                                      <option value="mercado">MercadoPago</option>
+                                                      <option value="credito">Crédito</option>
+                                                      <option value="debito">Débito</option>
+                                                      <option value="efectivo">Efectivo</option>
+                                                </select>
+                                          </tr>
+                                          <tr>
+                                                <td>
+                                                      <button type="submit" class="btn btn-success" id="btnFinalizar" name="btnFinalizar">Finalizar Compra</button>
+                                                </td>
+                                          </tr>
+                                    </tbody>
+                                    </form>
+                              </table>
+                        </div>
+                  </div>
             </div>
             @endif
       </div>

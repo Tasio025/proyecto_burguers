@@ -98,7 +98,7 @@
             return $this->idcarritos = DB::getPdo()->lastInsertId();
       }
       public function actualizarCantidad($idcarritos, $cantidad){
-            $sql = "UPDATE carritos SET cantidad = ? WHERE = idcarritos = ?";
+            $sql = "UPDATE carritos SET cantidad = ? WHERE idcarritos = ?";
             DB::update($sql, [$cantidad, $idcarritos]);
       }
 }
