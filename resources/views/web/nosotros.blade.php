@@ -50,10 +50,10 @@
             <div class="box">
               <div class="detail-box">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                  Me sorprendió la calidad de las comidas, sobre todo de las haburguesas! el pan de muy buena calidad y la carne siempre al punto justo! definitivamente recomendaría comer aquí
                 </p>
                 <h6>
-                  Moana Michell
+                  Brisa Quinteros
                 </h6>
                 <p>
                   Magna Aliqua
@@ -68,10 +68,10 @@
             <div class="box">
               <div class="detail-box">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                  Me llevé una sorpresa con las pizzas cuando pedí para llevar la ultima juntada con mis amigos, definitivamente muy conformes con la comida y el sistema de pedidos!
                 </p>
                 <h6>
-                  Mike Hamell
+                  Bruno Larosa
                 </h6>
                 <p>
                   Magna Aliqua
@@ -85,7 +85,6 @@
         </div>
       </div>
     </div>
-    <!--FALTA AGREGAR EL "TRABAJÁ CON NOSOTROS"-->
   </section>
 
   <!-- end client section --> 
@@ -119,8 +118,8 @@
             <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" required>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="">Cargar CV</label>
-            <input type="file" name="txtCV" id="txtCV" class="form-control" accept=".pdf, .doc, .docx" required>
+            <label for="txtCV">Cargar CV</label>
+            <input type="file" name="txtCV" id="txtCV" class="form-control-file" accept=".pdf, .doc, .docx" required>
             <small class="d-block">Archivos admitidos: .pdf, .doc, .docx</small>
           </div>
           <div class="col-md-12 text center">

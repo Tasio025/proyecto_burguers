@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Entidades\Cliente;
 use Illuminate\Http\Request;
+use Session;
 class ControladorWebCambiarClave extends Controller{
       public function index(){
             return view("web.cambiar-clave");
@@ -12,12 +13,12 @@ class ControladorWebCambiarClave extends Controller{
                   $claveActual = $request->input('txtClaveActual');
                   $claveNueva = $request->input('txtClaveNueva');
                   $claveConfirmacion = $request->input('txtClaveConfirmar');
-                  $idcliente = 1;   //Buscamos al cliente con el id
+                  $idcliente = Session::get('idcliente');
                   $entidad = new Cliente();
                   $entidad->obtenerPorId($idcliente);
                   //Ahora tenemos que hacer una validacion para saber si la clave es correcta
                   //Esta validación es para saber si la clave es correcta
-                  if($claveActual != $entidad->clave){
+                  if(!password_verify($claveActual, $entidad->clave)){
                         return redirect('/cambiar-clave')->with('msg', [
                               'ESTADO' => 'danger',
                               'MSG' => 'La contraseña actual es incorrecta'
@@ -31,7 +32,7 @@ class ControladorWebCambiarClave extends Controller{
                         ]);
                   }
                   //Ahora si todo está bien actualizamos
-                  $entidad->clave = $claveNueva;
+                  $entidad->clave = password_hash($claveNueva, PASSWORD_DEFAULT);
                   $entidad->guardar();
 
                   return redirect('/mi-cuenta')->with('msg', [

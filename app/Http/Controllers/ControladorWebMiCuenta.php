@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 use App\Entidades\Cliente;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ControladorWebMiCuenta extends Controller{
       public function index(){
-            $idcliente = 1;   
-            $cliente = new Cliente();     
+            $idcliente = Session::get('idcliente');
+            $cliente = new Cliente();
             $cliente = $cliente->obtenerPorId($idcliente);
             return view("web.mi-cuenta", compact('cliente'));
       }
       public function guardar(Request $request){      //Request para recibir los valores del formulario
             //dd($request->all());
             try{ 
-                  $idcliente = 1;
+                  $idcliente = Session::get('idcliente');
+                 // dd($idcliente);
                   $cliente = New Cliente();
                   $cliente = $cliente->obtenerPorId($idcliente);
                   //$cliente->cargarDesdeRequest($request);   //Cargamos lo que el usuario escribió

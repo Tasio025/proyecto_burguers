@@ -12,15 +12,17 @@ class ControladorWebRecuperarClave extends Controller{
             $titulo = "Recuperar clave";
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
-            return view("web.recuperar-clave", compact("titulo"));
+            return view("web.recuperar-clave", compact("titulo", "aSucursales")); 
       }
       public function recuperar(Request $request){
             $titulo = "Recuperar clave";
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
             $correo = $request->input('txtCorreo');
             $clave = rand(1000, 9999);
 
             $cliente = new Cliente();
-            $cliente->obtenerPorCorreo($correo);
+            $cliente = $cliente->obtenerPorCorreo($correo);
             if($cliente->correo != null){
                   $data = "Instrucciones";
                   $mail = new PHPMailer(true);
@@ -49,21 +51,24 @@ class ControladorWebRecuperarClave extends Controller{
                         $cliente->clave = $claveEncriptada;
                         $cliente->guardar();
 
-                        dd([
+                        /*dd([
                               'correo' => $cliente->correo,
                               'clave_nueva' => $clave,
                               'clave_encriptada' => $cliente->clave
-                        ]);
+                        ]);*/
 
-                        $mensaje = "La nueva clave es $clave, y te la hemos enviado a tu correo";
-                        return view('web.recuperar-clave', compact('titulo', 'mensaje'));
+                        $msg["ESTADO"] = 'success';
+                        $msg["MSG"] = "La nueva clave fué enviada a tu correo";
+                        return view('web.recuperar-clave', compact('titulo', 'msg', 'aSucursales'));
                   }catch(Exception $e){
-                        $mensaje = "No se pudo enviar el correo. ";
-                        return view('web.recuperar-clave', compact('titulo', 'mensaje'));
+                        $msg["ESTADO"] = 'danger';
+                        $msg["MSG"] = "Hubi un error al enviar el correo. Mensaje: " .  $e->getMessage();
+                        return view('web.recuperar-clave', compact('titulo', 'msg', 'aSucursales'));
                   }
             }else{
-                  $mensaje = "El correo no está registrado.";
-                  return view('web.recuperar-clave', compact('titulo', 'mensaje'));
+                  $msg["ESTADO"] = 'danger';
+                  $msg["MSG"] = "El correo no está registrado.";
+                  return view('web.recuperar-clave', compact('titulo', 'msg', 'aSucursales'));
             }
 
       }
