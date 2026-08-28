@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Entidades\Carrito;
+use App\Entidades\Producto;
 use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use Session;
@@ -15,8 +16,8 @@ class ControladorWebCarrito extends Controller{
             $aCarritos = $carritos->obtenerPorCliente($idcliente);
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
-            return view("web.carrito", compact('carritos', 'aCarritos', 'aSucursales', 'sucursal'));   //Esto nos devolvera el carrito.blade.php(el carrito de la plantilla) pero hay que armarlo xq aparece todo roto
-      }                                        //Por que el profe sacó carritos y sucursal de acá?
+            return view("web.carrito", compact('aCarritos', 'aSucursales'));   //Esto nos devolvera el carrito.blade.php(el carrito de la plantilla) pero hay que armarlo xq aparece todo roto
+      }                                        //Acá tenía también en este compact 'sucursal' y 'carrito'
      //Hace falta la función guardar?
       //Dudas acá en esta función
       public function eliminar(Request $request){
@@ -29,14 +30,26 @@ class ControladorWebCarrito extends Controller{
             return view('web.carrito', compact('resultado'));
             //return redirect('/carrito');
       }
-      public function actualizar(Request $request){
+      public function actualizar(Request $request){   //REVISAR ESTO, así debería estar bien el actualizar. Por que me marca error en $idcarrito y $producto
+            $carrito = new Carrito();
             $cantidad = $request->input("txtCantidad");
+            $idproducto = $request->input("txtProducto");
+            $idcliente = Session::get("idcliente");
+            $carrito->idcarrito = $idcarrito;
+            $carrito->cantidad = $cantidad;
+            $carrito->fk_idcliente = $idcliente;
+            $carrito->fk_idproducto = $producto;
+            $carrito->guardar();
+            $resultado["err"] = EXIT_SUCCESS;
+            $resultado["mensaje"] = "Producto actualizado exitosamente";
+            return view('web.carrito', compact('resultado'));
+            /*$cantidad = $request->input("txtCantidad");
             $carrito = new Carrito();
             $carrito->cantidad = $cantidad;
             $carrito->guardar();
             $resultado["err"] = EXIT_SUCCESS;
             $resultado["mensaje"] = "Producto actualizado exitosamente";
-            return view('web.carrito', compact('resultado'));
+            return view('web.carrito', compact('resultado'));*/
            /* $idcarritos = $request->input("txtCarritos");
             $cantidad = $request->input("txtCantidad");
             $carrito = new Carrito();

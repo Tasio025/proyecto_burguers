@@ -38,7 +38,8 @@
                                           <td>{{ $carritos->producto }}</td>
                                           <td>${{ $carritos->precio }}</td>
                                           <td>
-                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                <input type="hidden" name="_token" value="{{ csrf_token() }}"><!--El profe no tiene esto acá-->
+                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla<input type="hidden" class="form-control" value="{{ $carrito->fk_idproducto }}" type="number" name="txtCantidad" id="txtCantidad">-->
                                                 <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
                                                 <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1">
                                           </td>
