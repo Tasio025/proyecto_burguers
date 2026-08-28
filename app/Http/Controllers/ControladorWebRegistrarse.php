@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
+require app_path() . '/start/constants.php';
 
 class ControladorWebRegistrarse extends Controller{
       public function index(){
@@ -25,6 +26,7 @@ class ControladorWebRegistrarse extends Controller{
             if($cliente->nombre == "" || $cliente->apellido == "" || $cliente->direccion == "" || $cliente->correo == "" || $cliente->dni == "" || $cliente->celular == "" || $cliente->whatsapp == "" || $cliente->clave == ""){
                $msg["ESTADO"] = MSG_ERROR;
                $msg["MSG"] = "Complete todos los campos";   
+               return view('web.registrarse', compact('titulo', 'msg'));
             }else{
                   //Ahora que termino de settear todo llamo al método insertar
                   $cliente->insertar();
