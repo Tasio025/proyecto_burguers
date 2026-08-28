@@ -17,7 +17,7 @@
                                     </div>
                               @endif
                         </div>
-                        <form action="/cambiar-clave" id="form1" name="form1" method="POST">
+                        <form action="" id="form1" name="form1" method="POST">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <div class="mb-4">
                                     <label for="">Contraseña actual</label>

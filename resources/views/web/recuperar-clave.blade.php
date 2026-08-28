@@ -10,8 +10,8 @@
                   <div class="col-md-6 mx-auto">
                         <div class="form-container">
                               <p class="text-center mb-4">Ingresá tu correo con el que te hayas registrado y te enviaremos las indicaciones para cambiar tu clvae</p>
-                        @if(isset($mensaje))
-                        <div class="alert alert-{{ $msg['ESTADO'] }} text-center"></div>
+                        @if(isset($msg))
+                        <div class="alert alert-{{ $msg['ESTADO'] }} text-center">
                         {{ $msg['MSG'] }}      
                         </div>
                         @endif

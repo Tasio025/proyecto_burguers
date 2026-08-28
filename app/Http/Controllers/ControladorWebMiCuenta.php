@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 use App\Entidades\Cliente;
+use App\Entidades\Sucursal;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class ControladorWebMiCuenta extends Controller{
       public function index(){
+            if(!Session::has('idcliente')){
+                  $mensaje ='Debe iniciar sesión para ver su cuenta';
+                   $sucursal = new Sucursal();
+                  $aSucursales = $sucursal->obtenerTodos();
+                  $titulo = "Iniciar sesión";
+                  return view('web.login', compact('mensaje', 'aSucursales'));
+            }
             $idcliente = Session::get('idcliente');
             $cliente = new Cliente();
             $cliente = $cliente->obtenerPorId($idcliente);
@@ -15,6 +23,12 @@ class ControladorWebMiCuenta extends Controller{
       }
       public function guardar(Request $request){      //Request para recibir los valores del formulario
             //dd($request->all());
+            if(!Session::has('idcliente')){
+                  $mensaje = 'Debe iniciar sesión para ver su cuenta';
+                  $sucursal = new Sucursal();
+                  $aSucursales = $sucursal->obtenerTodos();
+                  return view('web.login', compact('mensaje', 'aSucursales'));
+            }
             try{ 
                   $idcliente = Session::get('idcliente');
                  // dd($idcliente);

@@ -19,10 +19,11 @@ class ControladorWebRecuperarClave extends Controller{
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
             $correo = $request->input('txtCorreo');
+            //Acá se termina de generar la clave
             $clave = rand(1000, 9999);
 
             $cliente = new Cliente();
-            $cliente = $cliente->obtenerPorCorreo($correo);
+            $cliente = $cliente->obtenerPorCorreo($correo); //Se obtiene el cliente por correo
             if($cliente->correo != null){
                   $data = "Instrucciones";
                   $mail = new PHPMailer(true);
@@ -42,27 +43,21 @@ class ControladorWebRecuperarClave extends Controller{
                         $mail->isHTML(true);
                         $mail->Subject = 'Recuperar clave';
                         $mail->Body = "Los datos de acceso son: 
-                        Usuario: $cliente->correo;
+                        Usuario: $cliente->correo;   
                         Clave: $clave;
-                        ";
-                        $mail->send();
+                        ";    //Le digo que va al correo
+                        //$mail->send();
                         //Actualizar en el cliente la nueva clave ya encriptada
                         $claveEncriptada = password_hash($clave, PASSWORD_DEFAULT);
                         $cliente->clave = $claveEncriptada;
-                        $cliente->guardar();
-
-                        /*dd([
-                              'correo' => $cliente->correo,
-                              'clave_nueva' => $clave,
-                              'clave_encriptada' => $cliente->clave
-                        ]);*/
-
+                        $cliente->guardar(); //Y así se actualiza la entidad
+                        
                         $msg["ESTADO"] = 'success';
-                        $msg["MSG"] = "La nueva clave fué enviada a tu correo";
+                        $msg["MSG"] = "La nueva clave es $clave y fué enviada a tu correo";
                         return view('web.recuperar-clave', compact('titulo', 'msg', 'aSucursales'));
                   }catch(Exception $e){
                         $msg["ESTADO"] = 'danger';
-                        $msg["MSG"] = "Hubi un error al enviar el correo. Mensaje: " .  $e->getMessage();
+                        $msg["MSG"] = "Hubo un error al enviar el correo. Mensaje: " .  $e->getMessage();
                         return view('web.recuperar-clave', compact('titulo', 'msg', 'aSucursales'));
                   }
             }else{

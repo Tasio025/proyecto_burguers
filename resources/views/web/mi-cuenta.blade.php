@@ -9,6 +9,11 @@
                         Mi Cuenta
                   </h2>
             </div>
+            @if(isset($msg))
+            <div class="alert alert-{{ $msg['ESTADO'] }}" role="alert">
+                  {{ $msg['MSG'] }}
+            </div>
+            @endif
             <div class="row">
                   <div class="col-md-10 mx-auto">
                         <div class="form_container">
