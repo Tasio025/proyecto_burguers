@@ -26,7 +26,13 @@ class ControladorWebCarrito extends Controller{
             $carrito->eliminar();
             $msg["ESTADO"] = EXIT_SUCCESS;
             $msg["MSG"] = "Producto eliminado correctamente";
-            return view('web.carrito', compact('msg'));
+            $idcliente = Session::get("idcliente");
+            $carritos = new Carrito();
+            $aCarritos = $carritos->obtenerPorCliente($idcliente);
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+
+            return view('web.carrito', compact('msg', 'aCarritos', 'aSucursales'));
             /*$idcarritos = $request->input("txtCarrito");
             $carrito = new Carrito();
             $carrito->idcarritos = $idcarritos;

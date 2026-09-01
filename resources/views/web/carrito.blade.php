@@ -31,7 +31,13 @@
                               </tr>
                         </thead>
                         <tbody>
+                              <?php
+                              $subtotal = 0;
+                              ?>
                                @foreach($aCarritos as $carritos)
+                               <?php
+                              $subtotal += $carritos->precio * $carritos->cantidad;
+                               ?>
                               <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
                                     <!--Version mia-->      
                                     <form action="" method="POST">                  
@@ -39,48 +45,24 @@
                                           <td>${{ $carritos->precio }}</td>
                                           <td>
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"><!--El profe no tiene esto acá-->
-                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla--><input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtCantidad" id="txtCantidad">
                                                 <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
+                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla--><input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtCantidad" id="txtCantidad">
                                                 <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1">
                                           </td>
                                           <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                           <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
                                           <td>
-                                                 @if(isset($msg))
+                                                <!-- @if(isset($msg))
                                                       <div class="alert alert-{{ $msg['ESTADO'] }}">
                                                             {{ $msg['MSG'] }}
                                                       </div>
-                                                @endif
+                                                @endif -->
                                                 <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                           </td>
                                           <td>
                                                 <button type="submit" class="btn btn-info">Actualizar</button>
                                           </td>
                                     </form>
-                                    <!--Version del profe-->
-                                        <!--  <td>{{ $carritos->producto }}</td>
-                                          <td>${{ number_format($carritos->precio, 2) }}</td>
-                                          <td style="width: 0px;">
-                                                <form action="">
-                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                      <input type="hidden" id="txtCarrito" name="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
-                                                      <input type="number" id="txtCantidad" name="txtCantidad" min="0" class="form-control" style="width: 65px;" value="{{ $carritos->cantidad }}">
-                                                </form>
-                                          </td>
-                                          <td>
-                                                <img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" class="img-thumbnail">
-                                          </td>
-                                          <td>${{ number_format($carritos->precio * $carritos->cantidad, 2) }}</td>
-                                          <td>
-                                                <div class="btn-group">
-                                                      <button type="submit" class="btn btn-info" id="btnActualizar" name="btnActualizar" form="formCarrito{{ $carritos->idcarritos }}">
-                                                            <i class="bi bi-arrow-clockwise">Actualizar</i>
-                                                      </button>
-                                                      <button type="submit" class="btn btn-danger" id="btnBorrar" name="btnBorrar" form="formCarrito{{ $carritos->idcarritos }}">
-                                                            <i class="bi bi-trash">Eliminar</i>
-                                                      </button>
-                                                </div>
-                                          </td>-->
                               </tr>
                               @endforeach
                         </tbody>
@@ -92,14 +74,20 @@
                               <table class="table">
                                     <thead>
                                           <tr>
-                                                <th>TOTAL: </th>
+                                                <?php $resultado = 0; 
+                                                foreach($aCarritos as $carrito){
+                                                      ($resultado += $carrito->cantidad * $carrito->precio);
+
+                                                }
+                                                ?>
+                                                <th>TOTAL: ${{ number_format($resultado, 2) }}</th>
                                           </tr>
                                     </thead>
                                     <form action="" method="POST">
                                     <tbody>
                                           <tr>
                                                 <td>
-                                                      <label>Sucursal: </label>
+                                                      <label class="d-block">Sucursal: </label>
                                                       <select name="lstSucursal" id="lstSucursal" class="form-select">
                                                             <option value="" disabled selected>Seleccionar</option>
                                                             @foreach($aSucursales as $sucursal)
