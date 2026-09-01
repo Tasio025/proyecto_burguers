@@ -33,19 +33,24 @@
                         <tbody>
                                @foreach($aCarritos as $carritos)
                               <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
-                                    <<!--Version mia-->      
+                                    <!--Version mia-->      
                                     <form action="" method="POST">                  
                                           <td>{{ $carritos->producto }}</td>
                                           <td>${{ $carritos->precio }}</td>
                                           <td>
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"><!--El profe no tiene esto acá-->
-                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla<input type="hidden" class="form-control" value="{{ $carrito->fk_idproducto }}" type="number" name="txtCantidad" id="txtCantidad">-->
+                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla--><input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtCantidad" id="txtCantidad">
                                                 <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
                                                 <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1">
                                           </td>
                                           <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                           <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
                                           <td>
+                                                 @if(isset($msg))
+                                                      <div class="alert alert-{{ $msg['ESTADO'] }}">
+                                                            {{ $msg['MSG'] }}
+                                                      </div>
+                                                @endif
                                                 <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                           </td>
                                           <td>
@@ -98,7 +103,7 @@
                                                       <select name="lstSucursal" id="lstSucursal" class="form-select">
                                                             <option value="" disabled selected>Seleccionar</option>
                                                             @foreach($aSucursales as $sucursal)
-                                                            <option value="{{ $sucursal->idsucursal }}">{{ $sucursal->idsucursal }}</option>
+                                                            <option value="{{ $sucursal->idsucursales }}">{{ $sucursal->idsucursales }}</option>
                                                             @endforeach
                                                       </select>
                                                 </td>

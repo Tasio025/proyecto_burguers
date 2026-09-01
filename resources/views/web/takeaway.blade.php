@@ -1,7 +1,9 @@
 @extends("web.plantilla")
 @section("contenido")
 @if(isset($msg))
+<div class="alert alert-{{ $msg['ESTADO'] }}">
   {{ $msg["MSG"] }}
+</div>
 @endif
   <!-- food section -->
   <section class="food_section layout_padding">

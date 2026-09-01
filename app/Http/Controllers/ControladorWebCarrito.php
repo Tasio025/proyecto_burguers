@@ -20,29 +20,35 @@ class ControladorWebCarrito extends Controller{
       }                                        //Acá tenía también en este compact 'sucursal' y 'carrito'
      //Hace falta la función guardar?
       //Dudas acá en esta función
-      public function eliminar(Request $request){
-            $idcarritos = $request->input("txtCarrito");
+      public function eliminar($idcarritos){
+            $carrito = new Carrito();
+            $carrito->idcarritos = $idcarritos;
+            $carrito->eliminar();
+            $msg["ESTADO"] = EXIT_SUCCESS;
+            $msg["MSG"] = "Producto eliminado correctamente";
+            return view('web.carrito', compact('msg'));
+            /*$idcarritos = $request->input("txtCarrito");
             $carrito = new Carrito();
             $carrito->idcarritos = $idcarritos;
             $carrito->eliminar();
             $resultado["err"] = EXIT_SUCCESS;
             $resultado["mensaje"] = "Producto eliminado exixtosamente";
-            return view('web.carrito', compact('resultado'));
-            //return redirect('/carrito');
+            return view('web.carrito', compact('resultado', 'aCarritos', 'aSucursales'));*/
       }
       public function actualizar(Request $request){   //REVISAR ESTO, así debería estar bien el actualizar. Por que me marca error en $idcarrito y $producto
             $carrito = new Carrito();
+            $idcarritos = $request->input("txtCarrito");
             $cantidad = $request->input("txtCantidad");
             $idproducto = $request->input("txtProducto");
             $idcliente = Session::get("idcliente");
-            $carrito->idcarrito = $idcarrito;
+            $carrito->idcarritos = $idcarritos;
             $carrito->cantidad = $cantidad;
             $carrito->fk_idcliente = $idcliente;
-            $carrito->fk_idproducto = $producto;
+            $carrito->fk_idproducto = $idproducto;
             $carrito->guardar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Producto actualizado exitosamente";
-            return view('web.carrito', compact('resultado'));
+            $msg["ESTADO"] = EXIT_SUCCESS;
+            $msg["MSG"] = "Producto actualizado exitosamente";
+            return view('web.carrito', compact('msg'));
             /*$cantidad = $request->input("txtCantidad");
             $carrito = new Carrito();
             $carrito->cantidad = $cantidad;
@@ -58,11 +64,12 @@ class ControladorWebCarrito extends Controller{
       }
       public function procesar(Request $request){
            if(isset($_POST["btnBorrar"])){
-                  $this->eliminar($request);
+            $idcarritos = $request->input("txtCarrito");
+                  return $this->eliminar($idcarritos);
            }else if(isset($_POST["btnActualizar"])){
-                  $this->actualizar($request);
+                  return $this->actualizar($request);
            }else if(isset($_POST["btnFinalizar"])){
-                  $this->insertarPedido($request);
+                  return $this->insertarPedido($request);
            } 
       }
       public function insertarPedido(Request $request){

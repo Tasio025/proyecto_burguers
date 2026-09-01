@@ -47,7 +47,7 @@ class ControladorWebTakeaway extends Controller{
                   }else{
                         $msg["ESTADO"] = MSG_ERROR;
                         $msg["MSG"] = "No se agregó ningún producto al carrito";
-                        return view('web.takeaway', compact('msg'));
+                        return view('web.takeaway', compact('msg', 'aCategorias', 'aSucursales', 'aProductos'));
                   }
             }else{
                   $msg["ESTADO"] = MSG_ERROR;
