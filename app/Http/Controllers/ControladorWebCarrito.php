@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Entidades\Carrito;
 use App\Entidades\Producto;
 use App\Entidades\Sucursal;
+use App\Entidades\Pedido;
 use Illuminate\Http\Request;
 use Session;
 require app_path() . '/start/constants.php';
@@ -12,7 +13,7 @@ class ControladorWebCarrito extends Controller{
       public function index(){
             $idcliente = Session::get("idcliente"); // Este debería ser el ID del cliente logueado
             $carritos = new Carrito();
-            //Acá el profe llama a la función obtenerPorCliente y le pasa el idcliente, porque hay que traer los carritos del cliente logueado
+            //Acá el profe llama a la función obtenerPorCliente  y le pasa el idcliente, porque hay que traer los carritos del cliente logueado
             $aCarritos = $carritos->obtenerPorCliente($idcliente);
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
@@ -27,8 +28,7 @@ class ControladorWebCarrito extends Controller{
             $msg["ESTADO"] = EXIT_SUCCESS;
             $msg["MSG"] = "Producto eliminado correctamente";
             $idcliente = Session::get("idcliente");
-            $carritos = new Carrito();
-            $aCarritos = $carritos->obtenerPorCliente($idcliente);
+            $aCarritos = $carrito->obtenerPorCliente($idcliente);
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
 
@@ -42,23 +42,25 @@ class ControladorWebCarrito extends Controller{
             return view('web.carrito', compact('resultado', 'aCarritos', 'aSucursales'));*/
       }
       public function actualizar(Request $request){   //REVISAR ESTO, así debería estar bien el actualizar. Por que me marca error en $idcarrito y $producto
-            $carritos = new Carrito();
-            $idcarritos = $request->input("txtCarrito");
             $cantidad = $request->input("txtCantidad");
+            $idcarritos = $request->input("txtCarrito");
             $idproducto = $request->input("txtProducto");
-            $idcliente = Session::get("idcliente");
-            $carritos = $carritos->obtenerPorId($idcarritos);
-            $carritos->cantidad = $cantidad;
-            $carritos->fk_idcliente = $idcliente;
-            $carritos->fk_idproductos = $idproducto;
-            $carritos->guardar();
-            $msg["ESTADO"] = EXIT_SUCCESS;
-            $msg["MSG"] = "Producto actualizado exitosamente";
-            //$carritos = new Carrito();
-            $aCarritos = $carritos->obtenerPorCliente($idcliente);
+            $idcliente =  Session::get("idcliente");
+            
+            $carrito = new Carrito();
+            $aCarritos = $carrito->obtenerPorCliente($idcliente);
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
-            return view('web.carrito', compact('msg', 'aCarritos', 'aSucursales'));
+
+            $carrito->idcarritos = $idcarritos;
+            $carrito->cantidad = $cantidad;
+            $carrito->fk_idcliente = $idcliente;
+            $carrito->fk_idproductos = $idproducto;
+            $carrito->guardar();
+            $msg["ESTADO"] = EXIT_SUCCESS;
+            $msg["MSG"] = "Producto actualizado correctamente";
+
+            return view('web.carrito', compact('msg', 'aSucursales', 'aCarritos'));
       }
       public function procesar(Request $request){
            if(isset($_POST["btnBorrar"])){
@@ -71,7 +73,36 @@ class ControladorWebCarrito extends Controller{
            } 
       }
       public function insertarPedido(Request $request){
-            
+            //Falta terminar
+            $idcliente = Session::get("idcliente");
+            $carrito = new Carrito();
+            $aCarritos = $carrito->obtenerPorCliente($idcliente);
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+
+            //REVISAR ESTE FOR
+            $total = 0;
+            foreach($aCarritos as $carrito){
+                  ($total += $carrito->cantidad * $carrito->precio);
+            }
+
+            $sucursal = $request->input("lstSucursal");
+            $pago = $request->input("lstPago");
+            $fecha = date("Y-m-d");
+            $total = $resultado;
+
+            $pedido = new Pedido();
+            $pedido->fk_idsucursal = $sucursal;
+            $pedido->fk_idcliente = $idcliente;
+            $pedido->fk_idestado = 1; // Estado pendiente
+            $pedido->fecha = $fecha;
+            $pedido->total  = $total;
+
+            $pedido->insertar();
+
+            $msg["ESTADO"] = EXIT_SUCCESS;
+            $msg["MSG"] = "El pedido se ha confirmado correctamente";
+            return view("web.carrito", compact('msg', 'aSucursales', 'aCarritos'));
       }
 }
 
