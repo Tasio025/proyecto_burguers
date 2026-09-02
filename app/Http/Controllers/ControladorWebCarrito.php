@@ -42,31 +42,23 @@ class ControladorWebCarrito extends Controller{
             return view('web.carrito', compact('resultado', 'aCarritos', 'aSucursales'));*/
       }
       public function actualizar(Request $request){   //REVISAR ESTO, así debería estar bien el actualizar. Por que me marca error en $idcarrito y $producto
-            $carrito = new Carrito();
+            $carritos = new Carrito();
             $idcarritos = $request->input("txtCarrito");
             $cantidad = $request->input("txtCantidad");
             $idproducto = $request->input("txtProducto");
             $idcliente = Session::get("idcliente");
-            $carrito->idcarritos = $idcarritos;
-            $carrito->cantidad = $cantidad;
-            $carrito->fk_idcliente = $idcliente;
-            $carrito->fk_idproducto = $idproducto;
-            $carrito->guardar();
+            $carritos = $carritos->obtenerPorId($idcarritos);
+            $carritos->cantidad = $cantidad;
+            $carritos->fk_idcliente = $idcliente;
+            $carritos->fk_idproductos = $idproducto;
+            $carritos->guardar();
             $msg["ESTADO"] = EXIT_SUCCESS;
             $msg["MSG"] = "Producto actualizado exitosamente";
-            return view('web.carrito', compact('msg'));
-            /*$cantidad = $request->input("txtCantidad");
-            $carrito = new Carrito();
-            $carrito->cantidad = $cantidad;
-            $carrito->guardar();
-            $resultado["err"] = EXIT_SUCCESS;
-            $resultado["mensaje"] = "Producto actualizado exitosamente";
-            return view('web.carrito', compact('resultado'));*/
-           /* $idcarritos = $request->input("txtCarritos");
-            $cantidad = $request->input("txtCantidad");
-            $carrito = new Carrito();
-            $carrito->actualizarCantidad($idcarritos, $cantidad);
-            return redirect('/carrito');*/
+            //$carritos = new Carrito();
+            $aCarritos = $carritos->obtenerPorCliente($idcliente);
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+            return view('web.carrito', compact('msg', 'aCarritos', 'aSucursales'));
       }
       public function procesar(Request $request){
            if(isset($_POST["btnBorrar"])){
