@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Entidades\Cliente;
 use App\Entidades\Sucursal;
+use App\Entidades\Pedido;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -19,7 +20,10 @@ class ControladorWebMiCuenta extends Controller{
             $idcliente = Session::get('idcliente');
             $cliente = new Cliente();
             $cliente = $cliente->obtenerPorId($idcliente);
-            return view("web.mi-cuenta", compact('cliente'));
+
+            $pedido = new Pedido();
+            $aPedidos = $pedido->obtenerPorCliente($idcliente);
+            return view("web.mi-cuenta", compact('cliente', 'aPedidos'));
       }
       public function guardar(Request $request){      //Request para recibir los valores del formulario
             //dd($request->all());

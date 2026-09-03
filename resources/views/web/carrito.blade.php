@@ -62,15 +62,15 @@
                                                 <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                                 <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
                                                 <td>
-                                                      <!-- @if(isset($msg))
+                                                      @if(isset($msg))
                                                             <div class="alert alert-{{ $msg['ESTADO'] }}">
                                                                   {{ $msg['MSG'] }}
                                                             </div>
-                                                      @endif -->
+                                                      @endif 
                                                       <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                                 </td>
                                                 <td>
-                                                      <button type="submit" class="btn btn-info" form="formCarrito{{ $carritos->idcarritos }}">Actualizar</button>
+                                                      <button type="submit" class="btn btn-info" name="btnActualizar" form="formCarrito{{ $carritos->idcarritos }}">Actualizar</button>
                                                 </td>      
                                     </tr>
                                     <!--</form>-->
@@ -101,7 +101,7 @@
                                                       <tr>
                                                             <td>
                                                                   <label class="d-block">Sucursal: </label>
-                                                                  <select name="lstSucursal" id="lstSucursal" class="form-select">
+                                                                  <select name="lstSucursal" id="lstSucursal" class="form-select" required>
                                                                         <option value="" disabled selected>Seleccionar</option>
                                                                         @foreach($aSucursales as $sucursal)
                                                                         <option value="{{ $sucursal->idsucursales }}">{{ $sucursal->idsucursales }}</option>

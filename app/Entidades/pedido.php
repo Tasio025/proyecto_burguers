@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Model;
       protected $table = 'pedidos';
       public $timestamps = false;
 
-      protected $fillable = ['idpedido', 'fecha', 'descripcion', 'total', 'fk_idsucursal', 'fk_idcliente', 'fk_idestado'];
+      protected $fillable = ['idpedido', 'fecha', 'descripcion', 'pago', 'total', 'fk_idsucursal', 'fk_idcliente', 'fk_idestado'];
       protected $hidden = [];
 
       public function cargarDesdeRequest($request){
             $this->idpedido = $request->input('idpedido') != "0" ? $request->input('idpedido') : $this->idpedido;
             $this->fecha = $request->input('txtFecha');
             $this->descripcion = $request->input('txtDescripcion');
+            $this->pago = $request->input("txtPago");
             $this->total = $request->input('txtTotal');
             $this->fk_idsucursal = $request->input('lstSucursal');
             $this->fk_idcliente = $request->input('lstCliente');
@@ -27,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
                   idpedido,
                   fecha,
                   descripcion,
+                  pago,
                   total,
                   fk_idsucursal,
                   fk_idcliente,
@@ -40,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
             idpedido,
             fecha,
             descripcion,
+            pago,
             total,
             fk_idsucursal,
             fk_idcliente,
@@ -51,6 +54,7 @@ use Illuminate\Database\Eloquent\Model;
                   $this->idpedido = $lstRetorno[0]->idpedido;
                   $this->fecha = $lstRetorno[0]->fecha;
                   $this->descripcion = $lstRetorno[0]->descripcion;
+                  $this->pago = $lstRetorno[0]->pago;
                   $this->total = $lstRetorno[0]->total;
                   $this->fk_idsucursal = $lstRetorno[0]->fk_idsucursal;
                   $this->fk_idcliente = $lstRetorno[0]->fk_idcliente;
@@ -59,10 +63,28 @@ use Illuminate\Database\Eloquent\Model;
             }
             return null;
       }
+      public function obtenerPorCliente($idcliente){
+            $sql ="SELECT 
+            p.idpedido,
+            p.fecha,
+            p.descripcion,
+            p.pago,
+            p.total,
+            s.nombre AS nombre_sucursal,
+            e.nombre AS nombre_estado
+            FROM pedidos p
+            JOIN sucursales s ON p.fk_idsucursal = s.idsucursales
+            JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
+            WHERE p.fk_idcliente = ?
+            ORDER BY p.fecha DESC";
+            $lstRetorno = DB::select($sql, [$idcliente]);
+            return $lstRetorno;
+      }
       public function guardar(){
             $sql = "UPDATE pedidos SET
             fecha = '$this->fecha',
             descripcion = '$this->descripcion',
+            pago = $this->pago,
             total = $this->total,
             fk_idsucursal = $this->fk_idsucursal,
             fk_idcliente = $this->fk_idcliente,
@@ -80,14 +102,16 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "INSERT INTO pedidos(
             fecha,
             descripcion,
+            pago,
             total,
             fk_idsucursal,
             fk_idcliente,
             fk_idestado
-            ) VALUES (?, ?, ?, ?, ?, ?)";
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $result = DB::insert($sql, [
                   $this->fecha,
                   $this->descripcion,
+                  $this->pago,
                   $this->total,
                   $this->fk_idsucursal,
                   $this->fk_idcliente,
@@ -101,6 +125,7 @@ use Illuminate\Database\Eloquent\Model;
             idpedido,
             fecha,
             descripcion,
+            pago,
             total,
             fk_idsucursal,
             fk_idcliente,
@@ -129,6 +154,7 @@ use Illuminate\Database\Eloquent\Model;
             idpedido,
             fecha,
             descripcion,
+            pago,
             total,
             fk_idsucursal,
             fk_idcliente,
@@ -146,15 +172,17 @@ use Illuminate\Database\Eloquent\Model;
                   0 => "idpedido",
                   1 => "fecha",
                   2 => "descripcion",
-                  3 => "total",
-                  4 => "fk_idsucursal",
-                  5 => "fk_idcliente",
-                  6 => "fk_idestado"
+                  3 => "pago",
+                  4 => "total",
+                  5 => "fk_idsucursal",
+                  6 => "fk_idcliente",
+                  7 => "fk_idestado"
             );
             $sql = "SELECT
             p.idpedido,
             p.fecha,
             p.descripcion,
+            p.pago,
             p.total,
             s.nombre AS nombre_sucursal,
             c.nombre AS nombre_cliente,
@@ -168,6 +196,7 @@ use Illuminate\Database\Eloquent\Model;
             if(!empty($request['search']['value'])){
                   $sql .= " AND (p.fecha like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.descripcion like '%" . $request['search']['value'] . "%'";
+                  $sql .= " OR p.pago like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.total like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.fk_idsucursal like '%" . $request['search']['value'] . "%'";
                   $sql .= " OR p.fk_idcliente like '%" . $request['search']['value'] . "%'";

@@ -33,6 +33,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::post('/carrito', 'ControladorWebCarrito@actualizar');
     Route::get('/carrito/eliminar/{idcarritos}', 'ControladorWebCarrito@eliminar');
+    Route::post('/carrito', 'ControladorWebCarrito@procesar');
     Route::get('/mi-cuenta', 'ControladorWebMiCuenta@index');
     Route::post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');

@@ -72,21 +72,32 @@ if (isset($msg)) {
                     </select>
                 </div>
                 <div class="form-group col-lg-6">
+                    <label>Medio de pago: </label>
+                    <select id="lstPago" name="lstPago" class="form-control selectpicker" required>
+                        <option value="" disabled selected>Seleccionar...</option>
+                        <option <?php echo $pedido->pago == "MercadoPago"? "selected" : "" ?>value="MercadoPago">MercadoPago</option>
+                        <option <?php echo $pedido->pago == "Efectivo"? "selected" : ""?>value="Efectivo">Efectivo</option>
+                        <option <?php echo $pedido->pago == "Tarjeta de Crédito"? "selected" : ""?>value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                        <option <?php echo $pedido->pago == "Tarjeta de Débito"? "selected" : ""?>value="Tarjeta de Débito">Tarjeta de Débito</option>
+                    </select>
+
+                </div>
+                <div class="form-group col-lg-6">
                     <label for="lstEstado">Estado del pedido</label>
                     <select name="lstEstado" id="lstEstado" class="form-control" required>
                         <option value="">Seleccionar...</option>
-                        <option value="1">Pendiente (pendiente por pago)</option>
-                        <option value="2">En preparacion</option>
-                        <option value="3">Entregado</option>
-                        <option value="4">Cancelado</option>
-                        <option value="5">Pendiente (pago por MP)</option>
+                        <option value="1" {{ isset($pedido->fk_idestado) && $pedido->fk_idestado == 1 ? 'selected' : '' }}>Pendiente (pendiente por pago)</option>
+                        <option value="2" {{ isset($pedido->fk_idestado) && $pedido->fk_idestado == 2 ? 'selected' : '' }}>En preparacion</option>
+                        <option value="3" {{ isset($pedido->fk_idestado) && $pedido->fk_idestado == 3 ? 'selected' : '' }}>Entregado</option>
+                        <option value="4" {{ isset($pedido->fk_idestado) && $pedido->fk_idestado == 4 ? 'selected' : '' }}>Cancelado</option>
+                        <option value="5" {{ isset($pedido->fk_idestado) && $pedido->fk_idestado == 5 ? 'selected' : '' }}>Pendiente (pago por MP)</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-lg-6">
                     <label for="txtTotal">Total: </label>
-                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" required>
+                    <input type="number" id="txtTotal" name="txtTotal" class="form-control" value="{{ old('txtTotal', $pedido->total ?? '') }}" required>
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="txtDescripcion">Descripción del pedido: </label>

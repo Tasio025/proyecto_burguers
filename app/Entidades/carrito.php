@@ -81,8 +81,12 @@
             ]);
       }
       public function eliminar(){
-            $sql = "DELETE FROM carritos WHERE idcarritos = $this->idcarritos";
-            $affected = DB::delete($sql);
+            $sql = "DELETE FROM carritos WHERE idcarritos = ?";
+            $affected = DB::delete($sql, [$this->idcarritos]);
+      }
+      public function eliminarPorCliente($idcliente){
+            $sql = "DELETE FROM carritos WHERE fk_idcliente = ?";
+            $affected = DB::delete($sql, [$idcliente]);
       }
       public function insertar(){
             $sql = "INSERT INTO carritos(
