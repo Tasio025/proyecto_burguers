@@ -30,7 +30,7 @@
                                           <th>Eliminar</th>
                                     </tr>
                               </thead>
-                              <form action="" method="POST">
+                              <!--<form action="" method="POST">-->
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <tbody>
                                     <?php
@@ -40,11 +40,14 @@
                                     <?php
                                     $subtotal += $carritos->precio * $carritos->cantidad;
                                     ?>
+                                    <!--<form action="" method="POST">-->
+                                    <form id="formCarrito{{ $carritos->idcarritos }}" action="/carrito" method="POST"></form>
                                     <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
                                           <!--Version mia-->                      
                                                 <td style="width: 0px;">
-                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                      <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}">
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}" form="formCarrito{{ $carritos->idcarritos }}">
+                                                      <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}" form="formCarrito{{ $carritos->idcarritos }}">
+                                                      
                                                 </td>
                                                <!-- <td style="width: 100px;">
                                                       <img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100">
@@ -52,11 +55,9 @@
                                                 <td>{{ $carritos->producto }}</td>
                                                 <td>${{ $carritos->precio }}</td>
                                                 <td>
-                                                      <form action="" id="" method="POST">
-                                          <!-- El profe agrega esta linea acá no se por que o donde debería agregarla-->  
-                                                      <input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtProducto" id="txtProducto">
-                                                      <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1">
-                                                      </form>
+                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla-->  
+                                                      <input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtProducto" id="txtProducto" form="formCarrito{{ $carritos->idcarritos }}">
+                                                      <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1" form="formCarrito{{ $carritos->idcarritos }}">
                                                 </td>
                                                 <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                                 <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
@@ -69,12 +70,13 @@
                                                       <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                                 </td>
                                                 <td>
-                                                      <button type="submit" class="btn btn-info">Actualizar</button>
+                                                      <button type="submit" class="btn btn-info" form="formCarrito{{ $carritos->idcarritos }}">Actualizar</button>
                                                 </td>      
                                     </tr>
+                                    <!--</form>-->
                                     @endforeach
                               </tbody>
-                              </form>
+                              <!--</form>-->
                         </table>
             </div>
             <div class="col-md-3">
@@ -127,7 +129,6 @@
                                     </table>
                               </div>
                         </div>
-                  <!--</form>-->
             </div>
             @endif
       </div>

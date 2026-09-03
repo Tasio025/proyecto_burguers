@@ -48,15 +48,16 @@ class ControladorWebCarrito extends Controller{
             $idcliente =  Session::get("idcliente");
             
             $carrito = new Carrito();
-            $aCarritos = $carrito->obtenerPorCliente($idcliente);
-            $sucursal = new Sucursal();
-            $aSucursales = $sucursal->obtenerTodos();
-
             $carrito->idcarritos = $idcarritos;
             $carrito->cantidad = $cantidad;
             $carrito->fk_idcliente = $idcliente;
             $carrito->fk_idproductos = $idproducto;
             $carrito->guardar();
+            
+            $aCarritos = $carrito->obtenerPorCliente($idcliente);
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+
             $msg["ESTADO"] = EXIT_SUCCESS;
             $msg["MSG"] = "Producto actualizado correctamente";
 
