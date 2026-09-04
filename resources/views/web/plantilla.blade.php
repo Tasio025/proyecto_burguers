@@ -46,7 +46,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="/">
             <span>
-              Feane
+              Gula Burguers SRL
             </span>
           </a>
 
@@ -172,7 +172,7 @@
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                  feane@gmail.com
+                  gulaburguers@gmail.com
                 </span>
               </a>
             </div>
@@ -181,7 +181,7 @@
         <div class="col-md-4 footer-col">
           <div class="footer_detail">
             <a href="" class="footer-logo">
-              Feane
+              Gula Burguers SRL
             </a>
             <p>
               Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with

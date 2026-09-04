@@ -75,10 +75,14 @@ if (isset($msg)) {
                     <label>Medio de pago: </label>
                     <select id="lstPago" name="lstPago" class="form-control selectpicker" required>
                         <option value="" disabled selected>Seleccionar...</option>
-                        <option <?php echo $pedido->pago == "MercadoPago"? "selected" : "" ?>value="MercadoPago">MercadoPago</option>
-                        <option <?php echo $pedido->pago == "Efectivo"? "selected" : ""?>value="Efectivo">Efectivo</option>
-                        <option <?php echo $pedido->pago == "Tarjeta de Crédito"? "selected" : ""?>value="Tarjeta de Crédito">Tarjeta de Crédito</option>
-                        <option <?php echo $pedido->pago == "Tarjeta de Débito"? "selected" : ""?>value="Tarjeta de Débito">Tarjeta de Débito</option>
+                       <!-- <option <?php //echo $pedido->pago == "MercadoPago" ? "selected" : "" ?> value="MercadoPago">MercadoPago</option>
+                        <option <?php //echo $pedido->pago == "Efectivo"? "selected" : "" ?> value="Efectivo">Efectivo</option>
+                        <option <?php //echo $pedido->pago == "Tarjeta de Crédito" ? "selected" : "" ?> value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+                        <option <?php //echo $pedido->pago == "Tarjeta de Débito" ? "selected" : "" ?> value="Tarjeta de Débito">Tarjeta de Débito</option>-->
+                        <option value="MercadoPago" {{ isset($pedido->pago) && $pedido->pago == "MercadoPago" ? "selected" : "" }}>MercadoPago</option>
+                        <option value="Efectivo" {{ isset($pedido->pago) && $pedido->pago == "Efectivo" ? "selected" : "" }}>Efectivo</option>
+                        <option value="Tarjeta de Crédito" {{ isset($pedido->pago) && $pedido->pago == "Tarjeta de Crédito" ? "selected" : "" }}>Tarjeta de Crédito</option>
+                        <option value="Tarjeta de Débito" {{ isset($pedido->pago) && $pedido->pago == "Tarjeta de Débito" ? "selected" : "" }}>Tarjeta de Débito</option>
                     </select>
 
                 </div>

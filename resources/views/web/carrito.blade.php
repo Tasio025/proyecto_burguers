@@ -113,10 +113,10 @@
                                                             <label>Método de pago:</label>
                                                             <select name="lstPago" id="lstPago" class="form-select" required>
                                                                   <option value="" disabled selected>Seleccionar</option>
-                                                                  <option value="mercado">MercadoPago</option>
-                                                                  <option value="credito">Crédito</option>
-                                                                  <option value="debito">Débito</option>
-                                                                  <option value="efectivo">Efectivo</option>
+                                                                  <option value="MercadoPago">MercadoPago</option>
+                                                                  <option value="Tarjeta de Crédito">Crédito</option>
+                                                                  <option value="Tarjeta de Débito">Débito</option>
+                                                                  <option value="Efectivo">Efectivo</option>
                                                             </select>
                                                       </tr>
                                                       <tr>
