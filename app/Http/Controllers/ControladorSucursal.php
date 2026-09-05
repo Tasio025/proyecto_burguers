@@ -104,14 +104,14 @@ require app_path() . '/start/constants.php';
             public function editar($idsucursal){
                   $titulo = "Editar sucursal";
                   if(Usuario::autenticado() == true){
-                        if(!Patente::autorizarOperacion("SUCURSALMODIFICACION")){
-                              $codigo = "SUCURSALMODIFICACION";
+                        if(!Patente::autorizarOperacion("SUCURSALEDITAR")){
+                              $codigo = "SUCURSALEDITAR";
                               $mensaje = "No tiene pemisos para la operación";
                               return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                         }else{
                         $sucursal = new Sucursal();
                         $sucursal = $sucursal->obtenerPorId($idsucursal);
-                        return view('sistema.sucursal-nuevo', compact('titulo', 'codigo', 'mensaje','sucursal'));
+                        return view('sistema.sucursal-nuevo', compact('titulo','sucursal'));
                         }
                   }else{
                         return redirect('admin/login');

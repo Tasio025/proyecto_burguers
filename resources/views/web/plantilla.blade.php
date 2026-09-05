@@ -13,7 +13,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="web/images/favicon.png" type="">
 
-  <title>Feane</title>
+  <title>Gula Burguers SRL</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="/web/css/bootstrap.css" />
@@ -148,7 +148,7 @@
   @yield("contenido")
 
   <!-- footer section -->
-  <footer class="footer_section">
+  <!--<footer class="footer_section">
     <div class="container">
       <div class="row">
         <div class="col-md-4 footer-col">
@@ -226,8 +226,111 @@
         </p>
       </div>
     </div>
-  </footer>
+  </footer>-->
   <!-- footer section -->
+<footer class="footer_section">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4 footer-col">
+        <div class="footer_contact">
+          <h4>Sucursales</h4>
+
+          <div class="d-flex align-items-center">
+            <!-- Flecha "anterior" - apunta al carousel de sucursales (id="carouselSucursales") -->
+            <a class="carousel-control-prev-custom" href="#carouselSucursales" role="button" data-slide="prev">
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+
+            <!-- id="carouselSucursales": sin data-ride="carousel" para que NO gire solo (navegación manual con las flechas) -->
+            <div id="carouselSucursales" class="carousel slide flex-grow-1" data-interval="false">
+              <div class="carousel-inner">
+                {{-- $loop->first agrega la clase "active" solo al primer item; Bootstrap exige que haya siempre uno activo --}}
+                @foreach($aSucursales as $sucursal)
+                  <div class="carousel-item @if($loop->first) active @endif">
+                    <div class="contact_link_box">
+                      <a href="{{ $sucursal->linkmapa }}" target="_blank">
+                        <i class="fa fa-building" aria-hidden="true"></i>
+                        <span>{{ $sucursal->nombre }}</span>
+                      </a>
+                      <a href="{{ $sucursal->linkmapa }}" target="_blank">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>{{ $sucursal->direccion }}</span>
+                      </a>
+                      <a href="tel:{{ $sucursal->telefono }}">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <span>{{ $sucursal->telefono }}</span>
+                      </a>
+                      <a href="{{ $sucursal->linkmapa }}" target="_blank">
+                        <i class="fa fa-map" aria-hidden="true"></i>
+                        <span>Ver ubicación en Google Maps</span>
+                      </a>
+                    </div>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+              <!--Fleccha-->
+            <a class="carousel-control-next-custom" href="#carouselSucursales" role="button" data-slide="next">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 footer-col">
+        <div class="footer_detail">
+          <a href="" class="footer-logo">
+            Gula Burguers SRL
+          </a>
+          <p>
+            ¡Síguenos en nuestras redes sociales!
+          </p>
+          <div class="footer_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 footer-col">
+        <h4>Nuestros horarios</h4>
+        <p>Lunes a domingo</p>
+
+        <div class="d-flex align-items-center">
+          <a class="carousel-control-prev-custom" href="#carouselHorarios" role="button" data-slide="prev">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </a>
+          <div id="carouselHorarios" class="carousel slide flex-grow-1" data-interval="false">
+            <div class="carousel-inner">
+              @foreach($aSucursales as $sucursal)
+                <div class="carousel-item @if($loop->first) active @endif">
+                  <p class="text-center mb-0">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                    {{ $sucursal->nombre }}: {{ $sucursal->horario }}
+                  </p>
+                </div>
+              @endforeach
+            </div>
+          </div>
+          <a class="carousel-control-next-custom" href="#carouselHorarios" role="button" data-slide="next">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-info">
+      <p>
+        &copy; <span id="displayYear"></span> Burgers SRL<br><br>
+        Adaptación de plantilla de <a href="https://html.design/">Free Html Templates</a> /
+        <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+      </p>
+    </div>
+  </div>
+</footer>
+<!-- footer section -->
 
   <!-- jQery -->
   <script src="/web/js/jquery-3.4.1.min.js"></script>
@@ -236,6 +339,34 @@
   </script>
   <!-- bootstrap js -->
   <script src="/web/js/bootstrap.js"></script>
+
+  
+
+  <script>
+    $(document).ready(function () {
+      var $carSucursales = $('#carouselSucursales');
+      var $carHorarios   = $('#carouselHorarios');
+      var sincronizado = false;
+
+      $carSucursales.on('slide.bs.carousel', function (e) {
+        if(sincronizado){
+          return;
+        }
+      sincronizado = true;
+      $carHorarios.carousel(e.to);
+      sincronizado = false;
+      });
+
+      $carHorarios.on('slide.bs.carousel', function (e) {
+        if(sincronizado){
+          return;
+        }
+        sincronizado = true;
+        $carSucursales.carousel(e.to);
+        sincronizado = false;
+      });
+    });
+  </script>
   <!-- owl slider -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>

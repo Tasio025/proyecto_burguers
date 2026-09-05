@@ -16,7 +16,12 @@ class ControladorWebTakeaway extends Controller{
 
             $categoria = new Categoria(); 
             $aCategorias = $categoria->obtenerTodos(); //Esto me va a traer todas las categorias de la base de datos
-            return view("web.takeaway", compact("msg", "aProductos", "aCategorias"));
+            
+            $sucursal = new SUcursal();
+            $aSucursales = $sucursal->obtenerTodos();
+
+
+            return view("web.takeaway", compact("msg", "aProductos", "aCategorias", "aSucursales"));
       }
       public function insertar(Request $request ){
             $idcliente = Session::get('idcliente');
