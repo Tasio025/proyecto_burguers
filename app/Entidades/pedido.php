@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
             $this->idpedido = $request->input('idpedido') != "0" ? $request->input('idpedido') : $this->idpedido;
             $this->fecha = $request->input('txtFecha');
             $this->descripcion = $request->input('txtDescripcion');
-            $this->pago = $request->input("txtPago");
+            $this->pago = $request->input("lstPago");
             $this->total = $request->input('txtTotal');
             $this->fk_idsucursal = $request->input('lstSucursal');
             $this->fk_idcliente = $request->input('lstCliente');
@@ -65,18 +65,21 @@ use Illuminate\Database\Eloquent\Model;
       }
       public function obtenerPorCliente($idcliente){
             $sql ="SELECT 
-            p.idpedido,
-            p.fecha,
-            p.descripcion,
-            p.pago,
-            p.total,
-            s.nombre AS nombre_sucursal,
-            e.nombre AS nombre_estado
-            FROM pedidos p
-            JOIN sucursales s ON p.fk_idsucursal = s.idsucursales
-            JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
-            WHERE p.fk_idcliente = ?
-            ORDER BY p.fecha DESC";
+            A.idpedido,
+            A.fecha,
+            A.descripcion,
+            A.pago,
+            A.total,
+            A.fk_idcliente,
+            A.fk_idsucursal,
+            A.fk_idestado,
+            B.nombre AS nombre_sucursal,
+            C.nombre AS nombre_estado
+            FROM pedidos A
+            INNER JOIN sucursales B ON A.fk_idsucursal = B.idsucursales
+            INNER JOIN estado_pedido C ON A.fk_idestado = C.idestadopedido
+            WHERE fk_idcliente = ? AND A.fk_idestado != 3
+            ORDER BY A.fecha DESC";
             $lstRetorno = DB::select($sql, [$idcliente]);
             return $lstRetorno;
       }
@@ -84,7 +87,7 @@ use Illuminate\Database\Eloquent\Model;
             $sql = "UPDATE pedidos SET
             fecha = '$this->fecha',
             descripcion = '$this->descripcion',
-            pago = $this->pago,
+            pago = '$this->pago',
             total = $this->total,
             fk_idsucursal = $this->fk_idsucursal,
             fk_idcliente = $this->fk_idcliente,

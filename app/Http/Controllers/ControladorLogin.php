@@ -7,6 +7,7 @@ use App\Entidades\Sistema\Area;
 use App\Entidades\Sistema\Menu;
 use App\Entidades\Sistema\Patente;
 use App\Entidades\Sistema\Usuario;
+use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use Session;
 

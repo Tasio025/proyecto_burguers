@@ -25,6 +25,22 @@ use Illuminate\Database\Eloquent\Model;
                   return $lstRetorno;
 
       }
+      public function obtenerPorPedido($idpedido){
+            $sql = "SELECT
+                  A.idpedidoproducto,
+                  A.cantidad,
+                  A.precio_unitario,
+                  A.total,
+                  A.fk_idpedido,
+                  A.fk_idproducto,
+                  B.imagen
+                  FROM pedidos_productos A
+                  INNER JOIN productos B ON A.fk_idproducto = B.idproducto
+                  WHERE A.fk_idpedido = ?
+                  ORDER BY idpedidoproducto ASC";
+            $lstRetorno = DB::select($sql, [$idpedido]) ;
+            return $lstRetorno;
+      }
       public function obtenerPorId($idpedidoproducto){
             $sql = "SELECT
             idpedidoproducto,
@@ -33,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
             total,
             fk_idpedido,
             fk_idproducto
-            FROM pedidos_productos WHERE idpedidoproducto = $idpedidoproducto";
+            FROM pedidos_productos WHERE idpedidoproducto = ?";
             $lstRetorno = DB::select($sql, [$idpedidoproducto]);
             return $lstRetorno;
 

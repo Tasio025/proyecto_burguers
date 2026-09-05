@@ -108,6 +108,29 @@ if (isset($msg)) {
                     <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" rows="4" required>{{ old('txtDescripcion', $pedido->descripcion ?? '') }}</textarea>
                 </div>
             </div>
+            @if($pedido->idpedido > 0)
+            <div class="row">
+                <div class="col-12">
+                    <label>Listado de productos</label>
+                </div>
+                <div class="col-12">
+                    <table class="table table-hover border">
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>        
+                        </tr>
+                        @foreach ($aPedidoProductos as $producto)
+                        <tr>
+                            <td><img src="/files/productos/{{ $producto->imagen }}" class="img-thumbnail" width="80"></td>
+                            <td>{{ $producto->cantidad }}</td>
+                            <td>${{ number_format($producto->precio_unitario, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+            @endif
       </form>
       <script>
 

@@ -23,7 +23,10 @@ class ControladorWebMiCuenta extends Controller{
 
             $pedido = new Pedido();
             $aPedidos = $pedido->obtenerPorCliente($idcliente);
-            return view("web.mi-cuenta", compact('cliente', 'aPedidos'));
+
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+            return view("web.mi-cuenta", compact('cliente', 'aPedidos', 'aSucursales'));
       }
       public function guardar(Request $request){      //Request para recibir los valores del formulario
             //dd($request->all());

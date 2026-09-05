@@ -7,7 +7,10 @@ use App\Entidades\Sucursal;
 use Session;
 class ControladorWebLogin extends Controller{
       public function index(){
-            return view("web.login"); 
+
+            $sucursal = new Sucursal();
+            $aSucursales = $sucursal->obtenerTodos();
+            return view("web.login", compact('aSucursales')); 
       }
       public function loguearse(Request $request){
             $titulo = "Iniciar sesión";

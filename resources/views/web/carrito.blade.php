@@ -28,9 +28,9 @@
                                           <th>Imagen</th>
                                           <th>Subtotal</th>
                                           <th>Eliminar</th>
+                                          <th>Actualizar</th>
                                     </tr>
                               </thead>
-                              <!--<form action="" method="POST">-->
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
                               <tbody>
                                     <?php
@@ -40,22 +40,19 @@
                                     <?php
                                     $subtotal += $carritos->precio * $carritos->cantidad;
                                     ?>
-                                    <!--<form action="" method="POST">-->
                                     <form id="formCarrito{{ $carritos->idcarritos }}" action="/carrito" method="POST"></form>
-                                    <tr>  <!--Esto lo tengo que revisar, no se si está bien-->
+                                    <tr>
                                           <!--Version mia-->                      
-                                                <td style="width: 0px;">
+                                                <td>
                                                       <input type="hidden" name="_token" value="{{ csrf_token() }}" form="formCarrito{{ $carritos->idcarritos }}">
-                                                      <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}" form="formCarrito{{ $carritos->idcarritos }}">
-                                                      
+                                                      <input type="hidden" name="txtCarrito" id="txtCarrito" class="form-control" value="{{ $carritos->idcarritos }}" form="formCarrito{{ $carritos->idcarritos }}">  
+                                                      {{ $carritos->producto }}
                                                 </td>
                                                <!-- <td style="width: 100px;">
                                                       <img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100">
                                                 </td>-->
-                                                <td>{{ $carritos->producto }}</td>
                                                 <td>${{ $carritos->precio }}</td>
                                                 <td>
-                                                <!-- El profe agrega esta linea acá no se por que o donde debería agregarla-->  
                                                       <input type="hidden" class="form-control" value="{{ $carritos->fk_idproductos }}" type="number" name="txtProducto" id="txtProducto" form="formCarrito{{ $carritos->idcarritos }}">
                                                       <input class="form-control" type="number" value="{{ $carritos->cantidad }}" name="txtCantidad" id="txtCantidad" min="1" form="formCarrito{{ $carritos->idcarritos }}">
                                                 </td>
@@ -110,14 +107,16 @@
                                                             </td>
                                                       </tr>
                                                       <tr>
-                                                            <label>Método de pago:</label>
-                                                            <select name="lstPago" id="lstPago" class="form-select" required>
-                                                                  <option value="" disabled selected>Seleccionar</option>
-                                                                  <option value="MercadoPago">MercadoPago</option>
-                                                                  <option value="Tarjeta de Crédito">Crédito</option>
-                                                                  <option value="Tarjeta de Débito">Débito</option>
-                                                                  <option value="Efectivo">Efectivo</option>
-                                                            </select>
+                                                            <td>
+                                                                  <label class="d-block">Método de pago:</label>
+                                                                  <select name="lstPago" id="lstPago" class="form-select" required>
+                                                                        <option value="" disabled selected>Seleccionar</option>
+                                                                        <option value="MercadoPago">MercadoPago</option>
+                                                                        <option value="Tarjeta de Crédito">Crédito</option>
+                                                                        <option value="Tarjeta de Débito">Débito</option>
+                                                                        <option value="Efectivo">Efectivo</option>
+                                                                  </select>
+                                                            </td>
                                                       </tr>
                                                       <tr>
                                                             <td>
