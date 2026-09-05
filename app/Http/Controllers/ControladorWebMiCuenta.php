@@ -46,10 +46,17 @@ class ControladorWebMiCuenta extends Controller{
                  $cliente->whatsapp = $request->input('txtWhatsapp');
                  $cliente->correo = $request->input('txtCorreo');
                   $cliente->guardar();    //Ejecutamos el método guardar que ya arreglamos antes en la clase cliente          
-                  return redirect('/mi-cuenta')->with('msg', ['ESTADO' => 'success', 'MSG' => 'Datos actualizados correctamente']);      
+                  
+                  $msg['ESTADO'] = EXIT_SUCCESS;
+                  $msg['MSG'] = 'Datos actualizados correctamente';
+
+                  return view("web.mi-cuenta", compact('msg', 'aSucursales'));
             }catch (\Exception $e){
                  //dd($e->getMessage());
-                  return redirect('/mi-cuenta')->with('msg', ['ESTADO' => 'danger', 'MSG' => 'Error al guardar: ' . $e->getMessage()]);
+                 $msg['ESTADO'] = 'danger';
+                 $msg['MSG'] = "Error al guardar los datos: " . $e->getMessage();
+
+                 return view("web.mi-cuenta", compact('msg', 'aSucursales'));
             }
       }
 }

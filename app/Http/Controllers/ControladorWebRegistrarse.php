@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Entidades\Sucursal;
 use Illuminate\Http\Request;
 use App\Entidades\Cliente;
 require app_path() . '/start/constants.php';
 
 class ControladorWebRegistrarse extends Controller{
       public function index(){
-            return view("web.registrarse");   //Esto nos devolvera el registrarse.blade.php(el registrarse de la plantilla) pero hay que armarlo xq aparece todo roto
+            $sucursal = new Sucursal();//Agregado
+            $aSucursales = $sucursal->obtenerTodos();//Agregado
+            return view("web.registrarse", compact('aSucursales'));   //Esto nos devolvera el registrarse.blade.php(el registrarse de la plantilla) pero hay que armarlo xq aparece todo roto
       }
       public function registrarse(Request $request){
             $titulo = "Nuevo registro";
@@ -23,14 +26,16 @@ class ControladorWebRegistrarse extends Controller{
             //La contraseña se settea así para encriptarla
             $cliente->clave = password_hash($request->input("txtClave"), PASSWORD_DEFAULT);
 
+            $sucursal = new Sucursal();//Agregado
+            $aSucursales = $sucursal->obtenerTodos();//Agregado
             if($cliente->nombre == "" || $cliente->apellido == "" || $cliente->direccion == "" || $cliente->correo == "" || $cliente->dni == "" || $cliente->celular == "" || $cliente->whatsapp == "" || $cliente->clave == ""){
                $msg["ESTADO"] = MSG_ERROR;
                $msg["MSG"] = "Complete todos los campos";   
-               return view('web.registrarse', compact('titulo', 'msg'));
+               return view('web.registrarse', compact('titulo', 'msg', 'aSucursales'));
             }else{
                   //Ahora que termino de settear todo llamo al método insertar
                   $cliente->insertar();
-                  return redirect('/login');
+                  return view("web.login", compact('titulo', 'msg', 'aSucursales'));
             }
       }
 }
