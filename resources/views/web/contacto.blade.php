@@ -11,18 +11,18 @@
       <div class="row">
         <div class="col-md-6">
           <div class="form_container">
-            <form action="/contacto" name="form1" id="form1" method="POST">
+            <form action="/contacto-gracias" id="form1" method="POST">
               <div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
               </div>
               <div>
-                <input type="text" name="txtNombre" class="form-control" placeholder="Tu nombre" />
+                <input type="text" name="txtNombre" id="txtNombre" class="form-control" placeholder="Tu nombre" required/>
               </div>
               <div>
-                <input type="text" name="txtTelefono" class="form-control" placeholder="Número de teléfono" />
+                <input type="text" name="txtTelefono" id="txtTelefono" class="form-control" placeholder="Número de teléfono" required />
               </div>
               <div>
-                <input type="email" name="txtCorreo" class="form-control" placeholder="Tu correo electrónico" />
+                <input type="email" name="txtCorreo" id="txtCorreo" class="form-control" placeholder="Tu correo electrónico" required />
               </div>
              <!-- <div>
                 <select name="txtPersonas" class="form-control nice-select wide">
@@ -50,7 +50,7 @@
                 <input type="date" name="txtFecha" class="form-control">
               </div>-->
               <div>
-                <textarea class="form-control" name="txtComentarios" placeholder="Dejanos un comentario" rows="5"></textarea>
+                <textarea class="form-control" name="txtComentarios" id="txtComentarios" placeholder="Dejanos un comentario" rows="5" required></textarea>
               </div>
               <div class="btn_box">
                 <button>

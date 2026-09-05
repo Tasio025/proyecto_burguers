@@ -29,6 +29,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/nosotros', 'ControladorWebNosotros@insertarPostulacion');
     Route::get('/contacto', 'ControladorWebContacto@index');
     Route::post('/contacto', 'ControladorWebContacto@enviar');
+    Route::post('/contacto-gracias', 'ControladorWebContactoGracias@index');
     Route::get('/postulacion-gracias', 'ControladorWebPostulacionGracias@index');
     Route::get('/carrito', 'ControladorWebCarrito@index');
     Route::post('/carrito', 'ControladorWebCarrito@actualizar');
@@ -38,7 +39,6 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/mi-cuenta', 'ControladorWebMiCuenta@guardar');
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
     Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
-    Route::post('/contacto-gracias', 'ControladorWebContactoGracias@contactoGracias');
     Route::get('/login', 'ControladorWebLogin@index'); 
     Route::get('logout', 'ControladorWebLogin@logout');
     Route::post('/login', 'ControladorWebLogin@loguearse');
@@ -47,6 +47,10 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/recuperar-clave', 'ControladorWebRecuperarClave@index');
     Route::post('/recuperar-clave', 'ControladorWebRecuperarClave@recuperar');
  
+    //RUTAS DE MP
+    Route::get('/mercado-pago/aprobado/{idpedido}', 'ControladorMercadoPago@aprobar');
+    Route::get('/mercado-pago/pendiente/{idpedido}', 'ControladorMercadoPago@pendiente');
+    Route::get('/mercado-pago/error/{idpedido}', 'ControladorMercadoPago@error');
 
 /* --------------------------------------------- */
 /* CONTROLADOR LOGIN                           */
