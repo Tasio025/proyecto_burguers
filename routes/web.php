@@ -40,7 +40,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/cambiar-clave', 'ControladorWebCambiarClave@index');
     Route::post('/cambiar-clave', 'ControladorWebCambiarClave@guardar');
     Route::get('/login', 'ControladorWebLogin@index'); 
-    Route::get('logout', 'ControladorWebLogin@logout');
+    Route::get('logout', 'ControladorWebLogin@logout'); 
     Route::post('/login', 'ControladorWebLogin@loguearse');
     Route::get('/registrarse', 'ControladorWebRegistrarse@index');
     Route::post('/registrarse', 'ControladorWebRegistrarse@registrarse');
