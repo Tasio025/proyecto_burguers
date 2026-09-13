@@ -128,7 +128,7 @@
                 </svg>
               </a>
               @if(Session::get("idcliente") && Session::get("idcliente") > 0)<!--Si el cliente está logueado-->
-              <a href="/login" class="order_online">
+              <a href="/logout" class="order_online">
                 Cerrar sesión
               </a>
               @else
@@ -146,87 +146,6 @@
   </div>
 
   @yield("contenido")
-
-  <!-- footer section -->
-  <!--<footer class="footer_section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 footer-col">
-          <div class="footer_contact">
-            <h4>
-              Contactanos
-            </h4>
-            <div class="contact_link_box">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Ubicación
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>
-                  Llame +54 11 1234 5678
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span>
-                  gulaburguers@gmail.com
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 footer-col">
-          <div class="footer_detail">
-            <a href="" class="footer-logo">
-              Gula Burguers SRL
-            </a>
-            <p>
-              Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
-            </p>
-            <div class="footer_social">
-              <a href="">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-pinterest" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 footer-col">
-          <h4>
-            Horarios de apertura
-          </h4>
-          <p>
-            Todos los días
-          </p>
-          <p>
-            10.00 Am -10.00 Pm
-          </p>
-        </div>
-      </div>
-      <div class="footer-info">
-        <p>
-          &copy; <span id="displayYear"></span> All Rights Reserved By
-          <a href="https://html.design/">Free Html Templates</a><br><br>
-          &copy; <span id="displayYear"></span> Distributed By
-          <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
-        </p>
-      </div>
-    </div>
-  </footer>-->
   <!-- footer section -->
 <footer class="footer_section">
   <div class="container">
@@ -249,11 +168,9 @@
                 @foreach($aSucursales as $sucursal)
                   <div class="carousel-item @if($loop->first) active @endif">
                     <div class="contact_link_box">
-                      <a href="{{ $sucursal->linkmapa }}" target="_blank">
                         <i class="fa fa-building" aria-hidden="true"></i>
                         <span>{{ $sucursal->nombre }}</span>
                       </a>
-                      <a href="{{ $sucursal->linkmapa }}" target="_blank">
                         <i class="fa fa-map-marker" aria-hidden="true"></i>
                         <span>{{ $sucursal->direccion }}</span>
                       </a>
@@ -261,6 +178,7 @@
                         <i class="fa fa-phone" aria-hidden="true"></i>
                         <span>{{ $sucursal->telefono }}</span>
                       </a>
+ <!--Acá linkié las direcciones url de distintas páginas en lugar de ubicaciones de mapas, tengo que correjir esto-->
                       <a href="{{ $sucursal->linkmapa }}" target="_blank">
                         <i class="fa fa-map" aria-hidden="true"></i>
                         <span>Ver ubicación en Google Maps</span>

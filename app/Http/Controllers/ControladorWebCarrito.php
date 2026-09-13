@@ -59,7 +59,7 @@ class ControladorWebCarrito extends Controller{
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
 
-            $msg["ESTADO"] = EXIT_SUCCESS;
+            $msg["ESTADO"] = MSG_SUCCESS;
             $msg["MSG"] = "Producto actualizado correctamente";
 
             return view('web.carrito', compact('msg', 'aSucursales', 'aCarritos'));

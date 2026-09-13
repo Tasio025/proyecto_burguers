@@ -65,9 +65,9 @@
                         <table class="table table-bordered table-striped">
                               <thead>
                                     <tr>  <!--Acá van todos los datos de la tabla pedidos-->
-                                          <th>#</th><!--idpedido-->
+                                          <th>Número de pedido</th><!--idpedido-->
                                           <th>Fecha</th>
-                                          <th>Descripción</th>
+                                          <!--<th>Descripción</th>-->
                                           <th>Importe Total</th>
                                           <th>Sucursal</th>
                                           <th>Estado</th>
@@ -79,7 +79,7 @@
                                     <tr>
                                           <td>{{ $pedido->idpedido }}</td>
                                           <td>{{ $pedido->fecha }}</td>
-                                          <td>{{ $pedido->descripcion }}</td>
+                                          <!--<td>{{ $pedido->descripcion }}</td>-->
                                           <td>{{ number_format($pedido->total, 2, ',', '.') }}</td>
                                           <td>{{ $pedido->nombre_sucursal }}</td>
                                           <td>{{ $pedido->nombre_estado }}</td>

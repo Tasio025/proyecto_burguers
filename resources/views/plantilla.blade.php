@@ -63,7 +63,7 @@
 </head>
   <body id="page-top">
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-      <a class="navbar-brand mr-1" href="/">Administración </a>
+      <a class="navbar-brand mr-1" href="/admin">Administración </a>
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
@@ -89,7 +89,8 @@
             <i class="fas fa-user-circle fa-fw"></i> {{ Session::get("usuario_nombre") }}
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="/usuarios/{{ Session::get("usuario") }}">Cuenta de usuario</a>
+            <a class="dropdown-item" href="/usuarios/{{ Session::get('usuario') }}">Cuenta de usuario</a>
+                                                <!--Acá estaba escrito "usuario" pero daba error-->
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal">Cerrar sesi&oacute;n</a>
           </div>

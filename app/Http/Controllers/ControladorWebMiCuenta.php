@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Session;
 
 class ControladorWebMiCuenta extends Controller{
       public function index(){
-            if(!Session::has('idcliente')){
+            if(!Session::get('idcliente') > 0){
                   $mensaje ='Debe iniciar sesión para ver su cuenta';
-                   $sucursal = new Sucursal();
+                  $sucursal = new Sucursal();
                   $aSucursales = $sucursal->obtenerTodos();
                   $titulo = "Iniciar sesión";
                   return view('web.login', compact('mensaje', 'aSucursales'));
@@ -30,7 +30,7 @@ class ControladorWebMiCuenta extends Controller{
       }
       public function guardar(Request $request){      //Request para recibir los valores del formulario
             //dd($request->all());
-            if(!Session::has('idcliente')){
+            if(!Session::get('idcliente') > 0){
                   $mensaje = 'Debe iniciar sesión para ver su cuenta';
                   $sucursal = new Sucursal();
                   $aSucursales = $sucursal->obtenerTodos();

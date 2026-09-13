@@ -4,6 +4,11 @@
       <div class="heading_container mt-5">
             <h2>Mi carrito</h2>
       </div>
+      @if(isset($msg))
+            <div class="alert alert-{{ $msg['ESTADO'] }}">
+                  {{ $msg['MSG'] }}
+            </div>
+      @endif 
       <div class="row">
             <!--Pregunta: Podría ir un if con "!Cliente::autenticado()" ?--> 
             @if(!Session::get("idcliente"))
@@ -59,11 +64,6 @@
                                                 <td><img src="/files/productos/{{ $carritos->imagen }}" alt="{{ $carritos->producto }}" width="100"></td>
                                                 <td>${{ number_format($carritos->precio * $carritos->cantidad) }}</td>
                                                 <td>
-                                                      @if(isset($msg))
-                                                            <div class="alert alert-{{ $msg['ESTADO'] }}">
-                                                                  {{ $msg['MSG'] }}
-                                                            </div>
-                                                      @endif 
                                                       <a href="/carrito/eliminar/{{ $carritos->idcarritos }}" class="btn btn-danger">Eliminar</a>
                                                 </td>
                                                 <td>
@@ -101,7 +101,7 @@
                                                                   <select name="lstSucursal" id="lstSucursal" class="form-select" required>
                                                                         <option value="" disabled selected>Seleccionar</option>
                                                                         @foreach($aSucursales as $sucursal)
-                                                                        <option value="{{ $sucursal->idsucursales }}">{{ $sucursal->idsucursales }}</option>
+                                                                        <option value="{{ $sucursal->idsucursales }}">{{ $sucursal->nombre }}</option>
                                                                         @endforeach
                                                                   </select>
                                                             </td>

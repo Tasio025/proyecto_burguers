@@ -28,12 +28,22 @@ class ControladorWebRegistrarse extends Controller{
 
             $sucursal = new Sucursal();//Agregado
             $aSucursales = $sucursal->obtenerTodos();//Agregado
+
+            $clienteExistente = new cliente();
+            $clienteExistente = $clienteExistente->obtenerPorCorreo($cliente->correo);
+
             if($cliente->nombre == "" || $cliente->apellido == "" || $cliente->direccion == "" || $cliente->correo == "" || $cliente->dni == "" || $cliente->celular == "" || $cliente->whatsapp == "" || $cliente->clave == ""){
                $msg["ESTADO"] = MSG_ERROR;
                $msg["MSG"] = "Complete todos los campos";   
                return view('web.registrarse', compact('titulo', 'msg', 'aSucursales'));
+            }else if($clienteExistente != NULL){
+                  $msg["ESTADO"] = MSG_ERROR;
+                  $msg["MSG"] = "El mail ingresado ya se registró";
+                  return view('web.registrarse', compact('titulo', 'msg', 'aSucursales'));
             }else{
                   //Ahora que termino de settear todo llamo al método insertar
+                  $msg["ESTADO"] = EXIT_SUCCESS;
+                  $msg["MSG"] = "Se ha registrado con éxito";
                   $cliente->insertar();
                   return view("web.login", compact('titulo', 'msg', 'aSucursales'));
             }

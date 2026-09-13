@@ -11,9 +11,9 @@
             <div class="row mb-4">
                   <div class="col-md-10 mx-auto">
                         <div class="form_container">
-                              @if(session('msg'))
-                                    <div class="alert alert-{{ session('msg')['ESTADO'] == 'success' ? 'success' : 'danger' }}">
-                                          {{ session('msg')['MSG'] }}
+                              @if(isset($msg))
+                                    <div class="alert alert-{{ $msg['ESTADO'] }}">
+                                          {{ $msg['MSG'] }}
                                     </div>
                               @endif
                         </div>

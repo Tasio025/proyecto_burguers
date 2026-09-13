@@ -10,14 +10,15 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                     Hamburguesas a domicilio!
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Pedí ahora y disfrutá del mejor sabor con entrega rápida y servicio de calidad!
+                      Registrate para hacer tu pedido 
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Order Now
+                      <a href="/registrarse" class="btn1">
+                        Registrarse
                       </a>
                     </div>
                   </div>
@@ -31,14 +32,15 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                      Gula Burguers
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Las mejores Hamburguesas y Pizzas de zona oeste! o de Buenos Aires...!
+                      Mirá nuestro catálogo y pedí lo que más te guste
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Order Now
+                      <a href="/takeaway" class="btn1">
+                        Ver el MENÚ y PEDIR
                       </a>
                     </div>
                   </div>
@@ -52,14 +54,14 @@
                 <div class="col-md-7 col-lg-6 ">
                   <div class="detail-box">
                     <h1>
-                      Fast Food Restaurant
+                      Si querés ssaber más sobre nosotros...
                     </h1>
                     <p>
-                      Doloremque, itaque aperiam facilis rerum, commodi, temporibus sapiente ad mollitia laborum quam quisquam esse error unde. Tempora ex doloremque, labore, sunt repellat dolore, iste magni quos nihil ducimus libero ipsam.
+                      Hacé click en el siguiente botón para saber más acerca de nosotros y ver reseñas de nuestros clientes!
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
-                        Order Now
+                      <a href="/nosotros" class="btn1">
+                        Sobre nosotros
                       </a>
                     </div>
                   </div>
@@ -86,6 +88,9 @@
     <div class="offer_container">
       <div class="container ">
         <div class="row">
+          <div class="col-md-12 text-center">
+            <h1>Promos de este més!</h1>
+          </div>
           <div class="col-md-6  ">
             <div class="box ">
               <div class="img-box">
@@ -93,13 +98,13 @@
               </div>
               <div class="detail-box">
                 <h5>
-                  Tasty Thursdays
+                  Viernes Tasty
                 </h5>
                 <h6>
                   <span>20%</span> Off
                 </h6>
-                <a href="">
-                  Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                <a href="/takeaway">
+                  Ordene ahora! <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                     <g>
                       <g>
                         <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
@@ -162,13 +167,13 @@
               </div>
               <div class="detail-box">
                 <h5>
-                  Pizza Days
+                  Sábado de Pizza
                 </h5>
                 <h6>
                   <span>15%</span> Off
                 </h6>
-                <a href="">
-                  Order Now <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
+                <a href="/takeaway">
+                  Ordene ahora! <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
                     <g>
                       <g>
                         <path d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248

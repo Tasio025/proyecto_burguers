@@ -9,7 +9,11 @@ class ControladorWebCambiarClave extends Controller{
       public function index(){
             $sucursal = new Sucursal();
             $aSucursales = $sucursal->obtenerTodos();
-
+            if(!Session::get('idcliente') > 0){
+                  $msg["ESTADO"] = 'danger';
+                  $msg["MSG"] = "Debe iniciar sesión para realizar esta operación";
+                  return view("web.cambiar-clave", compact('msg', 'aSucursales'));
+            }
             return view("web.cambiar-clave", compact('aSucursales'));
       }
       public function guardar(Request $request){
@@ -37,6 +41,12 @@ class ControladorWebCambiarClave extends Controller{
 
                         return view("web.cambiar-clave", compact('msg', 'aSucursales'));
                   }
+                  if(password_verify($claveNueva, $entidad->clave)){
+                        $msg["ESTADO"] = 'danger';
+                        $msg["MSG"] = "La clave nueva debe ser distinta de la actual";
+
+                        return view("web.cambiar-clave", compact('msg', 'aSucursales'));
+                  }
                   //Ahora si todo está bien actualizamos
                   $entidad->clave = password_hash($claveNueva, PASSWORD_DEFAULT);
                   $entidad->guardar();
@@ -46,11 +56,6 @@ class ControladorWebCambiarClave extends Controller{
 
                   return view("web.cambiar-clave", compact('msg', 'aSucursales'));
 
-                  /*    Por si el return view falla, dejo esto comentado
-                   return redirect('/mi-cuenta')->with('msg', [
-                  'ESTADO' => 'success',
-                  'MSG' => 'Clave actualizada correctamente'
-                  ]);*/ 
             }catch(\Exception $e){
                   $msg['ESTADO'] = 'danger';
                   $msg['MSG'] = "Error al actualizar la clave: " . $e->getMessage();
