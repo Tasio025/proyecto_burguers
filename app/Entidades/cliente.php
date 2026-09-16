@@ -96,18 +96,7 @@ use Illuminate\Database\Eloquent\Model;
             return null;
       }
       public function guardar(){
-           /* $sql = "UPDATE clientes SET
-            nombre = '$this->nombre',
-            apellido = '$this->apellido',
-            direccion = '$this->direccion',
-            correo = '$this->correo',
-            dni = $this->dni,
-            celular = $this->celular,
-            whatsapp = $this->whatsapp,
-            clave = '$this->clave'
-            WHERE idcliente = ?";
-            $affected = DB::update($sql, [$this->idcliente]);*/
-           // return $affected; 
+  
            $sql = "UPDATE clientes SET
            nombre = ?,
            apellido =?,

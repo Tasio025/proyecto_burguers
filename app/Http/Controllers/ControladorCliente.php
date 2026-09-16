@@ -67,6 +67,7 @@ class ControladorCliente extends Controller{
                         }
                         $_POST["idcliente"] = $entidad->idcliente;
                         return redirect('/admin/clientes')->with('msg', $msg);
+                        //return view('sistema.cliente-listado', compact('titulo', 'msg', ''))
                   }
             } catch (\Exception $e) {
                   $msg["ESTADO"] = MSG_ERROR;

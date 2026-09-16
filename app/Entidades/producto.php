@@ -98,7 +98,7 @@ use Illuminate\Database\Eloquent\Model;
             ]);
             return $this->idproducto = DB::getPdo()-> lastInsertId();
       }
-      public function obtenerFiltrado(){
+      public function obtenerFiltrado(){  //Este filtrado no me está funcionando
             $request = $_REQUEST;
             $columns = array(
                   0 => 'A.idproducto',
@@ -115,10 +115,10 @@ use Illuminate\Database\Eloquent\Model;
             A.precio,
             A.imagen,
             A.fk_idcategoria,
-            B.nombre AS nombre_categoria
+            B.nombre AS nombre_categoria 
             FROM productos A 
-            INNER JOIN categoria B ON A.fk_idcategria = B.idcategoria
-            WHERE 1=1";
+            INNER JOIN categoria B ON A.fk_idcategoria = B.idcategoria
+            WHERE 1 = 1";
             //Acá se hace el filtrado
             if(!empty($request['search']['value'])){
                   $sql .= " AND (A.nombre LIKE '%" . $request['search']['value'] . "%'";

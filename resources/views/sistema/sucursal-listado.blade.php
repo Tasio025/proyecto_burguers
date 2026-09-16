@@ -42,7 +42,6 @@ if (isset($msg)) {
                 <th>Nombre</th>
                 <th>Teléfono</th>
                 <th>Dirección</th>
-                <th>Ubicación</th>
                 <th>Link</th>
                 <th>Horario</th>
             </tr>

@@ -182,18 +182,18 @@ use Illuminate\Database\Eloquent\Model;
                   7 => "fk_idestado"
             );
             $sql = "SELECT
-            p.idpedido,
-            p.fecha,
-            p.descripcion,
-            p.pago,
-            p.total,
-            s.nombre AS nombre_sucursal,
-            c.nombre AS nombre_cliente,
-            e.nombre AS nombre_estado
-            FROM pedidos p    /*Acá hacemos un inner join para unir las tablas y que me aparezcan los nombres de lo que paso en el listado*/ 
-            JOIN sucursales s ON p.fk_idsucursal = s.idsucursales
-            JOIN clientes c ON p.fk_idcliente = c.idcliente
-            JOIN estado_pedido e ON p.fk_idestado = e.idestadopedido
+            A.idpedido,
+            A.fecha,
+            A.descripcion,
+            A.pago,
+            A.total,
+            B.nombre AS nombre_sucursal,
+            C.nombre AS nombre_cliente,
+            D.nombre AS nombre_estado
+            FROM pedidos A    /*Acá hacemos un inner join para unir las tablas y que me aparezcan los nombres de lo que paso en el listado*/ 
+            JOIN sucursales B ON A.fk_idsucursal = B.idsucursales
+            JOIN clientes C ON A.fk_idcliente = C.idcliente
+            JOIN estado_pedido D ON A.fk_idestado = D.idestadopedido
             WHERE 1 = 1";
             //Acá se hace el filtrado
             if(!empty($request['search']['value'])){

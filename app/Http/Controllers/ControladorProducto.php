@@ -97,7 +97,8 @@ class ControladorProducto extends Controller{
       public function cargarGrilla(Request $request){
             $request = $_REQUEST;
             $entidad = new Producto();
-            $aProductos = $entidad->obtenerFiltrado();
+            $aProductos = $entidad->obtenerTodos();   // ---> NO DA ERROR
+            //$aProductos = $entidad->obtenerFiltrado(); ---> ERROR
             $data = array();
             $cont = 0;
             $inicio = $request['start'];

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
       class Estado_pedido extends Model{
       protected $table = 'estado_pedido';
-      public $timestamps = false;
+      public $timestamps = false;   //No usa created_at ni updated_at por las filas de la tabla
       protected $fillable = ['idestadopedido', 'nombre'];
       protected $hidden = [];
 
