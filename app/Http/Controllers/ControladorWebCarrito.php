@@ -27,8 +27,6 @@ class ControladorWebCarrito extends Controller{
             $aSucursales = $sucursal->obtenerTodos();
             return view("web.carrito", compact('aCarritos', 'aSucursales'));   //Esto nos devolvera el carrito.blade.php(el carrito de la plantilla) pero hay que armarlo xq aparece todo roto
       }                                        //Acá tenía también en este compact 'sucursal' y 'carrito'
-     //Hace falta la función guardar?
-      //Dudas acá en esta función
       public function eliminar($idcarritos){
             $carrito = new Carrito();
             $carrito->idcarritos = $idcarritos;
@@ -42,7 +40,7 @@ class ControladorWebCarrito extends Controller{
 
             return view('web.carrito', compact('msg', 'aCarritos', 'aSucursales'));
       }
-      public function actualizar(Request $request){   //REVISAR ESTO, así debería estar bien el actualizar. Por que me marca error en $idcarrito y $producto
+      public function actualizar(Request $request){ 
             $cantidad = $request->input("txtCantidad");
             $idcarritos = $request->input("txtCarrito");
             $idproducto = $request->input("txtProducto");
@@ -75,7 +73,6 @@ class ControladorWebCarrito extends Controller{
            } 
       }
       public function insertarPedido(Request $request){
-            //Falta terminar
             $idcliente = Session::get("idcliente");
             $idsucursales = $request->input("lstSucursal");   //idsucursal?
             $pago = $request->input("lstPago");

@@ -17,7 +17,7 @@ class ControladorProducto extends Controller{
             if(Usuario::autenticado() == true){
                   if(!Patente::autorizarOperacion("PRODUCTOSALTA")){
                         $codigo = "PRODUCTOSALTA";
-                        $mensaje = "No tiene permisos para la operaci&oacute;n";
+                        $mensaje = "No tiene permisos para la   operaci&oacute;n";
                         return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
                   }else{
                         $producto = new Producto();
