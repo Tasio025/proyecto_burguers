@@ -13,7 +13,7 @@ class Usuario extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'usuario','activo','created_at','ultimo_ingreso', 'apellido','nombre','mail', 'clave'
+        'usuario','activo','created_at','ultimo_ingreso', 'apellido','nombre','mail', 'dosFa_correo', 'dosFa_authenticator', 'clave'
     ];
     
     function cargarDesdeRequest($request) {
@@ -22,10 +22,20 @@ class Usuario extends Model
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->mail =  $request->input('txtEmail');
+        $this->dosFa_correo = $request->input('txtDosfa_correo');
+        $this->dosFa_authenticator = $request->input('txtDosfa_authenticator');
         $this->activo = $request->input('lstEstado');
         $this->areapredeterminada = $request->input('lstArea');
     }
 
+    function cargarDesdeRequestNuevo($request){
+        $this->nombre = $request->input('txtNombre');
+        $this->apellido = $request->input('txtApellido');
+        $this->mail = $request->input('txtEmail');
+        $this->dosFa_correo = $request->input('txtdosFa_correo') ? 1 : 0;
+        $this->dosFa_authenticator = $request->input('txtdosFa_authenticator') ? 1 : 0;
+        $this->clave = $this->encriptarClave($request->input('txtClave'));
+    }
     public function obtenerFiltrado() {
         $request = $_REQUEST;
         $columns = array(
@@ -104,18 +114,21 @@ class Usuario extends Model
                     apellido,
                     nombre,
                     mail,
+                    dosFa_correo,
+                    dosFa_authenticator,
                     areapredeterminada,
                     clave
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             $result = DB::insert($sql, [
             		$this->usuario,
                     ACTIVO, 
                     $now->format('Y-m-d H:i:s'),
-                    0,
                     $this->apellido,
                     $this->nombre,
                     $this->mail,
-                    $this->areapredeterminada,
+                    $this->dosFa_correo,
+                    $this->dosFa_authenticator ?? 0,
+                    $this->areapredeterminada ?? 0,
                     $this->clave
                     ]);
 
@@ -128,10 +141,15 @@ class Usuario extends Model
             apellido='$this->apellido',
             nombre='$this->nombre',
             mail='$this->mail',
+            dosFa_correo = ?,
+            dosFa_authenticator = ?,
             activo='$this->activo',
             areapredeterminada='$this->areapredeterminada'
             WHERE idusuario= ?"; 
-        $affected = DB::update($sql, [$this->idusuario]);
+        $affected = DB::update($sql, [
+        $this->dosFa_correo ?? 0,
+        $this->dosFa_authenticator ?? 0,    
+        $this->idusuario]);
     }
 
     public function obtenerTodos() {
@@ -140,6 +158,8 @@ class Usuario extends Model
                 A.usuario,
                 A.clave,
                 A.mail,
+                A.dosFa_correo,
+                A.dosFa_authenticator,
                 A.nombre,
                 A.apellido,
                 A.activo,
@@ -159,6 +179,8 @@ class Usuario extends Model
                 A.idusuario,
                 A.usuario,
                 A.mail,
+                A.dosFa_correo,
+                A.dosFa_authenticator,
                 A.nombre,
                 A.apellido,
                 A.activo,
@@ -178,6 +200,8 @@ class Usuario extends Model
                     idusuario,
                     usuario,
                     mail,
+                    dosFa_correo,
+                    dosFa_authenticator,
                     nombre,
                     apellido,
                     activo,
@@ -193,6 +217,8 @@ class Usuario extends Model
             $this->idusuario =$lstRetorno[0]->idusuario;
             $this->usuario =$lstRetorno[0]->usuario;
             $this->mail =$lstRetorno[0]->mail;
+            $this->dosFa_correo = $lstRetorno[0]->dosFa_correo;
+            $this->dosFa_authenticator = $lstRetorno[0]->dosFa_authenticator;
             $this->nombre =$lstRetorno[0]->nombre;
             $this->apellido =$lstRetorno[0]->apellido;
             $this->activo =$lstRetorno[0]->activo;
@@ -208,6 +234,8 @@ class Usuario extends Model
                     A.idusuario,
                     usuario,
                     A.mail,
+                    A.dosFa_correo,
+                    A.dosFa_authenticator,
                     A.nombre,
                     A.apellido,
                     activo,
@@ -223,6 +251,8 @@ class Usuario extends Model
             $this->idusuario =$lstRetorno[0]->idusuario;
             $this->usuario =$lstRetorno[0]->usuario;
             $this->mail =$lstRetorno[0]->mail;
+            $this->dosFa_correo = $lstRetorno[0]->dosFa_correo;
+            $this->dosFa_authenticator = $lstRetorno[0]->dosFa_authenticator;
             $this->nombre =$lstRetorno[0]->nombre;
             $this->apellido =$lstRetorno[0]->apellido;
             $this->activo =$lstRetorno[0]->activo;

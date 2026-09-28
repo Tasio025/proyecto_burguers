@@ -30,6 +30,33 @@ class ControladorUsuario extends Controller
         }
     }
 
+    public function listado(){
+        $titulo = "Listado de usuarios";
+        
+        if(Usuario::autenticado() == true){
+            return view('sistema.usuario-listado', compact('titulo'));
+        }else{
+            return redirect('admin/login');
+        }
+    }
+
+    public function nuevoNuevo(){
+        $titulo = "Nuevo usuario";
+        if(Usuario::autenticado() == true){
+            $usuario = new Usuario();
+
+            $area = new Area();
+            $array_area = $area->obtenerTodos();
+
+            $grupo = new Area();
+            $array_grupo = $grupo->obtenerTodos();
+
+            return view('sistema.usuario-nuevo', compact('usuario', 'array_area', 'array_grupo', 'titulo'));
+        }else{
+            return redirect('admin/login');
+        }
+    }
+
     public function nuevo(){
         $titulo = "Nuevo usuario";
         if(Usuario::autenticado() == true){
@@ -110,6 +137,30 @@ class ControladorUsuario extends Controller
             "data" => $data
         );
         return json_encode($json_data);
+    }
+    public function guardarNuevo(Request $request){
+        try{
+            $usuario = new Usuario();
+            $usuario->cargarDesdeRequestNuevo($request);
+            if($usuario->nombre == "" || $usuario->apellido == "" || $usuario->mail == "" || $usuario->clave == ""){
+                $msg["ESTADO"] = MSG_ERROR;
+                $msg["MSG"] = "ERROR: Complete todos los campos";
+                return view('sistema.usuario-nuevo', compact('usuario', 'msg'));
+            }
+                $usuario->insertar();
+                $msg["ESTADO"] = MSG_SUCCESS;
+                $msg["MSG"] = "Usuario guardado correctamente";
+
+                return view('sistema.usuario-listado', compact('usuario', 'msg', 'titulo'));
+        }catch(\Exception $e){
+            dd($e->getMessage());
+            $msg["ESTADO"] = MSG_ERROR;
+            $msg["MSG"] = "Error al crear usuario";
+
+            $titulo = "Nuevo usuario";
+
+            return view('sistema.usuario-nuevo', compact('usuario', 'msg', 'titulo'));
+        }
     }
 
     public function guardar(Request $request){

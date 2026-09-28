@@ -104,6 +104,12 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::get('/admin/usuarios/buscarUsuario', 'ControladorUsuario@buscarUsuario');
     Route::get('/admin/usuarios/{usuario}', 'ControladorUsuario@editar');
 
+    //MODULO USUARIO NUEVO
+    Route::get('/admin/usuario', 'ControladorUsuario@listado');
+    Route::get('/admin/usuario/nuevo', 'ControladorUsuario@nuevoNuevo');
+    Route::post('/admin/usuario/nuevo', 'ControladorUsuario@guardarNuevo');
+    //Route::get('/admin/usuario/cargarGrilla', 'ControladorusuarioCargarGrillaNuevo')->name('usuario.CargarGrillaNuevo');
+
 /* --------------------------------------------- */
 /* CONTROLADOR MENU                             */
 /* --------------------------------------------- */
