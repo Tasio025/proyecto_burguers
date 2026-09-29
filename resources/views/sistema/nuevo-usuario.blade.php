@@ -72,6 +72,12 @@ if (isset($msg)) {
             <input type="email" id="txtEmail" name="txtEmail" class="form-control" required value="{{$usuario->mail }}">
         </div>
         <div class="form-group col-lg-2">
+            <label>Clave: <?php echo $globalId == 0 ? '*' : '';  ?></label>
+        </div>
+        <div class="form-group col-lg-4">
+            <input type="password" id="txtClave" name="txtClave" class="form-control" {{ $globalId == 0 ? 'required' : '' }}>
+        </div>
+        <div class="form-group col-lg-2">
             <label>Activo: *</label>
         </div>
         <div class="form-group col-lg-4">
@@ -95,9 +101,20 @@ if (isset($msg)) {
                         <option value="{{ $array_area[$i]->idarea }}">{{ $array_area[$i]->ncarea }}</option>
                     @endif
                 @endfor
-
             </select>
         </div>
+    </div>
+    <div class="form-group col-lg-2">
+        <label>2FA por correo:</label>
+    </div>
+    <div class="form-group col-lg-4">
+        <input type="checkbox" id="txtdosFa_correo" name="txtdosFa_correo" value="1" {{ isset($usuario) && $usuario->dosFa_correo == 1 ? 'checked' : '' }}>
+    </div>
+    <div class="form-group col-lg-2">
+        <label>2FA Authenticator:</label>
+    </div>
+    <div class="form-group col-lg-4">
+        <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
     </div>
     <div class="row">
         <div class="col-lg-12">

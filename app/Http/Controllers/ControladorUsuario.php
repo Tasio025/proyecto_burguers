@@ -30,7 +30,7 @@ class ControladorUsuario extends Controller
         }
     }
 
-    public function listado(){
+    /*public function listado(){
         $titulo = "Listado de usuarios";
         
         if(Usuario::autenticado() == true){
@@ -38,9 +38,9 @@ class ControladorUsuario extends Controller
         }else{
             return redirect('admin/login');
         }
-    }
+    }*/
 
-    public function nuevoNuevo(){
+    /*public function nuevoNuevo(){
         $titulo = "Nuevo usuario";
         if(Usuario::autenticado() == true){
             $usuario = new Usuario();
@@ -55,7 +55,7 @@ class ControladorUsuario extends Controller
         }else{
             return redirect('admin/login');
         }
-    }
+    }*/
 
     public function nuevo(){
         $titulo = "Nuevo usuario";
@@ -138,7 +138,7 @@ class ControladorUsuario extends Controller
         );
         return json_encode($json_data);
     }
-    public function guardarNuevo(Request $request){
+    /*public function guardarNuevo(Request $request){
         try{
             $usuario = new Usuario();
             $usuario->cargarDesdeRequestNuevo($request);
@@ -161,7 +161,7 @@ class ControladorUsuario extends Controller
 
             return view('sistema.usuario-nuevo', compact('usuario', 'msg', 'titulo'));
         }
-    }
+    }*/
 
     public function guardar(Request $request){
         try {

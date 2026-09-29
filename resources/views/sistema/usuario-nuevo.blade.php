@@ -2,6 +2,8 @@
 @section('titulo', $titulo)
 
 @section('scripts')
+
+//LA DEJO UNICAMENTE POR LAS DUDAS
 <script>
     globalId = '<?php echo isset($usuario->idusuario) && $usuario->idusuario > 0 ? $usuario->idusuario : 0; ?>';
     <?php $globalId = isset($usuario->idusuario) ? $usuario->idusuario : "0"; ?>

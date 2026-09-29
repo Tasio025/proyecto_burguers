@@ -22,20 +22,24 @@ class Usuario extends Model
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->mail =  $request->input('txtEmail');
-        $this->dosFa_correo = $request->input('txtDosfa_correo');
-        $this->dosFa_authenticator = $request->input('txtDosfa_authenticator');
+        $this->dosFa_correo = $request->input('txtdosFa_correo') ? 1 : 0;
+        $this->dosFa_authenticator = $request->input('txtdosFa_authenticator') ? 1 : 0;
+        $clave = $request->input("txtClave");
+        if($clave != ""){
+            $this->clave = $this->encriptarClave($clave);
+        }
         $this->activo = $request->input('lstEstado');
         $this->areapredeterminada = $request->input('lstArea');
     }
 
-    function cargarDesdeRequestNuevo($request){
+    /*function cargarDesdeRequestNuevo($request){
         $this->nombre = $request->input('txtNombre');
         $this->apellido = $request->input('txtApellido');
         $this->mail = $request->input('txtEmail');
         $this->dosFa_correo = $request->input('txtdosFa_correo') ? 1 : 0;
         $this->dosFa_authenticator = $request->input('txtdosFa_authenticator') ? 1 : 0;
         $this->clave = $this->encriptarClave($request->input('txtClave'));
-    }
+    }*/
     public function obtenerFiltrado() {
         $request = $_REQUEST;
         $columns = array(
@@ -145,11 +149,15 @@ class Usuario extends Model
             dosFa_authenticator = ?,
             activo='$this->activo',
             areapredeterminada='$this->areapredeterminada'
+            " . (isset($this->clave) ? ", clave = ?" : "") . "
             WHERE idusuario= ?"; 
-        $affected = DB::update($sql, [
-        $this->dosFa_correo ?? 0,
-        $this->dosFa_authenticator ?? 0,    
-        $this->idusuario]);
+
+            $params = [$this->dosFa_correo ?? 0, $this->dosFa_authenticator ?? 0];
+            if(isset($this->clave)){
+                $params[] = $this->clave;
+            }
+            $params[] = $this->idusuario;
+        $affected = DB::update($sql, $params);
     }
 
     public function obtenerTodos() {
