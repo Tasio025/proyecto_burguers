@@ -122,7 +122,7 @@ require app_path() . '/start/constants.php';
                         if(!Patente::autorizarOperacion("SUCURSALELIMINAR")){
                               $codigo = "SUCURSALELIMINAR";
                               $mensaje = "No tiene pemisos para la operación";
-                              return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
+                              return view('sistema.pagina-error', compact('codigo', 'mensaje'));
                         }else{
                               
                               $idsucursales = $request->input("idsucursal");
