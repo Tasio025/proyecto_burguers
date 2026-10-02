@@ -165,6 +165,10 @@ class ControladorUsuario extends Controller
 
     public function guardar(Request $request){
         try {
+           /* dd(
+                Patente::autorizarOperacion("USUARIOAGREGARPERMISO"),
+                array_keys($_POST)
+            );*/
             //Define la entidad servicio
             $titulo = "Usuario";
             $entidadUsuario = new Usuario();

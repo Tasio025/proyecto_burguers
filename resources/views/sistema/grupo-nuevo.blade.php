@@ -100,10 +100,14 @@ if (isset($msg)) {
                     $('#btnEnviar').hide();
                     $('#btnEliminar').hide();
 
-                    $('#mdlEliminar').modal
+                    $('#mdlEliminar').modal('toggle');
+                }else{
+                    msgShow(data.mensaje, "danger");
+
+                    $("#mdlEliminar").modal('toggle');
                 }
             }
-        })
+        });
     }
 
 </script>
