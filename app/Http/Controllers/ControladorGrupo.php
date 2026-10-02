@@ -36,7 +36,7 @@ class ControladorGrupo extends Controller
                 return view('sistema.pagina-error', compact('titulo', 'codigo', 'mensaje'));
             } else {
                 $grupo = new Area();
-                return view('sistema.grupo-nuevo', compact('grupo'));
+                return view('sistema.grupo-nuevo', compact('grupo', 'titulo'));
             }
         } else {
            return redirect('admin/login');
@@ -53,7 +53,7 @@ class ControladorGrupo extends Controller
             } else {
                 $grupo = new Area();
                 $grupo->obtenerPorId($id);
-                return view('sistema.grupo-nuevo', compact('grupo'));
+                return view('sistema.grupo-nuevo', compact('grupo', 'titulo'));
             }
         } else {
            return redirect('admin/login');
@@ -171,6 +171,7 @@ class ControladorGrupo extends Controller
 
     public function guardar(Request $request){
         try {
+            $titulo = "Listado de grupos";
             //Define la entidad servicio
             $entidad = new Area();
             $entidad->cargarDesdeRequest($request);
@@ -194,7 +195,7 @@ class ControladorGrupo extends Controller
                     $msg["MSG"] = OKINSERT;
                 }
                 $_POST["id"] = $entidad->idarea;
-                return view('sistema.grupo-listar', compact('titulo', 'msg'));
+                return view('sistema.grupo-listar', compact('titulo', 'msg',));
             }
         } catch (Exception $e) {
             $msg["ESTADO"] = MSG_ERROR;
@@ -202,7 +203,28 @@ class ControladorGrupo extends Controller
         }
         $grupo = new Area();
         $grupo->obtenerPorId($entidad->idarea);
-        return view('sistema.grupo-nuevo', compact('msg', 'grupo')) . '?id' . $grupo->idarea;
+        return view('sistema.grupo-nuevo', compact('msg', 'grupo', 'titulo')) . '?id' . $grupo->idarea;
     }
 
+    public function eliminar(Request $request){
+        if(Usuario::autenticado() == true){
+            if(!Patente::autorizarOperacion("GRUPOBAJA")){
+                    $aResultado["err"] = EXIT_FAILURE;
+                    $aResultado["mensaje"] = "No tiene permisos para esta operación";
+                }else{
+
+                $entidad = new Area();
+                $entidad->idarea = $request->input('id');
+
+                $entidad->eliminar();
+
+                $aResultado["err"] = EXIT_SUCCESS;
+                $aResultado['mensaje'] = "Area eliminada correctamente";
+                }
+        }else{
+            $aResultado["err"] = EXIT_FAILURE;
+            $aResultado["mensaje"] = "Usuario no autenticado";
+        }
+        return json_encode($aResultado);
+    }
 }

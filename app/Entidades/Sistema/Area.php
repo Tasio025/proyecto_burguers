@@ -107,5 +107,9 @@ class Area extends Model
         return $lstRetorno;
     }
 
+    public function eliminar(){
+        $sql = "DELETE FROM sistema_areas WHERE idarea = ?";
+        DB::delete($sql, [$this->idarea]);
+    }
 
 }

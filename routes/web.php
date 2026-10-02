@@ -92,6 +92,7 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/admin/grupo/nuevo', 'ControladorGrupo@guardar');
     Route::get('/admin/grupo/{idgrupo}', 'ControladorGrupo@editar');
     Route::post('/admin/grupo/{idgrupo}', 'ControladorGrupo@guardar');
+    Route::get('/admin/grupo/eliminar', 'ControladorGrupo@eliminar');
 
 /* --------------------------------------------- */
 /* CONTROLADOR USUARIO                           */

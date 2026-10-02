@@ -19,7 +19,10 @@
     <li class="btn-item"><a title="Nuevo" href="/admin/grupo/nuevo" class="fa fa-plus-circle" aria-hidden="true"><span>Nuevo</span></a></li>
     <li class="btn-item"><a title="Guardar" href="#" class="fa fa-floppy-o" aria-hidden="true" onclick="javascript: $('#modalGuardar').modal('toggle');"><span>Guardar</span></a>
     </li>
-    <li class="btn-item"><a title="Salir" href="#" class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="javascript: $('#modalSalir').modal('toggle');"><span>Salir</span></a></li>
+    <li class="btn-item"><a title="Salir" href="/admin/grupos" class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="javascript: $('#modalSalir').modal('toggle');"><span>Salir</span></a></li>
+    @if($globalId > 0)
+    <li class="btn-item"> <a title="Eliminar" href="/admin/grupo/eliminar?id={{ $globalId }}" class="fa fa-arrow-circle-o-left" aria-hidden="true" onclick="javascript: $('#mdlEliminar').modal('toggle');"><span>Eliminar</span></a></li>
+    @endif
 </ol>
 <script>
 function fsalir(){
@@ -81,6 +84,26 @@ if (isset($msg)) {
             msgShow("Corrija los errores e intente nuevamente.", "danger");
             return false;
         }
+    }
+    function eliminar(){
+        $.ajax({
+            type: "GET",
+            url: "{{ asset('/admin/grupo/eliminar') }}",
+            data: {id: globalId},
+            async: true,
+            dataType: "json",
+
+            success: function(data){
+                if(data.err == 0){
+                    msgShow(data.mensaje, "success");
+
+                    $('#btnEnviar').hide();
+                    $('#btnEliminar').hide();
+
+                    $('#mdlEliminar').modal
+                }
+            }
+        })
     }
 
 </script>
