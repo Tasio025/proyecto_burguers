@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Support\Facades\log;
 use Illuminate\Http\Request;
 use App\Entidades\Sistema\Usuario;
 use App\Entidades\Sistema\Patente;
@@ -9,8 +11,10 @@ use App\Entidades\Sistema\UsuarioArea;
 use App\Entidades\Sistema\Usuario_familia;
 use App\Entidades\Sistema\Area;
 use App\Entidades\Legajo\Personal;
+use App\Entidades\Sistema\Usuario_ip;
 require app_path().'/start/constants.php';
 use Session;
+
 
 class ControladorUsuario extends Controller
 {
@@ -29,33 +33,6 @@ class ControladorUsuario extends Controller
            return redirect('admin/login');
         }
     }
-
-    /*public function listado(){
-        $titulo = "Listado de usuarios";
-        
-        if(Usuario::autenticado() == true){
-            return view('sistema.usuario-listado', compact('titulo'));
-        }else{
-            return redirect('admin/login');
-        }
-    }*/
-
-    /*public function nuevoNuevo(){
-        $titulo = "Nuevo usuario";
-        if(Usuario::autenticado() == true){
-            $usuario = new Usuario();
-
-            $area = new Area();
-            $array_area = $area->obtenerTodos();
-
-            $grupo = new Area();
-            $array_grupo = $grupo->obtenerTodos();
-
-            return view('sistema.usuario-nuevo', compact('usuario', 'array_area', 'array_grupo', 'titulo'));
-        }else{
-            return redirect('admin/login');
-        }
-    }*/
 
     public function nuevo(){
         $titulo = "Nuevo usuario";
@@ -92,13 +69,17 @@ class ControladorUsuario extends Controller
                 $usuario = new Usuario();
                 $usuario->obtenerPorUsuario($us);
 
+                $usuarioIp = new Usuario_ip();
+                $lstIps = $usuarioIp->obtenerIpsDelUsuario($usuario->idusuario);
+                $ips = implode("\n", array_column($lstIps, 'ip'));
+                
                 $area = new Area();
-                $array_area =  $area->obtenerTodos();
-
+                $array_area = $area->obtenerTodos();
+                
                 $grupo = new Area();
                 $array_grupo = $grupo->obtenerTodos();
 
-                return view('sistema.nuevo-usuario', compact('usuario','array_area', 'array_grupo'));
+                return view('sistema.nuevo-usuario', compact('usuario', 'array_area', 'array_grupo', 'ips'));
             }
         } else {
            return redirect('admin/login');
@@ -138,41 +119,38 @@ class ControladorUsuario extends Controller
         );
         return json_encode($json_data);
     }
-    /*public function guardarNuevo(Request $request){
-        try{
-            $usuario = new Usuario();
-            $usuario->cargarDesdeRequestNuevo($request);
-            if($usuario->nombre == "" || $usuario->apellido == "" || $usuario->mail == "" || $usuario->clave == ""){
-                $msg["ESTADO"] = MSG_ERROR;
-                $msg["MSG"] = "ERROR: Complete todos los campos";
-                return view('sistema.usuario-nuevo', compact('usuario', 'msg'));
-            }
-                $usuario->insertar();
-                $msg["ESTADO"] = MSG_SUCCESS;
-                $msg["MSG"] = "Usuario guardado correctamente";
 
-                return view('sistema.usuario-listado', compact('usuario', 'msg', 'titulo'));
-        }catch(\Exception $e){
-            dd($e->getMessage());
-            $msg["ESTADO"] = MSG_ERROR;
-            $msg["MSG"] = "Error al crear usuario";
-
-            $titulo = "Nuevo usuario";
-
-            return view('sistema.usuario-nuevo', compact('usuario', 'msg', 'titulo'));
-        }
-    }*/
-
-    public function guardar(Request $request){
+    /*public function guardar(Request $request){
         try {
-           /* dd(
-                Patente::autorizarOperacion("USUARIOAGREGARPERMISO"),
-                array_keys($_POST)
-            );*/
+
+
             //Define la entidad servicio
             $titulo = "Usuario";
             $entidadUsuario = new Usuario();
             $entidadUsuario->cargarDesdeRequest($request);
+
+            $ipsTexto = $request->input('txtIps');  //texto del textarea
+            $aIps = array();  //Ips ya validadas, listas para guardar
+            $lineaValida = null;    //Num de la primer linea invalida (si es null, significa que todas estan bien)
+
+            //Esto se procesa solo si el formulario trajo el campo
+            if($ipsTexto != NULL){
+                //Separa el texto en lineas
+                $lineas = preg_split('/\r\n|\r|\n/', $ipsTexto);
+                foreach($lineas as $i => $linea){
+                    $ip = trim($linea); //saca espacios al principio y al final
+                    if($ip == ""){ //ignora las lineas vacias
+                        continue;
+                    }
+                    //filter var devuelve false si es una ipv4 o ipv6 valida
+                    if(filter_var($ip, FILTER_VALIDATE_IP) === false){
+                        $lineaInvalida = $i + 1;
+                        break;
+                    }
+                    $aIps[] = $ip;
+                }
+                $aIps = array_unique($aIps);
+            }
 
             //validaciones
             if ($entidadUsuario->usuario == "" || $entidadUsuario->mail == "" || $entidadUsuario->nombre == "") {
@@ -220,6 +198,19 @@ class ControladorUsuario extends Controller
                         }
                     }
                 }
+
+                //Guarda las Ips solo si el formulario trajo el campo, así si por alguna razón el campo no se envía, no se borran las Ips guardadas
+                if($ipsTexto != NULL){
+                    $usuarioIp = new Usuario_ip();
+                    $usuarioIp->eliminarPorUsuario($entidadUsuario->idusuario);
+                    foreach($aIps as $ip){
+                        $usuarioIp->fk_idusuario = $entidadUsuario->idusuario;
+                        $usaurioIp->ip = $ip;
+                        $usuarioIp->insertar();
+                    }
+                }
+
+
                 $msg["ESTADO"] = MSG_SUCCESS;
                 $msg["MSG"] = OKINSERT;
                 return view('sistema.listar', compact('titulo', 'msg'));
@@ -234,11 +225,162 @@ class ControladorUsuario extends Controller
             $grupo = new Area();
             $array_grupo = $grupo->obtenerTodos();
 
-            return view('sistema.nuevo-usuario', compact('array_area','msg','usuario', 'array_grupo')). '?id' . $request->input('txtUsuario');
+            $ips = $ipsTexto;
+
+            return view('sistema.nuevo-usuario', compact('array_area','msg','usuario', 'array_grupo'));
         } catch (Exception $e) {
+            Log::error('Error al guardar usuario: ' . $e->getMessage());
+
             $msg["ESTADO"] = MSG_ERROR;
             $msg["MSG"] = ERRORINSERT;
+
+            $usuario = new Usuario();
+            $usuario->obtenerPorUsuario($request->input('txtUsuario'));
+
+            $area = new Area();
+            $array_area = $area->obtenerTodos();
+
+            $grupo = new Area();
+            $array_grupo = $grupo->obtenerTodos();
+
+            $ips = $request->input('txtIps');
+
+            return view('sistema.nuevo-usuario', compact('array_area', 'msg', 'usuario', 'array_grupo'));
         }                
+    }*/
+         public function guardar(Request $request){
+        try {
+
+            //Define la entidad servicio
+            $titulo = "Usuario";
+            $entidadUsuario = new Usuario();
+            $entidadUsuario->cargarDesdeRequest($request);
+
+            // has() dice si el campo vino en el formulario, aunque esté vacío
+            $vinoCampoIps = $request->has('txtIps');
+            // (string) convierte el null de un campo vacío en ""
+            $ipsTexto = (string) $request->input('txtIps', '');
+            $aIps = array();            //Ips ya validadas, listas para guardar
+            // se llama $lineaInvalida, igual que más abajo
+            $lineaInvalida = null;      //Nº de la primera línea inválida (null = todas están bien)
+
+            //Esto se procesa solo si el formulario trajo el campo
+            if ($vinoCampoIps) {
+                //Separa el texto en líneas
+                // el patrón correcto (\r\n o \r o \n)
+                $lineas = preg_split('/\r\n|\r|\n/', $ipsTexto);
+                foreach ($lineas as $i => $linea) {
+                    $ip = trim($linea); //saca espacios al principio y al final
+                    if ($ip == "") {    //ignora las líneas vacías
+                        continue;
+                    }
+                    // filter_var devuelve false si NO es una IPv4 o IPv6 válida
+                    if (filter_var($ip, FILTER_VALIDATE_IP) === false) {
+                        $lineaInvalida = $i + 1;
+                        break;
+                    }
+                    $aIps[] = $ip;
+                }
+                $aIps = array_unique($aIps);
+            }
+
+            //validaciones
+            if ($entidadUsuario->usuario == "" || $entidadUsuario->mail == "" || $entidadUsuario->nombre == "") {
+                $msg["ESTADO"] = MSG_ERROR;
+                $msg["MSG"] = USUARIOFALTACAMPOS;
+            } elseif ($lineaInvalida !== null) {
+                $msg["ESTADO"] = MSG_ERROR;
+                $msg["MSG"] = "La línea " . $lineaInvalida . " de IPs permitidas no es una IP válida.";
+            } else {
+                if ($_POST["id"] > 0) {
+                    //Es actualizacion
+                    $entidadUsuario->guardar();
+
+                    //Actualiza en datos personales
+                    //$legajo = new Personal();
+                    //$legajo->guardarDesdeUsuario($entidadUsuario);
+
+                } else {
+                    //Inserta en datos personales
+                    //$legajo = new Personal();
+                    //$legajo->insertarDesdeUsuario($entidadUsuario);
+
+                    //Es nuevo
+                    //$entidadUsuario->fk_idlegajo = $legajo->idlegajo;
+                    $entidadUsuario->insertar();
+                    $_POST["id"] = $entidadUsuario->idusuario;
+                }
+
+                if (Patente::autorizarOperacion("USUARIOAGREGARPERMISO")) {
+
+                    //Guarda las patentes de la familia
+                    $familiaUsuario = new Usuario_familia();
+
+                    //Elimina todos las familias del usuario
+                    $aFamiliaAsignados = $familiaUsuario->eliminarPorUsuario($entidadUsuario->idusuario);
+
+                    //Obtiene las familias a asignar al usuario
+                    $aFamiliaSinAsignar = array();
+                    foreach ($_POST as $nombre => $valor) {
+                        if (substr($nombre,0,12) == "chk_Familia_") {
+                            $idCompuesto = explode("_", substr($nombre,12,strlen($nombre)));
+                            $idFamilia = $idCompuesto[0];
+                            $idArea = $idCompuesto[1];
+                            $familiaUsuario->fk_idfamilia = $idFamilia;
+                            $familiaUsuario->fk_idarea = $idArea;
+                            $familiaUsuario->fk_idusuario = $entidadUsuario->idusuario;
+                            $familiaUsuario->insertar();
+                        }
+                    }
+                }
+
+                //Guarda las Ips solo si el formulario trajo el campo, así si por alguna razón no se envía, no se borran las Ips guardadas
+                if ($vinoCampoIps) {
+                    $usuarioIp = new Usuario_ip();
+                    //Borra las Ips anteriores del usuario (se reemplazan todas)
+                    $usuarioIp->eliminarPorUsuario($entidadUsuario->idusuario);
+                    foreach ($aIps as $ip) {
+                        $usuarioIp->fk_idusuario = $entidadUsuario->idusuario;
+                        $usuarioIp->ip = $ip;
+                        $usuarioIp->insertar();
+                    }
+                }
+
+                $msg["ESTADO"] = MSG_SUCCESS;
+                $msg["MSG"] = OKINSERT;
+                return view('sistema.listar', compact('titulo', 'msg'));
+            }
+            $usuario = new Usuario();
+            $usuario->obtenerPorUsuario($request->input('txtUsuario'));
+
+            $area = new Area();
+            $array_area =  $area->obtenerTodos();
+
+            $grupo = new Area();
+            $array_grupo = $grupo->obtenerTodos();
+
+            $ips = $ipsTexto;
+
+            return view('sistema.nuevo-usuario', compact('array_area','msg','usuario', 'array_grupo', 'ips'));
+        } catch (Exception $e) {
+            Log::error('Error al guardar usuario: ' . $e->getMessage());
+
+            $msg["ESTADO"] = MSG_ERROR;
+            $msg["MSG"] = ERRORINSERT;
+
+            $usuario = new Usuario();
+            $usuario->obtenerPorUsuario($request->input('txtUsuario'));
+
+            $area = new Area();
+            $array_area = $area->obtenerTodos();
+
+            $grupo = new Area();
+            $array_grupo = $grupo->obtenerTodos();
+
+            $ips = $request->input('txtIps');
+
+            return view('sistema.nuevo-usuario', compact('array_area', 'msg', 'usuario', 'array_grupo', 'ips'));
+        }
     }
 
     public function buscarUsuario(Request $request){

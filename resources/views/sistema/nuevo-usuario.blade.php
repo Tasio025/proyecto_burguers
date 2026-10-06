@@ -117,6 +117,14 @@ if (isset($msg)) {
         <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
     </div>
     <div class="row">
+        <div class="form-group col-lg-2">
+            <label>Ips permitidas</label>
+        </div>
+        <div class="form-group col-lg-4">
+            <textarea id="txtIps" name="txtIps" class="form-control" rows="4" placeholder="Ingresar una IP por linea">{{ $ips ?? '' }}</textarea>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12">
             <div class="card mb-3">
                 <div class="card-header">
