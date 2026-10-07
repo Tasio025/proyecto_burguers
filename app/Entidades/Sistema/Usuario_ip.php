@@ -29,7 +29,7 @@ class Usuario_ip extends Model{
             return DB::select($sql, [$idusuario]);
       }
 
-      public function comprobarIpUsuario($idusuario){
+      public function comprobarIpUsuario($idusuario, $ip){
             $sql = "SELECT idusuario_ip FROM usuario_ip WHERE fk_idusuario = ? AND ip = ?";
             $lst = DB::select($sql, [$idusuario, $ip]);
             return count($lst);
