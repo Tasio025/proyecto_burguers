@@ -81,6 +81,7 @@ class Usuario extends Model
                 A.clave,
                 A.activo,
                 A.nombre,
+                A.mail,
                 A.apellido,
                 A.areapredeterminada
                 FROM sistema_usuarios A

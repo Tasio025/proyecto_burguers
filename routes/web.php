@@ -61,6 +61,8 @@ Route::group(array('domain' => '127.0.0.1'), function () {
     Route::post('/admin/logout', 'ControladorLogin@entrar');
     Route::post('/admin/login', 'ControladorLogin@entrar');
 
+    Route::post('admin/verificar-codigo', 'ControladorLogin@verificarCodigo');
+
 /* --------------------------------------------- */
 /* CONTROLADOR RECUPERO CLAVE                    */
 /* --------------------------------------------- */

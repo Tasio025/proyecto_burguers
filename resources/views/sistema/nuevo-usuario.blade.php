@@ -104,7 +104,29 @@ if (isset($msg)) {
             </select>
         </div>
     </div>
-    <div class="form-group col-lg-2">
+    <div class="row">
+        <div class="form-group col-lg-2">
+            <label for="txtIps">Ips permitidas</label>
+        </div>
+        <div class="form-group col-lg-4">
+            <textarea id="txtIps" name="txtIps" class="form-control" rows="4" placeholder="Ingresar una IP por linea">{{ $ips ?? '' }}</textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-lg-2">
+            <label for="txtdosFa_correo">2FA por correo:</label>
+        </div>
+        <div class="form-group col-lg-4">
+            <input type="checkbox" id="txtdosFa_correo" name="txtdosFa_correo" value="1" {{ isset($usuario) && $usuario->dosFa_correo == 1 ? 'checked' : '' }}>
+        </div>
+        <div class="form-group col-lg-2">
+            <label for="txtdosFa_authenticator">2FA Authenticator:</label>
+        </div>
+        <div class="form-group col-lg-4">
+            <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
+        </div>
+    </div>
+    <!--<div class="form-group col-lg-2">
         <label>2FA por correo:</label>
     </div>
     <div class="form-group col-lg-4">
@@ -123,7 +145,7 @@ if (isset($msg)) {
         <div class="form-group col-lg-4">
             <textarea id="txtIps" name="txtIps" class="form-control" rows="4" placeholder="Ingresar una IP por linea">{{ $ips ?? '' }}</textarea>
         </div>
-    </div>
+    </div>-->
     <div class="row">
         <div class="col-lg-12">
             <div class="card mb-3">
@@ -150,8 +172,6 @@ if (isset($msg)) {
         </div>
     </div>
 </form>
-
-<!-- Modal -->
 <div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
