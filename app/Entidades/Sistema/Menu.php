@@ -3,6 +3,7 @@
 namespace App\Entidades\Sistema;
 
 use DB;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -18,7 +19,9 @@ class Menu extends Model
 
     ];
 
-    public function cargarDesdeRequest($request) {
+    /*public function cargarDesdeRequest($request) {
+        $padre = $request->input('lstMenuPadre');
+        $this->id_padre = $request->input($padre == NULL || $padre == '') ? NULL : (int) $padre;
         $this->idmenu = $request->input('id') != "0" ? $request->input('id') : $this->idmenu;
         $this->nombre = $request->input('txtNombre');
         $this->id_padre = $request->input('lstMenuPadre');
@@ -26,7 +29,20 @@ class Menu extends Model
         $this->activo = $request->input('lstActivo');
         $this->url = $request->input('txtUrl');
         $this->css = $request->input('txtCss');
-    }
+    }*/
+
+    public function cargarDesdeRequest($request) {
+    $this->idmenu = $request->input('id') != "0" ? $request->input('id') : $this->idmenu;
+    $this->nombre = $request->input('txtNombre');
+    // Menú principal = sin padre: se guarda NULL 
+    $padre = $request->input('lstMenuPadre');
+    $this->id_padre = ($padre === null || $padre === '') ? null : (int) $padre;
+    $this->orden = $request->input('txtOrden') != "" ? $request->input('txtOrden') : 0;
+    $this->activo = $request->input('lstActivo');
+    // Si vienen vacíos se guarda '' (igual que antes)
+    $this->url = $request->input('txtUrl') ?? '';
+    $this->css = $request->input('txtCss') ?? '';
+}  
 
     public function obtenerFiltrado()
     {
@@ -123,7 +139,7 @@ class Menu extends Model
         return null;
     }
 
-    public function guardar() {
+    /*public function guardar() {
         $sql = "UPDATE sistema_menues SET
             nombre='$this->nombre',
             id_padre='$this->id_padre',
@@ -133,8 +149,19 @@ class Menu extends Model
             css='$this->css'
             WHERE idmenu=?";
         $affected = DB::update($sql, [$this->idmenu]);
-    }
+    }*/
 
+    public function guardar(){
+        $sql = "UPDATE sistema_menues SET
+        nombre = ?,
+        id_padre = ?,
+        orden = ?,
+        activo = ?,
+        url = ?,
+        css = ?
+        WHERE idmenu = ?";
+        $affected = DB::update($sql, [$this->nombre, $this->id_padre, $this->orden, $this->activo, $this->url, $this->css, $this->idmenu]);
+    }
     public function eliminar()
     {
         $sql = "DELETE FROM sistema_menues WHERE

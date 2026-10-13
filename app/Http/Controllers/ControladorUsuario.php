@@ -104,8 +104,8 @@ class ControladorUsuario extends Controller
                 $row[] = '<a href="/admin/usuarios/' . $usuarios[$i]->usuario . '">' . $usuarios[$i]->usuario . '</a>';
                 $row[] = $usuarios[$i]->nombre;
                 $row[] = $usuarios[$i]->apellido;
-                $row[] = $usuarios[$i]->created_at != ""? date_format(date_create($usuarios[$i]->created_at), 'Y-m-d H:i') : "";
-                $row[] = $usuarios[$i]->ultimo_ingreso != "" ?date_format(date_create($usuarios[$i]->ultimo_ingreso), 'Y-m-d H:i') : "";
+                $row[] = $usuarios[$i]->created_at != ""? date_format(date_create($usuarios[$i]->created_at), 'd-m-Y H:i') : "";
+                $row[] = $usuarios[$i]->ultimo_ingreso != "" ?date_format(date_create($usuarios[$i]->ultimo_ingreso), 'd-m-Y H:i') : "";
                 $row[] = $usuarios[$i]->activo == 1 ? "Si" : "No";
                 $cont++;
                 $data[] = $row;
