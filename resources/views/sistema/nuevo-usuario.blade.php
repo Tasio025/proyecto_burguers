@@ -28,6 +28,90 @@ function fsalir(){
 </script>
 @endsection
 @section('contenido')
+<style>
+    /* Tarjetas: una por permiso */
+    #grilla, #grilla tbody { display: block; width: 100% !important; }
+    #grilla thead { display: none; }
+    #grilla tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #fff !important;
+    }
+
+    /* Cada área: nombre + estado a la izquierda, interruptor a la derecha */
+    #grilla tbody td {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas: "titulo interruptor" "sub interruptor";
+        align-items: center;
+        column-gap: 12px;
+        padding: 12px 16px;
+        border: 0;
+        border-top: 1px solid #eee;
+        background: transparent !important;
+        cursor: pointer;
+    }
+
+    /* Interruptor */
+    #grilla input[type=checkbox] {
+    grid-area: interruptor;
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    box-sizing: border-box !important;
+    width: 36px !important;
+    min-width: 36px !important;
+    height: 20px !important;
+    min-height: 20px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 20px;
+    background: #ced4da radial-gradient(circle, #fff 7px, transparent 8px) left center / 20px 20px no-repeat;
+    box-shadow: none !important;
+    cursor: pointer;
+    transition: background-color .2s, background-position .2s;
+}
+    #grilla input[type=checkbox]:checked { background-color: #1a73e8; background-position: right center; }
+    #grilla input[type=checkbox]:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
+
+    /* Encabezado de la tarjeta (nombre del permiso + tacho) */
+    #grilla tbody td:first-child {
+        display: block;
+        padding: 0;
+        border-top: 0;
+        background: #f1f3f5 !important;
+        cursor: default;
+    }
+      .perm-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
+    /*.perm-nombre { font-weight: 600; }*/
+      .perm-nombre { display: block; font-weight: 600; }
+      .perm-desc { display: block; color: #6c757d; font-size: .8rem; }
+      .perm-quitar { border: 0; background: transparent; color: #6c757d; cursor: pointer; padding: 4px; line-height: 1; }
+      .perm-quitar:hover { color: #dc3545; }
+
+    /* Textos de cada área */
+    #grilla tbody td:nth-child(n+2)::before { grid-area: titulo; font-weight: 500; }
+    #grilla tbody td:nth-child(n+2)::after {
+        grid-area: sub;
+        content: "Sin acceso en esta área";
+        color: #6c757d;
+        font-size: .8rem;
+    }
+    #grilla tbody td:nth-child(n+2):has(input:checked)::after { content: "Habilitado en esta área"; }
+
+    @foreach($array_grupo as $grupo)
+    #grilla tbody td:nth-child({{ $loop->iteration + 1 }})::before { content: {!! json_encode($grupo->ncarea) !!}; }
+    @endforeach
+
+    #grilla tbody td.dataTables_empty { display: block; text-align: center; color: #6c757d; cursor: default; }
+    #grilla_info { color: #6c757d; padding-top: 8px; }
+
+    #grilla.dataTable, #grilla.dataTable.no-footer { border-bottom: 0 !important; }
+</style>
 <?php
 if (isset($msg)) {
     echo '<div id = "msg"></div>';
@@ -106,7 +190,7 @@ if (isset($msg)) {
     </div>
     <div class="row">
         <div class="form-group col-lg-2">
-            <label for="txtIps">Ips permitidas</label>
+            <label for="txtIps">IPS permitidas</label>
         </div>
         <div class="form-group col-lg-4">
             <textarea id="txtIps" name="txtIps" class="form-control" rows="4" placeholder="Ingresar una IP por linea">{{ $ips ?? '' }}</textarea>
@@ -126,26 +210,6 @@ if (isset($msg)) {
             <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
         </div>
     </div>
-    <!--<div class="form-group col-lg-2">
-        <label>2FA por correo:</label>
-    </div>
-    <div class="form-group col-lg-4">
-        <input type="checkbox" id="txtdosFa_correo" name="txtdosFa_correo" value="1" {{ isset($usuario) && $usuario->dosFa_correo == 1 ? 'checked' : '' }}>
-    </div>
-    <div class="form-group col-lg-2">
-        <label>2FA Authenticator:</label>
-    </div>
-    <div class="form-group col-lg-4">
-        <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
-    </div>
-    <div class="row">
-        <div class="form-group col-lg-2">
-            <label>Ips permitidas</label>
-        </div>
-        <div class="form-group col-lg-4">
-            <textarea id="txtIps" name="txtIps" class="form-control" rows="4" placeholder="Ingresar una IP por linea">{{ $ips ?? '' }}</textarea>
-        </div>
-    </div>-->
     <div class="row">
         <div class="col-lg-12">
             <div class="card mb-3">
@@ -161,9 +225,12 @@ if (isset($msg)) {
                             <tr>
                                 <th>familia_id</th>
                                 <th>Permiso</th>
-                                @foreach($array_grupo as $grupo)
+                               @foreach($array_grupo as $grupo)
                                     <th>{{ $grupo->ncarea }}</th>
                                 @endforeach
+                              <!--@foreach($array_grupo as $grupo)
+                                    #grilla tbody td:nth-child({{ $loop->iteration + 1 }})::before { content: {!! json_encode($grupo->ncarea, JSON_UNESCAPED_UNICODE) !!}; }
+                              @endforeach-->
                             </tr>
                         </thead>
                     </table> 
@@ -244,7 +311,6 @@ if (isset($msg)) {
             return false;
         }
     }
-
     function cargarGrilla() {
            var grilla = $('#grilla').DataTable({
             "processing": true,
