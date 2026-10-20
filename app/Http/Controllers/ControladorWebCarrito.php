@@ -76,6 +76,7 @@ class ControladorWebCarrito extends Controller{
             $idcliente = Session::get("idcliente");
             $idsucursales = $request->input("lstSucursal");   //idsucursal?
             $pago = $request->input("lstPago");
+            $descripcion = mb_substr(trim($request->input("txtDescripcion") ?? ""), 0, 255);
             
             //Si se paga por mercado pago:
             if($pago == "MercadoPago"){
@@ -100,7 +101,7 @@ class ControladorWebCarrito extends Controller{
                   $pedido->fk_idestado = 1; // Estado pendiente
                   $pedido->fecha = $fecha;
                   $pedido->pago = $pago;
-                  $pedido->descripcion = "";
+                  $pedido->descripcion = $descripcion;
                   $pedido->total  = $total;
 
                   $pedido->insertar();

@@ -84,7 +84,7 @@ use Illuminate\Database\Eloquent\Model;
             return $lstRetorno;
       }
       public function guardar(){
-            $sql = "UPDATE pedidos SET
+            /*$sql = "UPDATE pedidos SET
             fecha = '$this->fecha',
             descripcion = '$this->descripcion',
             pago = '$this->pago',
@@ -95,6 +95,12 @@ use Illuminate\Database\Eloquent\Model;
             WHERE idpedido = ?";
 
             $affected = DB::update($sql, [$this->idpedido]);
+            return $affected;*/
+            $sql = "UPDATE pedidos SET fecha = ?, descripcion = ?, pago = ?, total = ?, fk_idsucursal = ?, fk_idcliente = ?, fk_idestado = ?
+            WHERE idpedido = ?";
+            $affected = DB::UPDATE($sql, [
+                  $this->fecha, $this->descripcion, $this->pago, $this->total, $this->fk_idsucursal, $this->fk_idcliente, $this->fk_idestado, $this->idpedido
+            ]);
             return $affected;
       }
       public function eliminar(){

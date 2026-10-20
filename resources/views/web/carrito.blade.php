@@ -84,10 +84,13 @@
                                           <thead>
                                                 <tr>
                                                       <?php $resultado = 0; 
+                                                      $resumen = [];
                                                       foreach($aCarritos as $carrito){
                                                             ($resultado += $carrito->cantidad * $carrito->precio);
+                                                            $resumen[] = $carrito->cantidad . "x " . $carrito->producto;
 
                                                       }
+                                                      $desccripcionAutomatica = implode(", ", $resumen);
                                                       ?>
                                                       <th>TOTAL: ${{ number_format($resultado, 2) }}</th>
                                                 </tr>
@@ -116,6 +119,12 @@
                                                                         <option value="Tarjeta de Débito">Débito</option>
                                                                         <option value="Efectivo">Efectivo</option>
                                                                   </select>
+                                                            </td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>
+                                                                  <label class="d-block" for="txtDescripcion">Descripción del pedido:</label>
+                                                                  <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" rows="3" maxlength="255">{{ $desccripcionAutomatica }}</textarea>
                                                             </td>
                                                       </tr>
                                                       <tr>
