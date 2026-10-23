@@ -2,6 +2,7 @@
 @section('titulo', $titulo)
 
 @section('scripts')
+//ESTA VISTA YA NO ME SIRVE DE NADA
 
 //LA DEJO UNICAMENTE POR LAS DUDAS
 <script>
