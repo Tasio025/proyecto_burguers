@@ -39,16 +39,11 @@ class Familia extends Model
     }
 
     public function obtenerTodos($grupoID = null) {
-        $dacy = new Dacy();
-        $sql = "SELECT 
-            idfamilia,
-            nombre,
-            descripcion
-            FROM sistema_familias WHERE TRUE ";
-        $sql .= " ORDER BY nombre";
-        $lstRetorno = $dacy->exeQueryEntity($sql, "sistema_familias");
-
-        return $lstRetorno;
+        //Trae todos los permisos ordenados por nombre
+        $sql = "SELECT idfamilia, nombre, descripcion
+        FROM sistema_familias
+        ORDER BY nombre";
+        return DB::select($sql);
     }
 
     public function obtenerGrilla() {

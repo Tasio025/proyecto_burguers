@@ -29,117 +29,63 @@ function fsalir(){
 @endsection
 @section('contenido')
 <style>
-    /* Tarjetas: una por permiso */
-    #grilla, #grilla tbody { display: block; width: 100% !important; }
-    #grilla thead { display: none; }
-    #grilla tbody tr {
-        display: block;
-        margin-bottom: 12px;
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #fff !important;
-    }
+    /* Tarjeta de una empresa */
+    .emp-card { border: 1px solid #dee2e6; border-radius: 8px; overflow: hidden; margin-bottom: 16px; background: #fff; }
+    .emp-oculta { display: none; }                      /* empresas que el usuario todavía no tiene */
 
-    /* Cada área: nombre + estado a la izquierda, interruptor a la derecha */
-    #grilla tbody td {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-areas: "titulo interruptor" "sub interruptor";
-        align-items: center;
-        column-gap: 12px;
-        padding: 12px 16px;
-        border: 0;
-        border-top: 1px solid #eee;
-        background: transparent !important;
-        cursor: pointer;
-    }
+    /* Encabezado: nombre y contador a la izquierda, tacho a la derecha */
+    .emp-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: #f1f3f5; }
+    .emp-nombre { font-weight: 600; }
+    .emp-contador { color: #6c757d; font-size: .85rem; }
+    .emp-quitar { border: 0; background: transparent; color: #6c757d; cursor: pointer; padding: 4px 8px; }
+    .emp-quitar:hover { color: #dc3545; }               /* rojo al pasar el mouse */
+
+    /* Cada permiso: texto a la izquierda, interruptor a la derecha */
+    .emp-fila { display: flex; justify-content: space-between; align-items: center; margin: 0; padding: 14px 20px; border-top: 1px solid #eee; font-weight: normal; cursor: pointer; }
+    .emp-texto strong { display: block; font-weight: 400; }
+    .emp-texto small { display: block; color: #6c757d; font-size: .85rem; }
 
     /* Interruptor */
-    #grilla input[type=checkbox] {
-    grid-area: interruptor;
-    -webkit-appearance: none;
-    appearance: none;
-    display: block;
-    box-sizing: border-box !important;
-    width: 36px !important;
-    min-width: 36px !important;
-    height: 20px !important;
-    min-height: 20px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-    border-radius: 20px;
-    background: #ced4da radial-gradient(circle, #fff 7px, transparent 8px) left center / 20px 20px no-repeat;
-    box-shadow: none !important;
-    cursor: pointer;
-    transition: background-color .2s, background-position .2s;
-}
-    #grilla input[type=checkbox]:checked { background-color: #1a73e8; background-position: right center; }
-    #grilla input[type=checkbox]:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
-
-    /* Encabezado de la tarjeta (nombre del permiso + tacho) */
-    #grilla tbody td:first-child {
-        display: block;
-        padding: 0;
-        border-top: 0;
-        background: #f1f3f5 !important;
-        cursor: default;
+    .emp-fila input.sw {
+        -webkit-appearance: none; appearance: none;
+        box-sizing: border-box !important;
+        width: 40px !important; min-width: 40px !important;
+        height: 22px !important; min-height: 22px !important;
+        margin: 0 !important; padding: 0 !important; border: 0 !important;
+        border-radius: 22px;
+        background: #ced4da radial-gradient(circle, #fff 8px, transparent 9px) left center / 22px 22px no-repeat;
+        box-shadow: none !important; cursor: pointer;
+        transition: background-color .2s, background-position .2s;
     }
-      .perm-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; }
-    /*.perm-nombre { font-weight: 600; }*/
-      .perm-nombre { display: block; font-weight: 600; }
-      .perm-desc { display: block; color: #6c757d; font-size: .8rem; }
-      .perm-quitar { border: 0; background: transparent; color: #6c757d; cursor: pointer; padding: 4px; line-height: 1; }
-      .perm-quitar:hover { color: #dc3545; }
+    .emp-fila input.sw:checked { background-color: #1a73e8; background-position: right center; }
+    .emp-fila input.sw:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
 
-    /* Textos de cada área */
-    #grilla tbody td:nth-child(n+2)::before { grid-area: titulo; font-weight: 500; }
-    #grilla tbody td:nth-child(n+2)::after {
-        grid-area: sub;
-        content: "Sin acceso en esta área";
-        color: #6c757d;
-        font-size: .8rem;
-    }
-    #grilla tbody td:nth-child(n+2):has(input:checked)::after { content: "Habilitado en esta área"; }
-
-    @foreach($array_grupo as $grupo)
-    #grilla tbody td:nth-child({{ $loop->iteration + 1 }})::before { content: {!! json_encode($grupo->ncarea) !!}; }
-    @endforeach
-
-    #grilla tbody td.dataTables_empty { display: block; text-align: center; color: #6c757d; cursor: default; }
-    #grilla_info { color: #6c757d; padding-top: 8px; }
-
-    #grilla.dataTable, #grilla.dataTable.no-footer { border-bottom: 0 !important; }
+    #pieEmpresas { color: #6c757d; padding-top: 4px; }
 </style>
-<?php
-if (isset($msg)) {
-    echo '<div id = "msg"></div>';
-    echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
-}
-?>
+
 <div class="row">
-    <div id = "msg"></div>
+    <div id="msg"></div>
     <?php
     if (isset($msg)) {
         echo '<script>msgShow("' . $msg["MSG"] . '", "' . $msg["ESTADO"] . '")</script>';
     }
     ?>
 </div>
+
 <form id="form1" method="POST" action="/admin/usuarios/nuevo">
     <div class="row">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}"></input>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" id="id" name="id" class="form-control" value="{{$globalId}}" required>
         <div class="form-group col-lg-2">
             <label>Usuario: *</label>
         </div>
-       <div class="form-group col-lg-4">
+        <div class="form-group col-lg-4">
             <input type="text" id="txtUsuario" name="txtUsuario" class="form-control" value="{{$usuario->usuario }}" required>
             <input type="hidden" id="txtLegajo" name="txtLegajo" value="{{$usuario->fk_legajo_id }}" required>
         </div>
         <div class="form-group col-lg-2">
             <label>Nombre:</label>
-       </div>
+        </div>
         <div class="form-group col-lg-4">
             <input type="text" id="txtNombre" name="txtNombre" class="form-control" value="{{$usuario->nombre }}">
         </div>
@@ -181,7 +127,6 @@ if (isset($msg)) {
                     @if (isset($usuario) and $array_area[$i]->idarea == $usuario->areapredeterminada)
                         <option selected value="{{ $array_area[$i]->idarea }}">{{ $array_area[$i]->ncarea }}</option>
                     @else
-
                         <option value="{{ $array_area[$i]->idarea }}">{{ $array_area[$i]->ncarea }}</option>
                     @endif
                 @endfor
@@ -210,195 +155,154 @@ if (isset($msg)) {
             <input type="checkbox" id="txtdosFa_authenticator" name="txtdosFa_authenticator" value="1" {{ isset($usuario) && $usuario->dosFa_authenticator == 1 ? 'checked' : '' }}>
         </div>
     </div>
+
+    @php
+        // Empresas donde el usuario ya tiene al menos un permiso (ej: ["1"])
+        $empresasActivas = array();
+        foreach (($array_permisos_usuario ?? array()) as $par) {
+            $empresasActivas[] = explode('_', $par)[1];      // "9_1" -> toma el "1" (la empresa)
+        }
+    @endphp
     <div class="row">
         <div class="col-lg-12">
             <div class="card mb-3">
                 <div class="card-header">
-                    <i class="fa fa-table"></i> Permisos asignados
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-secondary fa fa-plus-circle" onclick="abrirAgregarPatentes()"></button>
+                    <i class="fa fa-building-o"></i> <strong>Empresas clientes</strong>
+                    <div>
+                        <button type="button" class="btn btn-secondary" title="Agregar empresa" onclick="abrirAgregarEmpresa()"><i class="fa fa-plus-circle"></i></button>
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="grilla" class="display">
-                        <thead>
-                            <tr>
-                                <th>familia_id</th>
-                                <th>Permiso</th>
-                               @foreach($array_grupo as $grupo)
-                                    <th>{{ $grupo->ncarea }}</th>
-                                @endforeach
-                              <!--@foreach($array_grupo as $grupo)
-                                    #grilla tbody td:nth-child({{ $loop->iteration + 1 }})::before { content: {!! json_encode($grupo->ncarea, JSON_UNESCAPED_UNICODE) !!}; }
-                              @endforeach-->
-                            </tr>
-                        </thead>
-                    </table> 
+                    <div id="tarjetasEmpresas">
+                        @foreach($array_grupo as $grupo)
+                        {{-- una tarjeta por empresa; oculta si el usuario no tiene permisos en ella --}}
+                        <div class="emp-card {{ in_array((string)$grupo->idarea, $empresasActivas) ? '' : 'emp-oculta' }}"
+                             id="emp_{{ $grupo->idarea }}" data-nombre="{{ $grupo->ncarea }}">
+                            <div class="emp-head">
+                                <div>
+                                    <div class="emp-nombre">{{ $grupo->ncarea }}</div>
+                                    <div class="emp-contador"></div>   {{-- lo completa el JS --}}
+                                </div>
+                                <button type="button" class="emp-quitar" title="Quitar empresa" onclick="quitarEmpresa({{ $grupo->idarea }})">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+                            @foreach($array_familia as $familia)
+                                @php $clave = $familia->idfamilia . '_' . $grupo->idarea; @endphp
+                                <label class="emp-fila">
+                                    <span class="emp-texto">
+                                        <strong>{{ $familia->nombre }}</strong>
+                                        <small>{{ $familia->descripcion }}</small>
+                                    </span>
+                                    {{-- mismo name de siempre: guardar() en PHP no cambia --}}
+                                    <input type="checkbox" class="sw" name="chk_Familia_{{ $clave }}" value="1"
+                                           @if(in_array($clave, $array_permisos_usuario ?? array())) checked @endif>
+                                </label>
+                            @endforeach
+                        </div>
+                        @endforeach
+                    </div>
+                    <div id="pieEmpresas"></div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLabel">
+
+<div class="modal fade" id="modalAgregarEmpresa" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalBuscarLabel">Permisos del sistema</h5>
+                <h5 class="modal-title">Agregar empresa</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                    <table id="grillaPermisos" class="display">
-                        <thead>
-                            <tr>
-                                <th>familia_id</th>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th>Descripci&oacute;n</th>
-                            </tr>
-                        </thead>
-                    </table> 
-    
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="agregarPatentesGrilla();">Agregar</button>
+                <div id="listaEmpresasDisponibles" class="list-group"></div>   <!-- lo llena el JS -->
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalAgregarGrupos" tabindex="-1" role="dialog" aria-labelledby="modalAgregarGruposLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalBuscarLabel">Grupos del sistema</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                    <table id="grillaTodosLosGrupos" class="display">
-                        <thead>
-                            <tr>
-                                <th>grupo_id</th>
-                                <th></th>
-                                <th>Nombre</th>
-                            </tr>
-                        </thead>
-                    </table> 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" onclick="agregarGruposGrilla();">Agregar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     $("#form1").validate();
-    cargarGrillaPermisos();
-    cargarGrilla();
+
+    // Recalcula el contador de cada tarjeta y el pie de página
+    function actualizarEmpresas() {
+        var total = $('.emp-card').length;                           // empresas del sistema
+        var visibles = $('.emp-card:not(.emp-oculta)').length;       // las que tiene el usuario
+
+        $('.emp-card').each(function () {
+            var cantidad = $(this).find('input.sw').length;          // permisos totales
+            var habilitados = $(this).find('input.sw:checked').length;
+            $(this).find('.emp-contador').text(habilitados + ' de ' + cantidad + ' permisos habilitados');
+        });
+
+        if (visibles === 0) {
+            $('#pieEmpresas').text('Todavía no se agregó ninguna empresa.');
+        } else {
+            $('#pieEmpresas').text('Mostrando ' + visibles + ' de un total de ' + total + ' empresas');
+        }
+    }
+
+    // Tacho: apaga todos los interruptores y oculta la tarjeta
+    function quitarEmpresa(id) {
+        var $card = $('#emp_' + id);
+        $card.find('input.sw').prop('checked', false);   // sin checks no se envía nada de esta empresa
+        $card.addClass('emp-oculta');
+        actualizarEmpresas();
+    }
+
+    // Botón +: lista las empresas que están ocultas
+    function abrirAgregarEmpresa() {
+        var $lista = $('#listaEmpresasDisponibles').empty();
+        $('.emp-card.emp-oculta').each(function () {
+            $lista.append(
+                $('<button type="button" class="list-group-item list-group-item-action">')
+                    .text($(this).attr('data-nombre'))                          // nombre visible
+                    .attr('data-id', this.id.replace('emp_', ''))               // id de la empresa
+            );
+        });
+        if ($lista.children().length === 0) {
+            $lista.append('<p class="text-muted m-3">No hay más empresas disponibles.</p>');
+        }
+        $('#modalAgregarEmpresa').modal('show');
+    }
+
+    // Al elegir una empresa del modal: se muestra su tarjeta
+    $('#listaEmpresasDisponibles').on('click', 'button', function () {
+        $('#emp_' + $(this).attr('data-id')).removeClass('emp-oculta');
+        $('#modalAgregarEmpresa').modal('hide');
+        actualizarEmpresas();
+    });
+
+    // Cada vez que se mueve un interruptor se recalculan los contadores
+    $('#tarjetasEmpresas').on('change', 'input.sw', actualizarEmpresas);
 
     function guardar() {
         if ($("#form1").valid()) {
+            // Una empresa visible sin permisos no deja filas en la base y desaparecería al recargar
+            var vacias = [];
+            $('.emp-card:not(.emp-oculta)').each(function () {
+                if ($(this).find('input.sw:checked').length === 0) {
+                    vacias.push($(this).attr('data-nombre'));
+                }
+            });
+            if (vacias.length > 0) {
+                $("#modalGuardar").modal('toggle');
+                msgShow("Habilitá al menos un permiso en: " + vacias.join(', ') + ", o quitá la empresa.", "danger");
+                return false;
+            }
             modificado = false;
-            form1.submit(); 
+            form1.submit();
         } else {
             $("#modalGuardar").modal('toggle');
             msgShow("Corrija los errores e intente nuevamente.", "danger");
             return false;
         }
     }
-    function cargarGrilla() {
-           var grilla = $('#grilla').DataTable({
-            "processing": true,
-            "serverSide": false,
-            "bFilter": false,
-            "bInfo": true,
-            "bSearchable": false,
-            "paging": false,
-            "ajax": "{{ asset('admin/usuarios/cargarGrillaFamiliasDelUsuario?us='.$globalId) }}",
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                },
-                 {
-                    "targets": [1],
-                    "visible": true,
-                    "searchable": true,
-                    "width": 200
-                }
-                @php ($pos = 2)
-                @foreach($array_grupo as $grupo)
-                ,
-                {
-                    "targets": [@php (print_r($pos))],
-                    "visible": true,
-                    "searchable": true,
-                    "width": 30,
-                    "className": "dt-head-center"
-                }
-                @php ($pos++)
-                @endforeach
-            ]
-        });
-    }
-    function cargarGrillaPermisos() {
-        var grilla = $('#grillaPermisos').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "bFilter": true,
-            "bInfo": true,
-            "bSearchable": true,
-            "pageLength": 10,
-            "ajax": "{{ asset('admin/usuarios/cargarGrillaFamiliaDisponibles?fam='.$globalId) }}",
-            "columnDefs": [
-                {
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false
-                }
-            ]
-        });
-    }
 
-    function abrirAgregarPatentes() {
-        $('#modalAgregar').modal('toggle');
-    }
- 
-    function agregarPatentesGrilla() {
-        var grilla = $('#grilla').DataTable();
-        var grillaPermisos = $('#grillaPermisos').DataTable();
-        var pos = 0;
-
-        $('#grillaPermisos input[type=checkbox]').each(function () {
-            if (this.checked) {
-                id = grillaPermisos.row(pos).data()[0];
-
-                if ($("[name*='chk_Familia_" + id + "']").length == 0) {
-                    //Si no esta lo agrega
-                    grilla.row.add([
-                        id,
-                        grillaPermisos.row(pos).data()[2]
-                        @php ($pos = 2)
-
-                        @foreach($array_grupo as $grupo)
-                            ,
-                            "<input id='chk_Familia_" + id + "_{{$grupo->idarea}}' name='chk_Familia_" +  id + "_{{$grupo->idarea}}' type='checkbox' class='form-control' />"
-                            @php ($pos++)
-                        @endforeach
-
-                    ]).draw();
-                }
-            }
-            pos++;
-        });
-        $('#modalAgregar').modal('toggle');
-    }
- 
+    actualizarEmpresas();   // pinta los contadores al abrir la pantalla
 </script>
 @endsection

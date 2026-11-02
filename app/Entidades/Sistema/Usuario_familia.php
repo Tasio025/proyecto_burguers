@@ -46,6 +46,17 @@ class Usuario_familia extends Model
         $lstRetorno = DB::select($sql);
         return count($lstRetorno);
     }
+    public function obtenerParesDelUsuario($usuarioID){
+        //Trae cada fila guardada del usuario: Un permiso en una empresa
+        $sql = "SELECT fk_idfamilia, fk_idarea FROM sistema_usuario_familia WHERE fk_idusuario = ?";
+        $filas = DB::select($sql, [$usuarioID]);
+
+        $pares = array();
+        foreach($filas as $fila){
+            $pares[] = $fila->fk_idfamilia . '_' . $fila->fk_idarea;
+        }
+        return $pares;
+    }
 }
 
 ?>

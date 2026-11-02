@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\log;
 use Illuminate\Http\Request;
 use App\Entidades\Sistema\Usuario;
 use App\Entidades\Sistema\Patente;
+use App\Entidades\Sistema\Familia;
 use App\Entidades\Sistema\UsuarioArea;
 use App\Entidades\Sistema\Usuario_familia;
 use App\Entidades\Sistema\Area;
@@ -51,7 +52,11 @@ class ControladorUsuario extends Controller
                 $grupo = new Area();
                 $array_grupo = $grupo->obtenerTodos();
 
-                return view('sistema.nuevo-usuario', compact('usuario', 'array_area', 'array_grupo'));
+                $familia = new Familia();
+                $array_familia = $familia->obtenerTodos();
+                $array_permisos_usuario = array();
+                
+                return view('sistema.nuevo-usuario', compact('usuario', 'array_area', 'array_grupo', 'array_familia', 'array_permisos_usuario'));
             }
         } else {
            return redirect('admin/login');
@@ -79,7 +84,13 @@ class ControladorUsuario extends Controller
                 $grupo = new Area();
                 $array_grupo = $grupo->obtenerTodos();
 
-                return view('sistema.nuevo-usuario', compact('usuario', 'array_area', 'array_grupo', 'ips'));
+                $familia = new Familia();
+                $array_familia = $familia->obtenerTodos();
+                
+                $usuarioFamilia = new Usuario_familia();
+                $array_permisos_usuario = $usuarioFamilia->obtenerParesDelUsuario($usuario->idusuario);
+
+                return view('sistema.nuevo-usuario', compact('usuario', 'array_area', 'array_grupo', 'ips', 'array_familia', 'array_permisos_usuario'));
             }
         } else {
            return redirect('admin/login');
@@ -361,7 +372,11 @@ class ControladorUsuario extends Controller
 
             $ips = $ipsTexto;
 
-            return view('sistema.nuevo-usuario', compact('array_area','msg','usuario', 'array_grupo', 'ips'));
+            $familia = new Familia();
+            $array_familia = $familia->obtenerTodos();
+            $array_permisos_usuario = $this->paresDesdeRequest($request);
+
+            return view('sistema.nuevo-usuario', compact('array_area','msg','usuario', 'array_grupo', 'ips', 'array_familia', 'array_permisos_usuario'));
         } catch (Exception $e) {
             Log::error('Error al guardar usuario: ' . $e->getMessage());
 
@@ -379,7 +394,11 @@ class ControladorUsuario extends Controller
 
             $ips = $request->input('txtIps');
 
-            return view('sistema.nuevo-usuario', compact('array_area', 'msg', 'usuario', 'array_grupo', 'ips'));
+            $familia = new Familia();
+            $array_familia = $familia->obtenerTodos();
+            $array_permisos_usuario = $this->paresDesdeRequest($request);
+
+            return view('sistema.nuevo-usuario', compact('array_area', 'msg', 'usuario', 'array_grupo', 'ips',  'array_familia', 'array_permisos_usuario'));
         }
     }
 
@@ -396,6 +415,15 @@ class ControladorUsuario extends Controller
             $msg["ESTADO"] = MSG_ERROR;
         }
         echo json_encode($msg);
+    }
+    private function paresDesdeRequest(Request $request){
+        $pares = array();
+        foreach($request->all() as $nombre => $valor){
+            if(strpos($nombre, 'chk_Familia_') === 0){
+                $pares[] = substr($nombre, 12);
+            }
+        }
+        return $pares;
     }
     
 }
